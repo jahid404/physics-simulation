@@ -5,6 +5,10 @@
   const gravity = ref(9.8)
   const objectSize = ref(40)
 
+  const squishEnabled = ref(true)
+  const squishAmount = ref(0)
+  let squishTimer: number | null = null
+
   const ballY = ref(0)
   const velocity = ref(0)
   const damping = 0.7
@@ -13,6 +17,9 @@
   let animationFrame: number
 
   const ballStyle = computed(() => ({
+    const scaleY = 1 - squishAmount.value
+  const scaleX = 1 + squishAmount.value
+  
     width: `${objectSize.value}px`,
     height: `${objectSize.value}px`,
     transform: `translateY(${ballY.value}px)`
