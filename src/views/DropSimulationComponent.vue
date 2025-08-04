@@ -120,6 +120,11 @@
             <input type="range" min="20" max="100" v-model.number="objectSize" class="w-full" />
           </div>
 
+          <div class="flex items-center justify-between">
+            <label class="font-medium">Enable Squish</label>
+            <input type="checkbox" v-model="squishEnabled" />
+          </div>
+
           <button @click="startDrop" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full">
             Start Drop
           </button>
@@ -129,3 +134,9 @@
     </div>
   </div>
 </template>
+
+<style scoped>
+  .ball {
+    transition: transform 0.15s ease-in-out;
+  }
+</style>
