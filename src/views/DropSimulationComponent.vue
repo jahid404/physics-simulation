@@ -88,10 +88,15 @@
       // apply coefficient of restitution (energy loss on bounce)
       velocity.value = -velocity.value * restitution
 
+      // log impact
+      console.log(`Impact at ${timestamp}ms, rebounding to ${(velocity.value * pxToM).toFixed(2)} m/s`)
+
       // stop simulation if velocity becomes negligible
       if (Math.abs(velocity.value) < 0.5 * mToPx) { // ~0.5 m/s threshold
         isDropping.value = false
         velocity.value = 0
+
+        console.log('Object came to rest at height:', currentHeight.value.toFixed(2), 'm')
         return
       }
     }
