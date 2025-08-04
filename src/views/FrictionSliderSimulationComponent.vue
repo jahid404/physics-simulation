@@ -19,10 +19,8 @@
   const positionX = ref(0)
   const velocity = ref(initialVelocity.value * mToPx)
   const isSliding = ref(false)
+  const maxDistance = 700 // px
   const restitution = 0.5 // Bounciness factor (0 = no bounce, 1 = full bounce)
-
-  const containerRef = ref<HTMLElement | null>(null)
-  const maxDistance = ref(0)
 
   let animationFrame: number
   let lastTime = 0
@@ -98,20 +96,8 @@
     animationFrame = requestAnimationFrame(simulate)
   }
 
-  const updateMaxDistance = () => {
-    if (containerRef.value) {
-      maxDistance.value = containerRef.value.clientWidth
-    }
-  }
-
-  onMounted(() => {
-    updateMaxDistance()
-    window.addEventListener('resize', updateMaxDistance)
-  })
-
   onUnmounted(() => {
     cancelAnimationFrame(animationFrame)
-    window.removeEventListener('resize', updateMaxDistance)
   })
 </script>
 
