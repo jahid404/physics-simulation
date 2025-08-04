@@ -54,34 +54,47 @@
 </script>
 
 <template>
-  <div class="flex items-center justify-center h-full">
-    <div class="w-full max-w-xl p-6 bg-white rounded-xl shadow-xl">
-      <h1 class="text-2xl font-bold mb-4 text-center">Ball Drop Simulation</h1>
+  <div class="flex items-center justify-center min-h-screen p-4 bg-gray-100">
+    <div class="flex flex-col md:flex-row gap-6 w-full max-w-6xl">
 
-      <div class="mb-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label class="block font-medium mb-1">Ball Weight (kg)</label>
-          <input type="number" v-model.number="weight" min="0.1" step="0.1" class="w-full border px-3 py-2 rounded" />
-        </div>
-        <div>
-          <label class="block font-medium mb-1">Gravity (m/s²)</label>
-          <input type="number" v-model.number="gravity" min="0" max="50" step="0.1"
-            class="w-full border px-3 py-2 rounded" />
-        </div>
-        <div class="md:col-span-2">
-          <label class="block font-medium mb-1">Ball Size (px): {{ ballSize }}px</label>
-          <input type="range" min="20" max="100" v-model.number="ballSize" class="w-full" />
+      <!-- Simulation Preview Box (Left on large, top on small) -->
+      <div class="flex-1 p-6 bg-white rounded-xl shadow-xl">
+        <h1 class="text-2xl font-bold mb-4 text-center">Ball Drop Simulation</h1>
+
+        <div ref="box" class="relative w-full h-[400px] bg-blue-50 border border-blue-200 rounded overflow-hidden">
+          <div class="absolute bottom-0 w-full h-[5px] bg-gray-700"></div>
+          <div class="ball absolute left-1/2 -translate-x-1/2 bg-red-500 rounded-full" :style="ballStyle"></div>
         </div>
       </div>
 
-      <button @click="startDrop" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full mb-6">
-        Start Drop
-      </button>
+      <!-- Configuration Panel (Right on large, bottom on small) -->
+      <div class="w-full md:w-[350px] p-6 bg-white rounded-xl shadow-xl">
+        <h2 class="text-xl font-semibold mb-4 text-center md:text-left">Configuration</h2>
 
-      <div ref="box" class="relative w-full h-[400px] bg-blue-50 border border-blue-200 rounded overflow-hidden">
-        <div class="absolute bottom-0 w-full h-[5px] bg-gray-700"></div>
-        <div class="ball absolute left-1/2 -translate-x-1/2 bg-red-500 rounded-full" :style="ballStyle"></div>
+        <div class="grid grid-cols-1 gap-4">
+          <div>
+            <label class="block font-medium mb-1">Ball Weight (kg)</label>
+            <input type="number" v-model.number="weight" min="0.1" step="0.1" class="w-full border px-3 py-2 rounded" />
+          </div>
+
+          <div>
+            <label class="block font-medium mb-1">Gravity (m/s²)</label>
+            <input type="number" v-model.number="gravity" min="0" max="50" step="0.1"
+              class="w-full border px-3 py-2 rounded" />
+          </div>
+
+          <div>
+            <label class="block font-medium mb-1">Ball Size (px): {{ ballSize }}px</label>
+            <input type="range" min="20" max="100" v-model.number="ballSize" class="w-full" />
+          </div>
+
+          <button @click="startDrop" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full">
+            Start Drop
+          </button>
+        </div>
       </div>
+
     </div>
   </div>
 </template>
+
