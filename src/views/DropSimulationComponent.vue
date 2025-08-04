@@ -63,7 +63,7 @@
 
 <template>
   <div class="flex items-center justify-center bg-gray-100">
-    <div class="flex flex-col md:flex-row gap-6 w-full max-w-6xl">
+    <div class="flex flex-col md:flex-row gap-4 w-full max-w-6xl">
 
       <!-- Simulation Preview Box -->
       <div class="flex-1 p-4 bg-white rounded-xl shadow-xl">
@@ -76,7 +76,7 @@
       </div>
 
       <!-- Configuration Panel -->
-      <div class="w-full md:w-[350px] h-max p-6 bg-white rounded-xl shadow-xl">
+      <div class="w-full md:w-[350px] h-max p-4 bg-white rounded-xl shadow-xl">
         <h2 class="text-xl font-semibold mb-4 text-center md:text-left">Configuration</h2>
 
         <div class="grid grid-cols-1 gap-4">
