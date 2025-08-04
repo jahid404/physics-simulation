@@ -4,7 +4,7 @@
   const weight = ref(1) // kg
   const gravity = ref(9.8) // m/s^2
   const objectSize = ref(40) // px
-  const airDensity = ref(1.225) // kg/m^3
+  const airDensity = ref(0.225) // kg/m^3
   const dragCoefficient = ref(0.47)
 
   // convert pixels to meters (assuming 100px = 1m for simulation)
@@ -122,7 +122,7 @@
 
         <div ref="box" class="relative w-full h-[400px] bg-blue-50 border border-blue-200 rounded overflow-hidden">
           <div class="absolute bottom-0 w-full h-[5px] bg-gray-700"></div>
-          <div class="ball absolute left-1/2 -translate-x-1/2 border-2 border-blue-600 border-dotted rounded-full" :style="ballStyle">
+          <div class="ball absolute left-1/2 -translate-x-1/2 border-2 border-blue-600 border-dashed rounded-full" :style="ballStyle">
             <div
               class="absolute top-1/2 left-1/2 w-1 h-1 bg-blue-600 rounded-full transform -translate-x-1/2 -translate-y-1/2">
             </div>
