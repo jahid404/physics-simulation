@@ -4,8 +4,8 @@
   const weight = ref(1) // kg
   const gravity = ref(9.8) // m/s^2
   const objectSize = ref(40) // px
-  const airDensity = ref(1.225) // kg/m^3 (standard at sea level)
-  const dragCoefficient = ref(0.47) // roughly a sphere's drag coefficient
+  const airDensity = ref(1.225) // kg/m^3
+  const dragCoefficient = ref(0.47)
 
   // convert pixels to meters (assuming 100px = 1m for simulation)
   const pxToM = 0.01
@@ -13,7 +13,7 @@
 
   const ballY = ref(0)
   const velocity = ref(0)
-  const restitution = 0.8 // coefficient of restitution (energy retained after bounce)
+  const restitution = 0.8
   const isDropping = ref(false)
   const maxDrop = 393.5 // px (~3.935m)
   let animationFrame: number
@@ -28,9 +28,7 @@
   }))
 
   const currentHeight = computed(() => {
-    // center point Y position in pixels
     const centerY = ballY.value + (objectSize.value / 2)
-    // convert to meters from the top (0 is top, max is bottom)
     return (maxDrop - centerY) * pxToM
   })
 
