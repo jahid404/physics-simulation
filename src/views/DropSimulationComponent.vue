@@ -16,14 +16,22 @@
   const maxDrop = 393.5
   let animationFrame: number
 
-  const ballStyle = computed(() => ({
-    const scaleY = 1 - squishAmount.value
-  const scaleX = 1 + squishAmount.value
-  
+  /* const ballStyle = computed(() => ({
     width: `${objectSize.value}px`,
     height: `${objectSize.value}px`,
     transform: `translateY(${ballY.value}px)`
-  }))
+  })) */
+  const ballStyle = computed(() => {
+    const scaleY = 1 - squishAmount.value
+    const scaleX = 1 + squishAmount.value
+
+    return {
+      width: `${objectSize.value}px`,
+      height: `${objectSize.value}px`,
+      transform: `translateY(${ballY.value}px) scale(${scaleX}, ${scaleY})`,
+      transition: squishAmount.value > 0 ? 'transform 0.1s ease' : ''
+    }
+  })
 
   const startDrop = () => {
     cancelAnimationFrame(animationFrame)
