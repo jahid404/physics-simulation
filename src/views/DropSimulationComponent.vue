@@ -4,7 +4,7 @@
   const weight = ref(1) // kg
   const gravity = ref(9.8) // m/s^2
   const objectSize = ref(40) // px
-  const airDensity = ref(0.225) // kg/m^3
+  const airDensity = ref(1.225) // kg/m^3
   const dragCoefficient = ref(0.47)
 
   // convert pixels to meters (assuming 100px = 1m for simulation)
