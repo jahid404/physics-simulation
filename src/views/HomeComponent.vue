@@ -6,6 +6,25 @@
       description: "Simulate a bouncing ball under gravity",
       link: "/drop-simulation",
     },
+    {
+      id: 2,
+      name: "Projectile Motion",
+      description: "See how objects fly through the air",
+      link: "/projectile-motion",
+    },
+    {
+      id: 3,
+      name: "Pendulum Swing",
+      description: "Visualize a swinging pendulum",
+      link: "/pendulum",
+    },
+    {
+      id: 4,
+      name: "Pendulum Swing",
+      description: "Visualize a swinging pendulum",
+      link: "/pendulum",
+    },
+
   ]
 </script>
 
