@@ -19,7 +19,7 @@
   let animationFrame: number
 
   let lastLogTime = 0
-  const logInterval = 100 // ms
+  const logInterval = 10 // ms
 
   const ballStyle = computed(() => ({
     width: `${objectSize.value}px`,
