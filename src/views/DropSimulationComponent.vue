@@ -143,8 +143,12 @@
           </div>
 
           <div>
-          <div class="flex justify-between"></div>
-            <label class="block font-medium mb-1">Gravity (m/s²)</label>
+          <div class="flex justify-between">
+              <label class="block font-medium mb-1">Gravity (m/s²)</label>
+              <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full">
+                Reset
+              </button>
+            </div>
             <input type="range" v-model.number="gravity" min="0" max="250" step="0.1" class="w-full" />
             <span class="text-sm text-gray-600">{{ gravity }} m/s²</span>
           </div>
