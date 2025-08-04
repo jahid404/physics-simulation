@@ -5,7 +5,7 @@
   const gravity = ref(9.8) // m/s^2
   const objectSize = ref(40) // px
   const airDensity = ref(1.225) // kg/m^3 (standard at sea level)
-  const dragCoefficient = ref(0.47) // Roughly a sphere's drag coefficient
+  const dragCoefficient = ref(0.47) // roughly a sphere's drag coefficient
 
   // Convert pixels to meters (assuming 100px = 1m for simulation)
   const pxToM = 0.01
