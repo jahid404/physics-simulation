@@ -19,7 +19,7 @@
   let animationFrame: number
 
   let lastLogTime = 0
-  const logInterval = 10 // ms between logs
+  const logInterval = 100 // ms
 
   const ballStyle = computed(() => ({
     width: `${objectSize.value}px`,
@@ -28,9 +28,9 @@
   }))
 
   const currentHeight = computed(() => {
-    // Center point Y position in pixels
+    // center point Y position in pixels
     const centerY = ballY.value + (objectSize.value / 2)
-    // Convert to meters from the top (0 is top, max is bottom)
+    // convert to meters from the top (0 is top, max is bottom)
     return (maxDrop - centerY) * pxToM
   })
 
