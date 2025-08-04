@@ -1,16 +1,17 @@
 <script lang="ts" setup>
   import { ref, computed, onUnmounted } from 'vue'
 
-  const weight = ref(1)
-  const gravity = ref(9.8)
-  const objectSize = ref(40)
+  const weight = ref(1) // kg
+  const gravity = ref(9.8) // m/s^2
+  const objectSize = ref(40) // px
+  const dampingCoefficient = ref(0.15) // realistic: between 0.05 to 0.25
 
   const ballY = ref(0)
   const velocity = ref(0)
-  const damping = 0.7
   const isDropping = ref(false)
   const maxDrop = 393.5
   let animationFrame: number
+
 
   const ballStyle = computed(() => ({
     width: `${objectSize.value}px`,
