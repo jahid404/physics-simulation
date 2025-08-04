@@ -98,8 +98,20 @@
     animationFrame = requestAnimationFrame(simulate)
   }
 
+  const updateMaxDistance = () => {
+    if (containerRef.value) {
+      maxDistance.value = containerRef.value.clientWidth
+    }
+  }
+
+  onMounted(() => {
+    updateMaxDistance()
+    window.addEventListener('resize', updateMaxDistance)
+  })
+
   onUnmounted(() => {
     cancelAnimationFrame(animationFrame)
+    window.removeEventListener('resize', updateMaxDistance)
   })
 </script>
 
