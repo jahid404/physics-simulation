@@ -2,14 +2,14 @@
   import { ref, computed, onUnmounted } from 'vue'
 
   // Simulation parameters
-  const mass = ref(5) // kg (more realistic default)
+  const mass = ref(1) // kg (more realistic default)
   const gravity = ref(9.8) // m/s²
-  const kineticFriction = ref(0.25) // Sliding friction coefficient (typical for wood on wood)
-  const initialVelocity = ref(3) // m/s (more realistic speed)
+  const kineticFriction = ref(0.2) // Sliding friction coefficient (typical for wood on wood)
+  const initialVelocity = ref(1) // m/s (more realistic speed)
   const objectWidth = ref(80) // px
   const objectHeight = ref(40) // px
   const airDensity = ref(1.225) // kg/m³
-  const dragCoefficient = ref(1.05) // Typical for rectangular box
+  const dragCoefficient = ref(0.05) // Typical for rectangular box
 
   // Conversion factors (100px = 1m)
   const pxToM = 0.01
