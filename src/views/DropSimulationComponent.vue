@@ -122,7 +122,8 @@
 
         <div ref="box" class="relative w-full h-[400px] bg-blue-50 border border-blue-200 rounded overflow-hidden">
           <div class="absolute bottom-0 w-full h-[5px] bg-gray-700"></div>
-          <div class="ball absolute left-1/2 -translate-x-1/2 border-2 border-blue-600 border-dashed rounded-full" :style="ballStyle">
+          <div class="ball absolute left-1/2 -translate-x-1/2 border-2 border-blue-600 border-dashed rounded-full"
+            :style="ballStyle">
             <div
               class="absolute top-1/2 left-1/2 w-1 h-1 bg-blue-600 rounded-full transform -translate-x-1/2 -translate-y-1/2">
             </div>
@@ -135,9 +136,14 @@
         <h2 class="text-xl font-semibold mb-4 text-center md:text-left">Configuration</h2>
 
         <div class="grid grid-cols-1 gap-4">
-          <div>
+          <!-- <div>
             <label class="block font-medium mb-1">Weight (kg)</label>
             <input type="number" v-model.number="weight" min="0.1" step="0.1" class="w-full border px-3 py-2 rounded" />
+          </div> -->
+          <div>
+            <label class="block font-medium mb-1">Weight (kg)</label>
+            <input type="range" v-model.number="weight" min="0.5" max="50" step="0.5" class="w-full">
+            <span class="text-sm text-gray-600">{{ weight }} kg</span>
           </div>
 
           <div>
