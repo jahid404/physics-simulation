@@ -60,7 +60,7 @@
     <div class="grid gap-4 w-full max-w-6xl
              grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       <router-link v-for="sim in simulations" :key="sim.id" :to="sim.link"
-        class="block bg-white rounded-lg shadow-md hover:shadow-2xs transition p-6 cursor-pointer">
+        class="block bg-white rounded-lg shadow-md hover:shadow-2xs transition p-6 cursor-pointer relative">
         <span v-if="sim.badge" class="bg-blue-300 px-[4px] py-[2px] rounded text-xs absolute top-2 right-2">{{ sim.badge }}</span>
         <h2 class="text-xl font-semibold mb-2">{{ sim.name }}</h2>
         <p class="text-gray-600">{{ sim.description }}</p>
