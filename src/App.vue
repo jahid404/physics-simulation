@@ -9,7 +9,6 @@
 
       <nav class="flex items-center text-base">
         <router-link to="/" class="mr-5 hover:text-gray-900">Home</router-link>
-        <router-link to="/drop-simulation" class="mr-5 hover:text-gray-900">Drop</router-link>
       </nav>
     </div>
   </header>

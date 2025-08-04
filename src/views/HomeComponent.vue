@@ -20,11 +20,34 @@
     },
     {
       id: 4,
-      name: "Pendulum Swing",
-      description: "Visualize a swinging pendulum",
-      link: "/pendulum",
+      name: "Spring Oscillation",
+      description: "Explore a spring-mass oscillating system",
+      link: "/spring-oscillation",
     },
-
+    {
+      id: 5,
+      name: "Friction Slider",
+      description: "Box sliding on a surface with friction",
+      link: "/friction-slider",
+    },
+    {
+      id: 6,
+      name: "Circular Motion",
+      description: "Object moving in a circle at constant speed",
+      link: "/circular-motion",
+    },
+    {
+      id: 7,
+      name: "Collision Demo",
+      description: "Simulate elastic collisions between balls",
+      link: "/collision-demo",
+    },
+    {
+      id: 8,
+      name: "Gravity Attraction",
+      description: "Two-body gravitational attraction",
+      link: "/gravity-attraction",
+    },
   ]
 </script>
 
