@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { ref, computed, onUnmounted } from 'vue'
+  import { ref, computed, onMounted, onUnmounted } from 'vue'
 
   // Simulation parameters
   const mass = ref(1) // kg
@@ -19,8 +19,10 @@
   const positionX = ref(0)
   const velocity = ref(initialVelocity.value * mToPx)
   const isSliding = ref(false)
-  const maxDistance = 700 // px
   const restitution = 0.5 // Bounciness factor (0 = no bounce, 1 = full bounce)
+
+  const previewRef = ref<HTMLElement | null>(null)
+  const maxDistance = ref(700)
 
   let animationFrame: number
   let lastTime = 0
@@ -31,6 +33,22 @@
     height: `${objectHeight.value}px`,
     transform: `translateX(${positionX.value}px)`
   }))
+
+  const updateMaxDistance = () => {
+    if (previewRef.value) {
+      maxDistance.value = previewRef.value.clientWidth
+    }
+  }
+
+  onMounted(() => {
+    updateMaxDistance()
+    window.addEventListener('resize', updateMaxDistance)
+  })
+
+  onUnmounted(() => {
+    cancelAnimationFrame(animationFrame)
+    window.removeEventListener('resize', updateMaxDistance)
+  })
 
   const startSlide = () => {
     cancelAnimationFrame(animationFrame)
@@ -75,8 +93,8 @@
     const rightEdge = positionX.value + ((objectWidth.value / 2) - 8)
     const leftEdge = positionX.value
 
-    if (rightEdge >= maxDistance) {
-      positionX.value = maxDistance - ((objectWidth.value / 2) - 8)
+    if (rightEdge >= maxDistance.value) {
+      positionX.value = maxDistance.value - ((objectWidth.value / 2) - 8)
       velocity.value = -Math.abs(velocity.value) * restitution
       console.log('Bounce at right edge')
     } else if (leftEdge <= 0) {
@@ -95,12 +113,7 @@
 
     animationFrame = requestAnimationFrame(simulate)
   }
-
-  onUnmounted(() => {
-    cancelAnimationFrame(animationFrame)
-  })
 </script>
-
 
 <template>
   <div class="flex items-center justify-center bg-gray-100">
@@ -108,7 +121,8 @@
       <!-- Simulation Preview -->
       <div class="flex-1 order-2 md:order-1 p-4 bg-white rounded-xl shadow-xl">
         <h2 class="text-xl font-bold mb-4 text-center">Box Sliding Simulation</h2>
-        <div class="relative w-full h-[150px] bg-orange-50 border border-orange-200 rounded overflow-hidden">
+        <div ref="previewRef"
+          class="relative w-full h-[150px] bg-orange-50 border border-orange-200 rounded overflow-hidden">
           <!-- Ground surface -->
           <div class="absolute bottom-0 w-full h-[5px] bg-gray-700"></div>
 
