@@ -54,7 +54,7 @@
 </script>
 
 <template>
-  <div class="flex items-center justify-center min-h-screen p-4 bg-gray-100">
+  <div class="flex items-center justify-center border p-4 bg-gray-100">
     <div class="flex flex-col md:flex-row gap-6 w-full max-w-6xl">
 
       <!-- Simulation Preview Box (Left on large, top on small) -->
