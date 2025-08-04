@@ -76,7 +76,7 @@
     const leftEdge = positionX.value
 
     if (rightEdge >= maxDistance) {
-      positionX.value = maxDistance - (objectWidth.value / 2)
+      positionX.value = maxDistance - objectWidth.value
       velocity.value = -Math.abs(velocity.value) * restitution
       console.log('Bounce at right edge')
     } else if (leftEdge <= 0) {
