@@ -169,9 +169,3 @@
     </div>
   </div>
 </template>
-
-<style scoped>
-  .ball {
-    transition: transform 0.05s linear;
-  }
-</style>
