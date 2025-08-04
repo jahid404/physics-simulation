@@ -31,8 +31,8 @@
 
     const dt = 0.016 // frame time ~60fps
     const gForce = gravity.value * weight.value // w = m * g
-    velocity.value += gForce * dt
-    ballY.value += velocity.value
+    velocity.value += gForce * dt // v = u + at
+    ballY.value += velocity.value // s = ut + 1/2at^2
 
     const maxY = maxDrop - ballSize.value
     if (ballY.value >= maxY) {
