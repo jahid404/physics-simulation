@@ -39,11 +39,12 @@
 
     // Friction force: F_friction = µ * N (N = mg)
     const frictionForce = frictionCoefficient.value * mass.value * gravity.value
-    const acceleration = -frictionForce / mass.value // Always opposes motion
+    const acceleration = -frictionForce / mass.value
 
     velocity.value += acceleration * dt * mToPx
+    console.log('velocity', velocity.value);
 
-    // Stop when velocity nearly zero
+    // stop when velocity nearly zero
     if (velocity.value <= 0) {
       velocity.value = 0
       isSliding.value = false
