@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { ref, computed, onUnmounted } from 'vue'
+  /* import { ref, computed, onUnmounted } from 'vue'
 
   const weight = ref(1)
   const gravity = ref(9.8)
@@ -58,6 +58,89 @@
 
   onUnmounted(() => {
     cancelAnimationFrame(animationFrame)
+  }) */
+
+  import { ref, computed, onUnmounted } from 'vue'
+
+  const weight = ref(1)
+  const gravity = ref(9.8)
+  const objectSize = ref(40)
+
+  const squishEnabled = ref(true)
+  const squishAmount = ref(0)
+  let squishTimer: number | null = null
+
+  const ballY = ref(0)
+  const velocity = ref(0)
+  const damping = 0.7
+  const isDropping = ref(false)
+  const maxDrop = 393.5
+  let animationFrame: number
+
+  const ballStyle = computed(() => {
+    const scaleY = 1 - squishAmount.value
+    const scaleX = 1 + squishAmount.value
+
+    return {
+      width: `${objectSize.value}px`,
+      height: `${objectSize.value}px`,
+      transform: `translateY(${ballY.value}px) scale(${scaleX}, ${scaleY})`,
+      transition: squishAmount.value > 0 ? 'transform 0.1s ease-out' : 'transform 0.2s ease-in'
+    }
+  })
+
+  const startDrop = () => {
+    cancelAnimationFrame(animationFrame)
+    squishAmount.value = 0
+    ballY.value = 0
+    velocity.value = 0
+    isDropping.value = true
+    simulate()
+  }
+
+  const simulate = () => {
+    if (!isDropping.value) return
+
+    const dt = 0.016 // frame time ~60fps
+    const gForce = gravity.value * weight.value
+    velocity.value += gForce * dt
+    ballY.value += velocity.value
+
+    const maxY = maxDrop - objectSize.value
+
+    if (ballY.value >= maxY) {
+      ballY.value = maxY
+
+      // Only squish when hitting the ground while moving downward
+      if (velocity.value > 5 && squishEnabled.value) {
+        // Immediate squish on impact
+        squishAmount.value = 0.3
+
+        // Clear any previous timer
+        if (squishTimer) clearTimeout(squishTimer)
+
+        // Reset squish after a short delay
+        squishTimer = setTimeout(() => {
+          squishAmount.value = 0
+        }, 100)
+      }
+
+      // Bounce with damping
+      velocity.value = -velocity.value * damping
+
+      // Stop if velocity is too small
+      if (Math.abs(velocity.value) < 1) {
+        isDropping.value = false
+        return
+      }
+    }
+
+    animationFrame = requestAnimationFrame(simulate)
+  }
+
+  onUnmounted(() => {
+    cancelAnimationFrame(animationFrame)
+    if (squishTimer) clearTimeout(squishTimer)
   })
 </script>
 
@@ -105,3 +188,11 @@
     </div>
   </div>
 </template>
+
+<style scoped>
+  .ball {
+    transform-origin: center bottom;
+    /* This makes the squish effect happen from the bottom */
+    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+</style>
