@@ -19,7 +19,7 @@
   let animationFrame: number
 
   let lastLogTime = 0
-  const logInterval = 10 // ms
+  const logInterval = 100 // ms
 
   const ballStyle = computed(() => ({
     width: `${objectSize.value}px`,
@@ -79,6 +79,11 @@
 
     // update position: s = s + v * dt
     ballY.value += velocity.value * dt
+
+    // Log current height at intervals
+    if (timestamp) {
+      logCurrentHeight(timestamp)
+    }
 
     // check for ground collision
     const maxY = maxDrop - objectSize.value
