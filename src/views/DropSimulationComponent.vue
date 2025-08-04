@@ -18,6 +18,9 @@
   const maxDrop = 393.5 // px (~3.935m)
   let animationFrame: number
 
+  let lastLogTime = 0
+  const logInterval = 100 // ms between logs
+
   const ballStyle = computed(() => ({
     width: `${objectSize.value}px`,
     height: `${objectSize.value}px`,
