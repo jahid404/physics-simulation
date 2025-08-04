@@ -7,13 +7,13 @@
   const airDensity = ref(1.225) // kg/m^3 (standard at sea level)
   const dragCoefficient = ref(0.47) // roughly a sphere's drag coefficient
 
-  // Convert pixels to meters (assuming 100px = 1m for simulation)
+  // convert pixels to meters (assuming 100px = 1m for simulation)
   const pxToM = 0.01
   const mToPx = 100
 
   const ballY = ref(0)
   const velocity = ref(0)
-  const restitution = 0.8 // Coefficient of restitution (energy retained after bounce)
+  const restitution = 0.8 // coefficient of restitution (energy retained after bounce)
   const isDropping = ref(false)
   const maxDrop = 393.5 // px (~3.935m)
   let animationFrame: number
@@ -37,38 +37,37 @@
 
     const dt = 0.016 // frame time ~60fps
 
-    // Calculate forces
+    // calculate forces
     const gForce = gravity.value * weight.value
-    console.log('gForce', gForce)
 
-    // Calculate air resistance (drag force)
+    // calculate air resistance (drag force)
     // F_drag = 0.5 * ρ * v² * C_d * A
-    const velocityInMs = velocity.value * pxToM // Convert px/s to m/s
+    const velocityInMs = velocity.value * pxToM // convert px/s to m/s
     const crossSectionArea = Math.PI * Math.pow((objectSize.value * pxToM / 2), 2) // m²
     const dragForce = 0.5 * airDensity.value * Math.pow(velocityInMs, 2) *
       dragCoefficient.value * crossSectionArea
 
-    // Determine direction of drag force (always opposes motion)
+    // determine direction of drag force (always opposes motion)
     const dragDirection = Math.sign(velocityInMs) * -1
 
-    // Total force (gravity + drag)
+    // total force (gravity + drag)
     const totalForce = gForce + (dragForce * dragDirection)
 
-    // Update velocity: v = u + a * t (a = F/m)
+    // update velocity: v = u + a * t (a = F/m)
     velocity.value += (totalForce / weight.value) * dt * mToPx
 
-    // Update position: s = s + v * dt
+    // update position: s = s + v * dt
     ballY.value += velocity.value * dt
 
-    // Check for ground collision
+    // check for ground collision
     const maxY = maxDrop - objectSize.value
     if (ballY.value >= maxY) {
       ballY.value = maxY
 
-      // Apply coefficient of restitution (energy loss on bounce)
+      // apply coefficient of restitution (energy loss on bounce)
       velocity.value = -velocity.value * restitution
 
-      // Stop simulation if velocity becomes negligible
+      // stop simulation if velocity becomes negligible
       if (Math.abs(velocity.value) < 0.5 * mToPx) { // ~0.5 m/s threshold
         isDropping.value = false
         velocity.value = 0
