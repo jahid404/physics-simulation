@@ -79,7 +79,7 @@
     // Forces
     const normalForce = mass.value * gravity.value
     const frictionForce = kineticFriction.value * normalForce
-    const frontalArea = (objectHeight.value * pxToM) * ((( / 2)) * pxToM)
+    const frontalArea = (objectHeight.value * pxToM) * (objectWidth.value * pxToM)
     const dragForce = 0.5 * airDensity.value * velocityMs ** 2 * dragCoefficient.value * frontalArea
     const totalForce = frictionForce + dragForce
     const direction = velocityMs > 0 ? -1 : 1
@@ -90,11 +90,11 @@
 
     positionX.value += ((velocityMs + newVelocityMs) / 2) * dt * mToPx
 
-    const rightEdge = positionX.value + (( / 2))
+    const rightEdge = positionX.value + objectWidth.value
     const leftEdge = positionX.value
 
     if (rightEdge >= maxDistance.value) {
-      positionX.value = maxDistance.value - (( / 2))
+      positionX.value = maxDistance.value - objectWidth.value
       velocity.value = -Math.abs(velocity.value) * restitution
       console.log('Bounce at right edge')
     } else if (leftEdge <= 0) {
