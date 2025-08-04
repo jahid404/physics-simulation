@@ -1,100 +1,115 @@
-<script setup>
-  import { ref } from 'vue'
+<script lang="ts" setup>
+  import { ref, computed, onUnmounted } from 'vue'
 
-  const positionX = ref(0)
-  const objectWidth = ref(40)
-  const objectHeight = ref(40)
-  const velocity = ref(300)
-  const mass = ref(5)
-  const gravity = ref(9.8)
-  const kineticFriction = ref(0.2)
-  const dragCoefficient = ref(0.47)
-  const airDensity = ref(1.225)
-  const isSliding = ref(false)
+  // Simulation parameters
+  const mass = ref(1) // kg (more realistic default)
+  const gravity = ref(9.8) // m/s²
+  const kineticFriction = ref(0.25) // Sliding friction coefficient (typical for wood on wood)
+  const initialVelocity = ref(1) // m/s (more realistic speed)
+  const objectWidth = ref(80) // px
+  const objectHeight = ref(40) // px
+  const airDensity = ref(1.225) // kg/m³
+  const dragCoefficient = ref(1.05) // Typical for rectangular box
 
-  const pxToM = 1 / 100
+  // Conversion factors (100px = 1m)
+  const pxToM = 0.01
   const mToPx = 100
 
-  let animationFrame = null
+  // Simulation state
+  const positionX = ref(0)
+  const velocity = ref(initialVelocity.value * mToPx) // px/s
+  const isSliding = ref(false)
+  const maxDistance = 700 // px
+  let animationFrame: number
   let lastTime = 0
 
-  const startSliding = () => {
+  // Object style
+  const objectStyle = computed(() => ({
+    width: `${objectWidth.value}px`,
+    height: `${objectHeight.value}px`,
+    transform: `translateX(${positionX.value}px)`
+  }))
+
+  const startSlide = () => {
     cancelAnimationFrame(animationFrame)
-    lastTime = performance.now()
+    positionX.value = 0
+    velocity.value = initialVelocity.value * mToPx
     isSliding.value = true
+    lastTime = performance.now()
+
+    console.log(`Starting slide at ${initialVelocity.value} m/s`)
+    console.log('Current mass', mass.value);
+
     simulate()
   }
-
-  const stopSliding = () => {
-    cancelAnimationFrame(animationFrame)
-    isSliding.value = false
-  }
-
-  const resetSimulation = () => {
-    stopSliding()
-    positionX.value = 0
-    velocity.value = 300
-  }
-
-  const restitution = 0.6
 
   const simulate = (timestamp = 0) => {
     if (!isSliding.value) return
 
+    // Calculate delta time in seconds
     const now = performance.now()
     const dt = (now - lastTime) / 1000
     lastTime = now
 
+    // Skip if time interval is too large (tab was inactive)
     if (dt > 0.1) {
       animationFrame = requestAnimationFrame(simulate)
       return
     }
 
-    const velocityMs = velocity.value * pxToM
+    const velocityMs = velocity.value * pxToM // Current velocity in m/s
 
+    // 1. Normal force (N = mg)
     const normalForce = mass.value * gravity.value
+
+    // 2. Kinetic friction (F_friction = μ_k * N)
     const frictionForce = kineticFriction.value * normalForce
 
-    const frontalArea = (objectHeight.value * pxToM) * (objectWidth.value * pxToM)
-    const dragForce = 0.5 * airDensity.value * Math.pow(velocityMs, 2) * dragCoefficient.value * frontalArea
+    // 3. Air resistance (F_drag = 0.5 * ρ * v² * C_d * A)
+    const frontalArea = (objectHeight.value * pxToM) * (objectWidth.value * pxToM) // m²
+    const dragForce = 0.5 * airDensity.value * Math.pow(velocityMs, 2) *
+      dragCoefficient.value * frontalArea
 
+    // 4. Total deceleration force (always opposes motion)
     const totalForce = frictionForce + dragForce
-    const direction = velocityMs > 0 ? -1 : 1
+    const direction = velocityMs > 0 ? -1 : 1 // Force opposes motion
+
+    // 5. Calculate acceleration (a = F/m)
     const acceleration = (totalForce * direction) / mass.value
 
+    // Update velocity (convert back to px/s)
     const newVelocityMs = velocityMs + acceleration * dt
     velocity.value = newVelocityMs * mToPx
 
+    // Update position (using average velocity during this timestep)
     positionX.value += ((velocityMs + newVelocityMs) / 2) * dt * mToPx
 
-    const maxDistance = 600
-    const maxRight = maxDistance - objectWidth.value
-
-    if (positionX.value >= maxRight) {
-      positionX.value = maxRight
-      velocity.value = -velocity.value * restitution
-
-      if (Math.abs(velocity.value * pxToM) < 0.05) {
-        velocity.value = 0
-        isSliding.value = false
-        console.log(`Stopped at edge after ${(positionX.value * pxToM).toFixed(2)} m`)
-        return
-      }
-
-      console.log(`Bounce! New velocity: ${(velocity.value * pxToM).toFixed(2)} m/s`)
+    // Boundary check - right edge of box reaches end
+    const rightEdge = positionX.value + objectWidth.value
+    if (rightEdge >= maxDistance) {
+      positionX.value = maxDistance - (objectWidth.value / 2) + 8
+      isSliding.value = false
+      const finalDistance = (positionX.value * pxToM).toFixed(2)
+      console.log(`Box reached end at ${finalDistance} m`)
+      return
     }
 
-    if (Math.abs(newVelocityMs) <= 0.01 && positionX.value < maxRight) {
+    // Stop condition (when velocity becomes negligible)
+    if (Math.abs(newVelocityMs) <= 0.01) { // ~0.01 m/s threshold
       velocity.value = 0
       isSliding.value = false
-      console.log(`Stopped after ${(positionX.value * pxToM).toFixed(2)} m`)
+      const finalDistance = (positionX.value * pxToM).toFixed(2)
+      console.log(`Stopped after ${finalDistance} m`)
       return
     }
 
     animationFrame = requestAnimationFrame(simulate)
   }
-</script>
 
+  onUnmounted(() => {
+    cancelAnimationFrame(animationFrame)
+  })
+</script>
 
 <template>
   <div class="flex items-center justify-center bg-gray-100">
