@@ -39,6 +39,7 @@
 
     // Calculate forces
     const gForce = gravity.value * weight.value
+    console.log('gForce', gForce)
 
     // Calculate air resistance (drag force)
     // F_drag = 0.5 * ρ * v² * C_d * A
