@@ -56,17 +56,8 @@
     ballY.value += velocity.value
 
     const maxY = maxDrop - objectSize.value
-    if (ballY.value >= maxY) {
+    /* if (ballY.value >= maxY) {
       ballY.value = maxY
-
-      if (squishEnabled.value) {
-        squishAmount.value = 0.3
-        clearTimeout(squishTimer as number)
-        squishTimer = setTimeout(() => {
-          squishAmount.value = 0
-        }, 100)
-      }
-
 
       // Reverse velocity with damping to simulate bounce: v = -v * damping
       velocity.value = -velocity.value * damping
@@ -75,7 +66,29 @@
         isDropping.value = false
         return
       }
+    } */
+    if (ballY.value >= maxY) {
+      ballY.value = maxY
+
+      // Only squish if coming downward fast enough
+      if (velocity.value > 5 && squishEnabled.value) {
+        squishAmount.value = 0.3
+        clearTimeout(squishTimer as number)
+        squishTimer = setTimeout(() => {
+          squishAmount.value = 0
+        }, 100)
+      }
+
+      // Bounce with damping
+      velocity.value = -velocity.value * damping
+
+      // Stop if velocity is too small
+      if (Math.abs(velocity.value) < 1) {
+        isDropping.value = false
+        return
+      }
     }
+
 
     animationFrame = requestAnimationFrame(simulate)
   }
