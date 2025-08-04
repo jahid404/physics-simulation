@@ -43,6 +43,8 @@
     const maxY = maxDrop - ballSize.value
     if (ballY.value >= maxY) {
       ballY.value = maxY
+
+      // Reverse velocity with damping to simulate bounce: v = -v * damping
       velocity.value = -velocity.value * damping
 
       if (Math.abs(velocity.value) < 1) {
@@ -63,7 +65,7 @@
   <div class="flex items-center justify-center bg-gray-100">
     <div class="flex flex-col md:flex-row gap-6 w-full max-w-6xl">
 
-      <!-- Simulation Preview Box (Left on large, top on small) -->
+      <!-- Simulation Preview Box -->
       <div class="flex-1 p-6 bg-white rounded-xl shadow-xl">
         <h1 class="text-2xl font-bold mb-4 text-center">Ball Drop Simulation</h1>
 
@@ -73,7 +75,7 @@
         </div>
       </div>
 
-      <!-- Configuration Panel (Right on large, bottom on small) -->
+      <!-- Configuration Panel -->
       <div class="w-full md:w-[350px] h-max p-6 bg-white rounded-xl shadow-xl">
         <h2 class="text-xl font-semibold mb-4 text-center md:text-left">Configuration</h2>
 
