@@ -10,6 +10,7 @@
   const objectHeight = ref(40) // px
   const airDensity = ref(1.225) // kg/m³
   const dragCoefficient = ref(1.05) // Typical for rectangular box
+  const restitution = 0.6 // between 0 (no bounce) and 1 (perfect elastic)
 
   // Conversion factors (100px = 1m)
   const pxToM = 0.01
