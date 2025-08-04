@@ -13,7 +13,7 @@
     </div>
   </header>
 
-  <div class="mt-20 mb-10">
+  <div class="mt-15 md:mt-20 mb-10">
     <router-view />
   </div>
 </template>

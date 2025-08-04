@@ -53,7 +53,7 @@
 
 <template>
   <div class="min-h-screen bg-gray-100 flex flex-col items-center">
-    <h1 class="text-3xl font-bold mb-8">Physics Simulations</h1>
+    <h1 class="text-3xl font-bold mb-5">Physics Simulations</h1>
 
     <div class="grid gap-4 w-full max-w-6xl
              grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
