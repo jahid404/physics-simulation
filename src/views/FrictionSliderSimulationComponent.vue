@@ -84,7 +84,7 @@
     // Boundary check - right edge of box reaches end
     const rightEdge = positionX.value + objectWidth.value
     if (rightEdge >= maxDistance) {
-      positionX.value = maxDistance - (objectWidth.value / 2)
+      positionX.value = maxDistance - (objectWidth.value / 2) + 8
       isSliding.value = false
       const finalDistance = (positionX.value * pxToM).toFixed(2)
       console.log(`Box reached end at ${finalDistance} m`)
@@ -127,7 +127,7 @@
           </div>
 
           <!-- End wall -->
-          <div class="absolute bottom-0 right-0 w-2 h-[150px] bg-gray-800"></div>
+          <div class="absolute bottom-0 right-0 w-1 h-[150px] bg-gray-800"></div>
         </div>
       </div>
 
