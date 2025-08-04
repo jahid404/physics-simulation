@@ -30,7 +30,9 @@
     if (!isDropping.value) return
 
     const dt = 0.016 // frame time ~60fps
-    const gForce = gravity.value * weight.value // w = m * g
+
+    // Calculate force: F = m * g (weight = mass * gravity)
+    const gForce = gravity.value * weight.value
     velocity.value += gForce * dt
     ballY.value += velocity.value
 
