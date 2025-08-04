@@ -68,7 +68,7 @@
       </div>
 
       <!-- Configuration Panel (Right on large, bottom on small) -->
-      <div class="w-full md:w-[350px] p-6 bg-white rounded-xl shadow-xl">
+      <div class="w-full md:w-[350px] h-[400px] p-6 bg-white rounded-xl shadow-xl">
         <h2 class="text-xl font-semibold mb-4 text-center md:text-left">Configuration</h2>
 
         <div class="grid grid-cols-1 gap-4">
