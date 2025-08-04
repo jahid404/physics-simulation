@@ -11,6 +11,10 @@ const router = createRouter({
       path: '/drop-simulation',
       component: () => import('@/views/DropSimulationComponent.vue'),
     },
+    {
+      path: '/friction-slider',
+      component: () => import('@/views/FrictionSliderSimulationComponent.vue'),
+    },
   ],
 })
 
