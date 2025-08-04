@@ -59,6 +59,15 @@
     if (ballY.value >= maxY) {
       ballY.value = maxY
 
+      if (squishEnabled.value) {
+        squishAmount.value = 0.3
+        clearTimeout(squishTimer as number)
+        squishTimer = setTimeout(() => {
+          squishAmount.value = 0
+        }, 100)
+      }
+
+
       // Reverse velocity with damping to simulate bounce: v = -v * damping
       velocity.value = -velocity.value * damping
 
