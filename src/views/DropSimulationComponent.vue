@@ -27,11 +27,29 @@
     transform: `translateY(${ballY.value}px)`
   }))
 
+  const currentHeight = computed(() => {
+    // Center point Y position in pixels
+    const centerY = ballY.value + (objectSize.value / 2)
+    // Convert to meters from the top (0 is top, max is bottom)
+    return (maxDrop - centerY) * pxToM
+  })
+
+  const logCurrentHeight = (timestamp: number) => {
+    if (timestamp - lastLogTime > logInterval) {
+      console.log(`Current height: ${currentHeight.value.toFixed(2)}m`)
+      lastLogTime = timestamp
+    }
+  }
+
   const startDrop = () => {
     cancelAnimationFrame(animationFrame)
     ballY.value = 0
     velocity.value = 0
     isDropping.value = true
+
+    lastLogTime = 0
+    console.log('Drop started from height:', currentHeight.value.toFixed(2), 'm')
+
     simulate()
   }
 
