@@ -27,7 +27,7 @@
     simulate()
   }
 
-  const simulate = () => {
+  /* const simulate = () => {
     if (!isDropping.value) return
 
     const dt = 0.016 // frame time ~60fps
@@ -48,6 +48,33 @@
       // Reverse velocity with damping to simulate bounce: v = -v * damping
       velocity.value = -velocity.value * damping
 
+      if (Math.abs(velocity.value) < 1) {
+        isDropping.value = false
+        return
+      }
+    }
+
+    animationFrame = requestAnimationFrame(simulate)
+  } */
+
+  const simulate = () => {
+    if (!isDropping.value) return
+
+    const dt = 0.016 // 60fps
+    const gForce = gravity.value * weight.value
+    const acceleration = gForce / weight.value // m/s^2
+
+    velocity.value += acceleration * dt
+    velocity.value *= (1 - dampingCoefficient.value) // Apply damping proportionally
+    ballY.value += velocity.value
+
+    const maxY = maxDrop - objectSize.value
+    if (ballY.value >= maxY) {
+      ballY.value = maxY
+
+      velocity.value = -velocity.value
+
+      // Stop bouncing if velocity too low
       if (Math.abs(velocity.value) < 1) {
         isDropping.value = false
         return
