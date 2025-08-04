@@ -5,7 +5,7 @@
   const mass = ref(1) // kg (more realistic default)
   const gravity = ref(9.8) // m/s²
   const kineticFriction = ref(0.25) // Sliding friction coefficient (typical for wood on wood)
-  const initialVelocity = ref(3) // m/s (more realistic speed)
+  const initialVelocity = ref(1) // m/s (more realistic speed)
   const objectWidth = ref(80) // px
   const objectHeight = ref(40) // px
   const airDensity = ref(1.225) // kg/m³
@@ -140,7 +140,7 @@
         <div class="grid grid-cols-1 gap-4">
           <div>
             <label class="block font-medium mb-1">Mass (kg)</label>
-            <input type="range" v-model.number="mass" min="0.1" max="50" step="0.1" class="w-full">
+            <input type="range" v-model.number="mass" min="0.5" max="50" step="0.5" class="w-full">
             <span class="text-sm text-gray-600">{{ mass }} kg</span>
           </div>
 
