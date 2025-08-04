@@ -74,7 +74,7 @@
       if (velocity.value > 5 && squishEnabled.value) {
         squishAmount.value = 0.3
         clearTimeout(squishTimer as number)
-        squishTimer = setTimeout(() => {
+        setTimeout(() => {
           squishAmount.value = 0
         }, 100)
       }
