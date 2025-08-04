@@ -48,7 +48,6 @@
     animationFrame = requestAnimationFrame(simulate)
   }
 
-  // Clean up animation if component is unmounted
   onUnmounted(() => {
     cancelAnimationFrame(animationFrame)
   })
