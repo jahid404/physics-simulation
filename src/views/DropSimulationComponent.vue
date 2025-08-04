@@ -5,10 +5,6 @@
   const gravity = ref(9.8)
   const objectSize = ref(40)
 
-  const squishEnabled = ref(true)
-  const squishAmount = ref(0)
-  let squishTimer: number | null = null
-
   const ballY = ref(0)
   const velocity = ref(0)
   const damping = 0.7
@@ -16,22 +12,11 @@
   const maxDrop = 393.5
   let animationFrame: number
 
-  /* const ballStyle = computed(() => ({
+  const ballStyle = computed(() => ({
     width: `${objectSize.value}px`,
     height: `${objectSize.value}px`,
     transform: `translateY(${ballY.value}px)`
-  })) */
-  const ballStyle = computed(() => {
-    const scaleY = 1 - squishAmount.value
-    const scaleX = 1 + squishAmount.value
-
-    return {
-      width: `${objectSize.value}px`,
-      height: `${objectSize.value}px`,
-      transform: `translateY(${ballY.value}px) scale(${scaleX}, ${scaleY})`,
-      transition: squishAmount.value > 0 ? 'transform 0.1s ease' : ''
-    }
-  })
+  }))
 
   const startDrop = () => {
     cancelAnimationFrame(animationFrame)
@@ -56,7 +41,7 @@
     ballY.value += velocity.value
 
     const maxY = maxDrop - objectSize.value
-    /* if (ballY.value >= maxY) {
+    if (ballY.value >= maxY) {
       ballY.value = maxY
 
       // Reverse velocity with damping to simulate bounce: v = -v * damping
@@ -66,29 +51,7 @@
         isDropping.value = false
         return
       }
-    } */
-    if (ballY.value >= maxY) {
-      ballY.value = maxY
-
-      // Only squish if coming downward fast enough
-      if (velocity.value > 5 && squishEnabled.value) {
-        squishAmount.value = 0.3
-        clearTimeout(squishTimer as number)
-        setTimeout(() => {
-          squishAmount.value = 0
-        }, 100)
-      }
-
-      // Bounce with damping
-      velocity.value = -velocity.value * damping
-
-      // Stop if velocity is too small
-      if (Math.abs(velocity.value) < 1) {
-        isDropping.value = false
-        return
-      }
     }
-
 
     animationFrame = requestAnimationFrame(simulate)
   }
@@ -133,11 +96,6 @@
             <input type="range" min="20" max="100" v-model.number="objectSize" class="w-full" />
           </div>
 
-          <div class="flex items-center justify-between">
-            <label class="font-medium">Enable Squish</label>
-            <input type="checkbox" v-model="squishEnabled" />
-          </div>
-
           <button @click="startDrop" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full">
             Start Drop
           </button>
@@ -147,9 +105,3 @@
     </div>
   </div>
 </template>
-
-<style scoped>
-  .ball {
-    transition: transform 0.15s ease-in-out;
-  }
-</style>
