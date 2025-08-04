@@ -63,7 +63,7 @@
 
         <div ref="box" class="relative w-full h-[400px] bg-blue-50 border border-blue-200 rounded overflow-hidden">
           <div class="absolute bottom-0 w-full h-[5px] bg-gray-700"></div>
-          <div class="ball absolute left-1/2 -translate-x-1/2 bg-blue-700 rounded-full" :style="ballStyle"></div>
+          <div class="ball absolute left-1/2 -translate-x-1/2 bg-blue-600 rounded-full" :style="ballStyle"></div>
         </div>
       </div>
 
