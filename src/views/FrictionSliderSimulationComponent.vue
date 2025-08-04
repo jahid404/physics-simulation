@@ -55,6 +55,7 @@
     }
 
     const velocityMs = velocity.value * pxToM // Current velocity in m/s
+    console.log('Current mass', mass.value);
 
     // 1. Normal force (N = mg)
     const normalForce = mass.value * gravity.value
