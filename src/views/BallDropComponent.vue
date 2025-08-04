@@ -63,12 +63,12 @@
 
         <div ref="box" class="relative w-full h-[400px] bg-blue-50 border border-blue-200 rounded overflow-hidden">
           <div class="absolute bottom-0 w-full h-[5px] bg-gray-700"></div>
-          <div class="ball absolute left-1/2 -translate-x-1/2 bg-red-500 rounded-full" :style="ballStyle"></div>
+          <div class="ball absolute left-1/2 -translate-x-1/2 bg-blue-700 rounded-full" :style="ballStyle"></div>
         </div>
       </div>
 
       <!-- Configuration Panel (Right on large, bottom on small) -->
-      <div class="w-full md:w-[350px] h-[400px] p-6 bg-white rounded-xl shadow-xl">
+      <div class="w-full md:w-[350px] h-max p-6 bg-white rounded-xl shadow-xl">
         <h2 class="text-xl font-semibold mb-4 text-center md:text-left">Configuration</h2>
 
         <div class="grid grid-cols-1 gap-4">
