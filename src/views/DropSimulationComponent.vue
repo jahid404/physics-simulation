@@ -143,9 +143,9 @@
           </div>
 
           <div>
-          <div class="flex justify-between">
               <label class="block font-medium mb-1">Gravity (m/s²)</label>
-              <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full">
+          <div class="flex justify-between">
+              <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
                 Reset
               </button>
             </div>
