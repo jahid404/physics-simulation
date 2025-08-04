@@ -7,7 +7,7 @@
 
   const ballY = ref(0)
   const velocity = ref(0)
-  const damping = 0.5
+  const damping = 0.7
   const isDropping = ref(false)
   const maxDrop = 393.5
   let animationFrame: number
