@@ -5,6 +5,7 @@
       name: "Drop Simulation",
       description: "Simulate a bouncing ball under gravity",
       link: "/drop-simulation",
+      badge: "New",
     },
     {
       id: 2,
@@ -29,6 +30,7 @@
       name: "Friction Slider",
       description: "Box sliding on a surface with friction",
       link: "/friction-slider",
+      badge: "New",
     },
     {
       id: 6,
@@ -59,7 +61,7 @@
              grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       <router-link v-for="sim in simulations" :key="sim.id" :to="sim.link"
         class="block bg-white rounded-lg shadow-md hover:shadow-2xs transition p-6 cursor-pointer">
-        <span class="badge"></span>
+        <span v-if="sim.badge" class="bg-blue-300 p-1">{{ sim.badge }}</span>
         <h2 class="text-xl font-semibold mb-2">{{ sim.name }}</h2>
         <p class="text-gray-600">{{ sim.description }}</p>
       </router-link>
