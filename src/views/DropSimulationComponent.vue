@@ -27,36 +27,6 @@
     simulate()
   }
 
-  /* const simulate = () => {
-    if (!isDropping.value) return
-
-    const dt = 0.016 // frame time ~60fps
-
-    // Calculate force: F = m * g (weight = mass * gravity)
-    const gForce = gravity.value * weight.value
-
-    // Update velocity: v = u + a * t
-    velocity.value += gForce * dt
-
-    // Update position: s = s + v * dt
-    ballY.value += velocity.value
-
-    const maxY = maxDrop - objectSize.value
-    if (ballY.value >= maxY) {
-      ballY.value = maxY
-
-      // Reverse velocity with damping to simulate bounce: v = -v * damping
-      velocity.value = -velocity.value * damping
-
-      if (Math.abs(velocity.value) < 1) {
-        isDropping.value = false
-        return
-      }
-    }
-
-    animationFrame = requestAnimationFrame(simulate)
-  } */
-
   const simulate = () => {
     if (!isDropping.value) return
 
