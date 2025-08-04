@@ -52,7 +52,7 @@
 </script>
 
 <template>
-  <div class="min-h-screen p-4 pt-0 bg-gray-100 flex flex-col items-center">
+  <div class="min-h-screen bg-gray-100 flex flex-col items-center">
     <h1 class="text-3xl font-bold mb-8">Physics Simulations</h1>
 
     <div class="grid gap-4 w-full max-w-6xl
