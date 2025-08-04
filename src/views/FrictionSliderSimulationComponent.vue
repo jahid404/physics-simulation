@@ -36,7 +36,10 @@
     velocity.value = initialVelocity.value * mToPx
     isSliding.value = true
     lastTime = performance.now()
+
     console.log(`Starting slide at ${initialVelocity.value} m/s`)
+    console.log('Current mass', mass.value);
+
     simulate()
   }
 
@@ -55,7 +58,6 @@
     }
 
     const velocityMs = velocity.value * pxToM // Current velocity in m/s
-    console.log('Current mass', mass.value);
 
     // 1. Normal force (N = mg)
     const normalForce = mass.value * gravity.value
