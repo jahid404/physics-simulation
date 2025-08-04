@@ -3,7 +3,7 @@
 
   const weight = ref(1)
   const gravity = ref(9.8)
-  const ballSize = ref(40)
+  const objectSize = ref(40)
 
   const ballY = ref(0)
   const velocity = ref(0)
@@ -13,8 +13,8 @@
   let animationFrame: number
 
   const ballStyle = computed(() => ({
-    width: `${ballSize.value}px`,
-    height: `${ballSize.value}px`,
+    width: `${objectSize.value}px`,
+    height: `${objectSize.value}px`,
     transform: `translateY(${ballY.value}px)`
   }))
 
@@ -40,7 +40,7 @@
     // Update position: s = s + v * dt
     ballY.value += velocity.value
 
-    const maxY = maxDrop - ballSize.value
+    const maxY = maxDrop - objectSize.value
     if (ballY.value >= maxY) {
       ballY.value = maxY
 
@@ -67,7 +67,7 @@
 
       <!-- Simulation Preview Box -->
       <div class="flex-1 p-6 bg-white rounded-xl shadow-xl">
-        <h1 class="text-2xl font-bold mb-4 text-center">Ball Drop Simulation</h1>
+        <h1 class="text-2xl font-bold mb-4 text-center">Drop Simulation</h1>
 
         <div ref="box" class="relative w-full h-[400px] bg-blue-50 border border-blue-200 rounded overflow-hidden">
           <div class="absolute bottom-0 w-full h-[5px] bg-gray-700"></div>
@@ -81,7 +81,7 @@
 
         <div class="grid grid-cols-1 gap-4">
           <div>
-            <label class="block font-medium mb-1">Ball Weight (kg)</label>
+            <label class="block font-medium mb-1">Weight (kg)</label>
             <input type="number" v-model.number="weight" min="0.1" step="0.1" class="w-full border px-3 py-2 rounded" />
           </div>
 
@@ -92,8 +92,8 @@
           </div>
 
           <div>
-            <label class="block font-medium mb-1">Ball Size (px): {{ ballSize }}px</label>
-            <input type="range" min="20" max="100" v-model.number="ballSize" class="w-full" />
+            <label class="block font-medium mb-1">Ball Size (px): {{ objectSize }}px</label>
+            <input type="range" min="20" max="100" v-model.number="objectSize" class="w-full" />
           </div>
 
           <button @click="startDrop" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full">

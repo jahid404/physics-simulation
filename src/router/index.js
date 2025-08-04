@@ -8,8 +8,8 @@ const router = createRouter({
       component: () => import('@/views/HomeComponent.vue'),
     },
     {
-      path: '/ball-drop',
-      component: () => import('@/views/BallDropComponent.vue'),
+      path: '/drop-simulation',
+      component: () => import('@/views/DropSimulationComponent.vue'),
     },
   ],
 })
