@@ -4,14 +4,14 @@
   const mass = ref(1) // kg
   const gravity = ref(9.8) // m/s^2
   const frictionCoefficient = ref(0.3)
-  const initialVelocity = ref(10) // px/s
+  const initialVelocity = ref(10) // m/s (now in real units)
   const objectWidth = ref(80) // px
   const objectHeight = ref(40) // px
   const pxToM = 0.01
   const mToPx = 100
 
   const positionX = ref(0)
-  const velocity = ref(initialVelocity.value)
+  const velocity = ref(initialVelocity.value * mToPx) // Convert to px/s
   const isSliding = ref(false)
   const maxDistance = 700
   let animationFrame: number
@@ -25,10 +25,10 @@
   const startSlide = () => {
     cancelAnimationFrame(animationFrame)
     positionX.value = 0
-    velocity.value = initialVelocity.value
+    velocity.value = initialVelocity.value * mToPx
     isSliding.value = true
 
-    console.log(`Slide started with velocity: ${velocity.value * pxToM} m/s`)
+    console.log(`Slide started with velocity: ${initialVelocity.value} m/s`)
     simulate()
   }
 
@@ -37,15 +37,16 @@
 
     const dt = 0.016 // ~60fps
 
-    // Friction force: F_friction = µ * N (N = mg)
-    const frictionForce = frictionCoefficient.value * mass.value * gravity.value
-    const acceleration = -frictionForce / mass.value
+    // Correct physics - acceleration depends only on µ and g
+    const acceleration = -frictionCoefficient.value * gravity.value
 
-    velocity.value += acceleration * dt * mToPx
-    console.log('velocity', velocity.value);
+    // Update velocity in m/s, then convert to px/s for display
+    const velocityMs = velocity.value * pxToM
+    const newVelocityMs = velocityMs + acceleration * dt
+    velocity.value = newVelocityMs * mToPx
 
     // stop when velocity nearly zero
-    if (velocity.value <= 0) {
+    if (newVelocityMs <= 0) {
       velocity.value = 0
       isSliding.value = false
       console.log(`Object stopped at ${(positionX.value * pxToM).toFixed(2)} m`)
