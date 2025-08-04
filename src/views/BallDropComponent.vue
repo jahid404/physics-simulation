@@ -33,7 +33,11 @@
 
     // Calculate force: F = m * g (weight = mass * gravity)
     const gForce = gravity.value * weight.value
+
+    // Update velocity: v = u + a * t
     velocity.value += gForce * dt
+
+    // Update position: s = s + v * dt
     ballY.value += velocity.value
 
     const maxY = maxDrop - ballSize.value
