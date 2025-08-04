@@ -66,8 +66,8 @@
     <div class="flex flex-col md:flex-row gap-6 w-full max-w-6xl">
 
       <!-- Simulation Preview Box -->
-      <div class="flex-1 p-6 bg-white rounded-xl shadow-xl">
-        <h1 class="text-2xl font-bold mb-4 text-center">Drop Simulation</h1>
+      <div class="flex-1 p-4 bg-white rounded-xl shadow-xl">
+        <h2 class="text-xl font-bold mb-4 text-center">Drop Simulation</h2>
 
         <div ref="box" class="relative w-full h-[400px] bg-blue-50 border border-blue-200 rounded overflow-hidden">
           <div class="absolute bottom-0 w-full h-[5px] bg-gray-700"></div>
