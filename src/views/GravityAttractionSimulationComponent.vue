@@ -66,7 +66,7 @@
 
       // Dynamic range based on screen size
       distanceMin.value = previewWidth.value * 0.1
-      distanceMax.value = previewWidth.value * 0.9
+      distanceMax.value = previewWidth.value * 0.8
 
       // If current distance is out of range after resize, clamp it
       if (initialDistance.value < distanceMin.value) {
