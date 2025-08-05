@@ -132,7 +132,7 @@
     return parts.join(" ")
   }
 
-  const estimatedCollisionTimeFormatted = computed(() => {
+  const realCollisionTimeFormatted = computed(() => {
     const r0 = initialDistance.value * pxToM // px → m
     const M = mass1.value + mass2.value
     if (r0 <= 0 || M <= 0) return "0 s"
@@ -222,8 +222,8 @@
           </div>
 
           <div class="flex justify-between">
-            <span class="text-md font-semibold">Estimated Collision Time</span>
-            <span class="text-md font-medium">{{ estimatedCollisionTimeFormatted }}</span>
+            <span class="text-md font-semibold">Real Collision Time</span>
+            <span class="text-md font-medium">{{ realCollisionTimeFormatted }}</span>
           </div>
           <div class="flex justify-between" v-if="collisionTime !== null">
             <span class="text-md font-semibold">Time to Collision</span>
