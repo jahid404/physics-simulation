@@ -139,7 +139,15 @@
         </div>
 
         <div class="mt-5">
-          <p class="text-md font-semibold"></p>
+          <div class="flex justify-between">
+            <span class="text-md font-semibold">Mass</span>
+            <span class="text-md font-semibold">{{ mass }} kg</span>
+          </div>
+          
+          <div class="flex justify-between">
+            <span class="text-md font-semibold">Initial Velocity</span>
+            <span class="text-md font-semibold">{{ initialVelocity }} m/s</span>
+          </div>
         </div>
       </div>
 
