@@ -138,8 +138,8 @@
           <div class="absolute bottom-0 right-0 w-1 h-[150px] bg-gray-800"></div>
         </div>
 
-        <div class="mt-10">
-          <h6 class="text-sm"></h6>
+        <div class="mt-5">
+          <p class="text-md font-semibold"></p>
         </div>
       </div>
 
