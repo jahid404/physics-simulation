@@ -202,7 +202,7 @@
   <div class="flex items-center justify-center bg-gray-100">
     <div class="flex flex-col md:flex-row gap-4 w-full max-w-6xl">
       <!-- Simulation Preview -->
-      <div class="flex-1 order-2 md:order-1 p-4 bg-white rounded-xl shadow-xl h-max">
+      <div class="flex-1 order-2 md:order-1 p-4 bg-white rounded-xl shadow-xl">
         <h2 class="text-xl font-bold mb-4 text-center">Two-Body Gravity Simulation</h2>
         <div ref="previewRef"
           class="relative w-full h-[200px] bg-gray-50 border border-gray-300 rounded overflow-hidden flex items-center">
