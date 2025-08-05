@@ -141,13 +141,25 @@
         <div class="mt-5">
           <div class="flex justify-between">
             <span class="text-md font-semibold">Mass</span>
-            <span class="text-md font-semibold">{{ mass }} kg</span>
+            <span class="text-md font-medium">{{ mass }} kg</span>
           </div>
-          
+
           <div class="flex justify-between">
             <span class="text-md font-semibold">Initial Velocity</span>
-            <span class="text-md font-semibold">{{ initialVelocity }} m/s</span>
+            <span class="text-md font-medium">{{ initialVelocity }} m/s</span>
           </div>
+
+          <div class="flex justify-between">
+            <span class="text-md font-semibold">Friction Coefficient</span>
+            <span class="text-md font-medium">{{ kineticFriction }}</span>
+          </div>
+
+          <div class="flex justify-between">
+            <span class="text-md font-semibold">Air Density</span>
+            <span class="text-md font-medium">{{ airDensity }} kg/m³</span>
+          </div>
+
+          <div class="flex justify-between"></div>
         </div>
       </div>
 
