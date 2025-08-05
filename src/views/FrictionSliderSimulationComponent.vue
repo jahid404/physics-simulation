@@ -159,7 +159,10 @@
             <span class="text-md font-medium">{{ airDensity }} kg/m³</span>
           </div>
 
-          <div class="flex justify-between"></div>
+          <div class="flex justify-between">
+            <span class="text-md font-semibold">Drag Coefficient</span>
+            <span class="text-md font-medium">{{ dragCoefficient }}</span>
+          </div>
         </div>
       </div>
 
