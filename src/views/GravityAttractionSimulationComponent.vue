@@ -74,6 +74,8 @@
       } else if (initialDistance.value > distanceMax.value) {
         initialDistance.value = distanceMax.value
       }
+
+      setInitialPositions()
     }
   }
 
@@ -87,7 +89,6 @@
   const startSimulation = () => {
     cancelAnimationFrame(animationFrame)
     updatePreviewWidth()
-    setInitialPositions()
 
     // Initial velocities (m/s)
     vel1X.value = initialVelocity.value
@@ -253,7 +254,7 @@
           </div>
           <div>
             <label>Initial Distance (px)</label>
-            <input type="range" v-model.number="initialDistance" :min="distanceMin" :max="distanceMax" step="10"
+            <input type="range" v-model.number="initialDistance"  @input="setInitialPositions" :min="distanceMin" :max="distanceMax" step="10"
               class="w-full" />
             <div class="flex justify-between">
               <span class="text-sm text-gray-600">{{ initialDistance }} px</span>
