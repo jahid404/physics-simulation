@@ -23,6 +23,9 @@
   const vel1X = ref(initialVelocity.value)
   const vel2X = ref(-initialVelocity.value)
   const isRunning = ref(false)
+  const collisionTime = ref<number | null>(null) // seconds
+  let startTime = 0
+
   let animationFrame: number
   let lastTime = 0
 
@@ -62,8 +65,8 @@
       previewWidth.value = previewRef.value.clientWidth
 
       // Dynamic range based on screen size
-      distanceMin.value = previewWidth.value * 0.2
-      distanceMax.value = previewWidth.value * 0.8
+      distanceMin.value = previewWidth.value * 0.1
+      distanceMax.value = previewWidth.value * 0.9
 
       // If current distance is out of range after resize, clamp it
       if (initialDistance.value < distanceMin.value) {
@@ -92,8 +95,50 @@
 
     lastTime = performance.now()
     isRunning.value = true
+
+    collisionTime.value = null
+    startTime = performance.now()
+
     simulate()
   }
+
+  const formatTime = (seconds: number) => {
+    if (seconds <= 0) return "0 s"
+
+    const years = Math.floor(seconds / (365 * 24 * 3600))
+    seconds %= (365 * 24 * 3600)
+
+    const months = Math.floor(seconds / (30 * 24 * 3600))
+    seconds %= (30 * 24 * 3600)
+
+    const days = Math.floor(seconds / (24 * 3600))
+    seconds %= (24 * 3600)
+
+    const hours = Math.floor(seconds / 3600)
+    seconds %= 3600
+
+    const minutes = Math.floor(seconds / 60)
+    seconds = Math.floor(seconds % 60)
+
+    const parts = []
+    if (years) parts.push(`${years}y`)
+    if (months) parts.push(`${months}m`)
+    if (days) parts.push(`${days}d`)
+    if (hours) parts.push(`${hours}h`)
+    if (minutes) parts.push(`${minutes}min`)
+    if (seconds) parts.push(`${seconds}s`)
+
+    return parts.join(" ")
+  }
+
+  const estimatedCollisionTimeFormatted = computed(() => {
+    const r0 = initialDistance.value * pxToM // px → m
+    const M = mass1.value + mass2.value
+    if (r0 <= 0 || M <= 0) return "0 s"
+
+    const timeSeconds = Math.sqrt((r0 ** 3) / (2 * G * M)) * (Math.PI / 2)
+    return formatTime(timeSeconds)
+  })
 
   const simulate = () => {
     if (!isRunning.value) return
@@ -110,6 +155,11 @@
     if (rMeters <= ((radius1.value + radius2.value) + radius2.value) * pxToM) {
       console.log('Collision detected', radius1.value + radius2.value)
       isRunning.value = false
+
+      const elapsed = (performance.now() - startTime) / 1000
+      collisionTime.value = elapsed
+      console.log(`Collision time: ${elapsed.toFixed(2)} seconds`)
+
       return
     }
 
@@ -168,6 +218,15 @@
           <div class="flex justify-between">
             <span class="text-md font-semibold">Force</span>
             <span class="text-md font-medium">{{ gravitationalForce.toExponential(2) }} N</span>
+          </div>
+
+          <div class="flex justify-between">
+            <span class="text-md font-semibold">Estimated Collision Time</span>
+            <span class="text-md font-medium">{{ estimatedCollisionTimeFormatted }}</span>
+          </div>
+          <div class="flex justify-between" v-if="collisionTime !== null">
+            <span class="text-md font-semibold">Time to Collision</span>
+            <span class="text-md font-medium">{{ collisionTime.toFixed(2) }} s</span>
           </div>
         </div>
       </div>
