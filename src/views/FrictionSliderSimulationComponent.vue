@@ -164,7 +164,11 @@
             <span class="text-md font-medium">{{ dragCoefficient }}</span>
           </div>
 
-          <!-- Stopped  -->
+          <!-- Final Result -->
+          <div class="mt-5">
+            <span class="text-md font-semibold">Final Result</span>
+            <span class="text-md font-medium">{{ positionX * pxToM }} m</span>
+          </div>
         </div>
       </div>
 
