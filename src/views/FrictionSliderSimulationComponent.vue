@@ -26,6 +26,7 @@
 
   let animationFrame: number
   let lastTime = 0
+  let totalBounces = 0
 
   // Box style
   const objectStyle = computed(() => ({
@@ -46,6 +47,7 @@
     velocity.value = initialVelocity.value * mToPx
     isSliding.value = true
     lastTime = performance.now()
+    totalBounces = 0
 
     console.log(`Starting slide at ${initialVelocity.value} m/s`)
     console.log('Current mass', mass.value)
@@ -87,17 +89,21 @@
       positionX.value = maxDistance.value - objectWidth.value
       velocity.value = -Math.abs(velocity.value) * restitution
       console.log('Bounce at right edge')
+      totalBounces++
     } else if (leftEdge <= 0) {
       positionX.value = 0
       velocity.value = Math.abs(velocity.value) * restitution
       console.log('Bounce at left edge')
+      totalBounces++
     }
 
     if (Math.abs(newVelocityMs) <= 0.01) {
       velocity.value = 0
       isSliding.value = false
+
       const finalDistance = (positionX.value * pxToM).toFixed(2)
       console.log(`Stopped after ${finalDistance} m`)
+
       return
     }
 
@@ -167,6 +173,11 @@
           <div class="flex justify-between">
             <span class="text-md font-semibold">Final Distance</span>
             <span class="text-md font-medium">{{ (positionX * pxToM).toFixed(2) }} m</span>
+          </div>
+
+          <div class="flex justify-between">
+            <span class="text-md font-semibold">Total Bounces</span>
+            <span class="text-md font-medium">{{ totalBounces }}</span>
           </div>
         </div>
       </div>
