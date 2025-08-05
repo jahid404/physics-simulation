@@ -164,10 +164,9 @@
             <span class="text-md font-medium">{{ dragCoefficient }}</span>
           </div>
 
-          <!-- Final Result -->
-          <div class="mt-5">
-            <span class="text-md font-semibold">Final Result</span>
-            <span class="text-md font-medium">{{ positionX * pxToM }} m</span>
+          <div class="flex justify-between">
+            <span class="text-md font-semibold">Final Distance</span>
+            <span class="text-md font-medium">{{ (positionX * pxToM).toFixed(2) }} m</span>
           </div>
         </div>
       </div>
