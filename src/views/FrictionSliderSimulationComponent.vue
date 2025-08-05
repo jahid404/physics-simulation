@@ -125,18 +125,18 @@
   <div class="flex items-center justify-center bg-gray-100">
     <div class="flex flex-col md:flex-row gap-4 w-full max-w-6xl">
       <!-- Simulation Preview -->
-      <div class="flex-1 order-2 md:order-1 p-4 bg-white rounded-xl shadow-xl">
+      <div class="flex-1 order-2 md:order-1 p-4 bg-white rounded-xl shadow-xl h-max">
         <h2 class="text-xl font-bold mb-4 text-center">Box Sliding Simulation</h2>
         <div ref="previewRef"
-          class="relative w-full h-[150px] bg-orange-50 border border-orange-200 rounded overflow-hidden">
+          class="relative w-full h-[150px] bg-orange-50 border border-blue-200 rounded overflow-hidden">
           <!-- Ground surface -->
           <div class="absolute bottom-0 w-full h-[5px] bg-gray-700"></div>
 
           <!-- Sliding box -->
-          <div class="absolute bottom-[5px] left-0 bg-orange-500 border border-orange-600 rounded" :style="objectStyle">
+          <div class="absolute bottom-[5px] left-0 bg-blue-500 border border-blue-500 rounded" :style="objectStyle">
             <!-- Center indicator -->
             <div
-              class="absolute top-1/2 left-1/2 w-2 h-2 bg-red-500 rounded-full transform -translate-x-1/2 -translate-y-1/2">
+              class="absolute top-1/2 left-1/2 w-1 h-1 bg-white rounded-full transform -translate-x-1/2 -translate-y-1/2">
             </div>
           </div>
 
