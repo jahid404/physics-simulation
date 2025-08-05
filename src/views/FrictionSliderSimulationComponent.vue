@@ -40,16 +40,6 @@
     }
   }
 
-  onMounted(() => {
-    updateMaxDistance()
-    window.addEventListener('resize', updateMaxDistance)
-  })
-
-  onUnmounted(() => {
-    cancelAnimationFrame(animationFrame)
-    window.removeEventListener('resize', updateMaxDistance)
-  })
-
   const startSlide = () => {
     cancelAnimationFrame(animationFrame)
     positionX.value = 0
@@ -113,6 +103,16 @@
 
     animationFrame = requestAnimationFrame(simulate)
   }
+
+  onMounted(() => {
+    updateMaxDistance()
+    window.addEventListener('resize', updateMaxDistance)
+  })
+
+  onUnmounted(() => {
+    cancelAnimationFrame(animationFrame)
+    window.removeEventListener('resize', updateMaxDistance)
+  })
 </script>
 
 <template>
