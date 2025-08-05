@@ -163,6 +163,8 @@
             <span class="text-md font-semibold">Drag Coefficient</span>
             <span class="text-md font-medium">{{ dragCoefficient }}</span>
           </div>
+
+          <!--  -->
         </div>
       </div>
 
