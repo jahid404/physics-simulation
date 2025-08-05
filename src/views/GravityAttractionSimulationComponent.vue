@@ -12,8 +12,10 @@
   const radius1 = ref(30)    // px
   const radius2 = ref(15)    // px
   const gravityMultiplier = ref(5e7) // Boost factor for visual speed
-  const initialDistance = ref(300) // px (scaled distance)
   const initialVelocity = ref(0) // m/s (for each body)
+  const initialDistance = ref(300) // px (scaled distance)
+  const distanceMin = ref(100)
+  const distanceMax = ref(600)
 
   // Simulation state
   const pos1X = ref(0)
@@ -51,24 +53,38 @@
     borderRadius: '50%'
   }))
 
-  // Preview area width (dynamic)
+  // Preview box width (dynamic)
   const previewRef = ref<HTMLElement | null>(null)
   const previewWidth = ref(600)
 
   const updatePreviewWidth = () => {
     if (previewRef.value) {
       previewWidth.value = previewRef.value.clientWidth
+
+      // Dynamic range based on screen size
+      distanceMin.value = previewWidth.value * 0.2
+      distanceMax.value = previewWidth.value * 0.8
+
+      // If current distance is out of range after resize, clamp it
+      if (initialDistance.value < distanceMin.value) {
+        initialDistance.value = distanceMin.value
+      } else if (initialDistance.value > distanceMax.value) {
+        initialDistance.value = distanceMax.value
+      }
     }
+  }
+
+  // Position bodies based on current width
+  const setInitialPositions = () => {
+    pos1X.value = previewWidth.value / 2 - initialDistance.value / 2 - radius1.value
+    pos2X.value = previewWidth.value / 2 + initialDistance.value / 2 - radius2.value
   }
 
   // Start simulation
   const startSimulation = () => {
     cancelAnimationFrame(animationFrame)
     updatePreviewWidth()
-
-    // Initial positions
-    pos1X.value = previewWidth.value / 2 - initialDistance.value / 2 - radius1.value
-    pos2X.value = previewWidth.value / 2 + initialDistance.value / 2 - radius2.value
+    setInitialPositions()
 
     // Initial velocities (m/s)
     vel1X.value = initialVelocity.value
@@ -91,8 +107,8 @@
     }
 
     const rMeters = distanceMeters.value
-    if (rMeters <= (radius1.value + radius2.value) * pxToM) {
-      console.log('Collision detected')
+    if (rMeters <= ((radius1.value + radius2.value) + radius2.value) * pxToM) {
+      console.log('Collision detected', radius1.value + radius2.value)
       isRunning.value = false
       return
     }
@@ -120,7 +136,10 @@
 
   onMounted(() => {
     updatePreviewWidth()
-    window.addEventListener('resize', updatePreviewWidth)
+    window.addEventListener('resize', () => {
+      updatePreviewWidth()
+      if (!isRunning.value) setInitialPositions()
+    })
   })
 
   onUnmounted(() => {
@@ -130,10 +149,10 @@
 </script>
 
 <template>
-  <div class="flex items-center justify-center bg-gray-100 p-4">
+  <div class="flex items-center justify-center bg-gray-100">
     <div class="flex flex-col md:flex-row gap-4 w-full max-w-6xl">
       <!-- Simulation Preview -->
-      <div class="flex-1 p-4 bg-white rounded-xl shadow-xl">
+      <div class="flex-1 order-2 md:order-1 p-4 bg-white rounded-xl shadow-xl">
         <h2 class="text-xl font-bold mb-4 text-center">Two-Body Gravity Simulation</h2>
         <div ref="previewRef"
           class="relative w-full h-[200px] bg-gray-50 border border-gray-300 rounded overflow-hidden flex items-center">
@@ -154,7 +173,7 @@
       </div>
 
       <!-- Controls -->
-      <div class="w-full md:w-[350px] p-4 bg-white rounded-xl shadow-xl">
+      <div class="w-full order-1 md:order-2 md:w-[350px] h-max p-4 bg-white rounded-xl shadow-xl">
         <h2 class="text-xl font-semibold mb-4 text-center md:text-left">Configuration</h2>
         <div class="grid gap-4">
           <div>
@@ -166,17 +185,21 @@
             <input type="number" v-model.number="mass2" class="w-full border rounded p-1" />
           </div>
           <div>
-            <label>Initial Distance (px)</label>
-            <input type="range" v-model.number="initialDistance" min="100" max="600" step="10" class="w-full" />
-            <span class="text-sm text-gray-600">{{ initialDistance }} px</span>
-          </div>
-          <div>
             <label>Gravity Multiplier</label>
             <input type="number" v-model.number="gravityMultiplier" class="w-full border rounded p-1" />
           </div>
           <div>
             <label>Initial Velocity (m/s)</label>
             <input type="number" v-model.number="initialVelocity" class="w-full border rounded p-1" />
+          </div>
+          <div>
+            <label>Initial Distance (px)</label>
+            <input type="range" v-model.number="initialDistance" :min="distanceMin" :max="distanceMax" step="10"
+              class="w-full" />
+            <div class="flex justify-between">
+              <span class="text-sm text-gray-600">{{ initialDistance }} px</span>
+              <span class="text-sm text-gray-600">(1px = 1,000,000 m)</span>
+            </div>
           </div>
           <button @click="startSimulation" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full">
             Start Simulation
