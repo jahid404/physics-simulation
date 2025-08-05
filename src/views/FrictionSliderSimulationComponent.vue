@@ -164,7 +164,7 @@
             <span class="text-md font-medium">{{ dragCoefficient }}</span>
           </div>
 
-          <!--  -->
+          <!-- Stopped  -->
         </div>
       </div>
 
