@@ -10,12 +10,31 @@ const router = createRouter({
     {
       path: '/drop-simulation',
       component: () => import('@/views/DropSimulationComponent.vue'),
+      meta: {
+        title: 'Drop Simulation',
+      },
     },
     {
       path: '/friction-slider',
       component: () => import('@/views/FrictionSliderSimulationComponent.vue'),
+      meta: {
+        title: 'Friction Slider',
+      },
+    },
+    {
+      path: '/gravity-attraction',
+      component: () => import('@/views/GravityAttractionSimulationComponent.vue'),
+      meta: {
+        title: 'Gravity Attraction',
+      },
     },
   ],
+})
+
+router.afterEach((to) => {
+  if (to.meta?.title) {
+    document.title = `${to.meta.title} | Physics Simulation`
+  }
 })
 
 export default router

@@ -49,6 +49,7 @@
       name: "Gravity Attraction",
       description: "Two-body gravitational attraction",
       link: "/gravity-attraction",
+      badge: "New",
     },
   ]
 </script>
