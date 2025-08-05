@@ -7,8 +7,16 @@
         <span class="ml-3 text-xl font-bold">Physics Simulation</span>
       </a>
 
-      <nav class="flex items-center text-base">
-        <router-link to="/" class="mr-5 hover:text-gray-900">Home</router-link>
+      <nav class="flex items-center gap-2 text-base">
+        <router-link to="/"
+          class="text-white text-sm bg-blue-500 hover:bg-blue-600 transition-all duration-100 px-3 py-1 rounded-md">Home</router-link>
+
+        <router-link :to="{ path: '', hash: '' }" custom v-slot="{ href }">
+          <a href="https://dreamersdesire.com" target="_blank" rel="noopener noreferrer"
+            class="text-white text-sm bg-blue-500 hover:bg-blue-600 transition-all duration-100 px-3 py-1 rounded-md">
+            Developer
+          </a>
+        </router-link>
       </nav>
     </div>
   </header>
