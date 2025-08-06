@@ -15,17 +15,13 @@
   let animationFrame: number
   let lastTime = 0
 
-  // Preview size
+  // Preview
   const previewRef = ref<HTMLElement | null>(null)
   const previewWidth = ref(400)
   const pivotX = computed(() => previewWidth.value / 2)
-  const pivotY = 0
+  const pivotY = 50 // top offset
 
-  // Bob position (corrected)
-  const bobX = computed(() => pivotX.value + length.value * Math.sin(angle.value))
-  const bobY = computed(() => pivotY + length.value * Math.cos(angle.value))
-
-  // Styles
+  // String style
   const stringStyle = computed(() => ({
     position: "absolute",
     top: `${pivotY}px`,
@@ -37,28 +33,26 @@
     transform: `rotate(${angle.value}rad)`
   }))
 
-  const bobStyle = computed(() => ({
-    position: "absolute",
-    top: `${bobY.value - 15}px`,
-    left: `${bobX.value - 15}px`,
-    width: "30px",
-    height: "30px",
-    backgroundColor: "orange",
-    borderRadius: "50%",
-    border: "2px solid #b45309"
-  }))
-
-  // Physics calculations
-  const period = computed(() => {
-    // Small-angle approximation
-    return 2 * Math.PI * Math.sqrt((length.value / 100) / gravity.value)
+  // Bob style — attached to string’s bottom
+  const bobStyle = computed(() => {
+    const bobDiameter = 30
+    const offsetX = Math.sin(angle.value) * length.value
+    const offsetY = Math.cos(angle.value) * length.value
+    return {
+      position: "absolute",
+      top: `${pivotY + offsetY - bobDiameter / 2}px`,
+      left: `${pivotX.value + offsetX - bobDiameter / 2}px`,
+      width: `${bobDiameter}px`,
+      height: `${bobDiameter}px`,
+      backgroundColor: "orange",
+      borderRadius: "50%",
+      border: "2px solid #b45309"
+    }
   })
 
-  const heightChange = computed(() => {
-    // Vertical displacement from lowest point
-    return length.value - length.value * Math.cos(angle.value)
-  })
-
+  // Physics
+  const period = computed(() => 2 * Math.PI * Math.sqrt((length.value / 100) / gravity.value))
+  const heightChange = computed(() => length.value - length.value * Math.cos(angle.value))
   const potentialEnergy = computed(() => mass.value * gravity.value * (heightChange.value / 100))
   const kineticEnergy = computed(() => 0.5 * mass.value * Math.pow(length.value / 100 * angularVelocity.value, 2))
   const totalEnergy = computed(() => potentialEnergy.value + kineticEnergy.value)
@@ -73,26 +67,22 @@
   // Simulation loop
   const simulate = () => {
     if (!isSwinging.value) return
-
     const now = performance.now()
     const dt = (now - lastTime) / 1000
     lastTime = now
-
     if (dt > 0.1) {
       animationFrame = requestAnimationFrame(simulate)
       return
     }
 
-    // Non-linear equation of motion
     const angularAcceleration = -(gravity.value / 100) / (length.value / 100) * Math.sin(angle.value) - damping.value * angularVelocity.value
-
     angularVelocity.value += angularAcceleration * dt
     angle.value += angularVelocity.value * dt
 
     animationFrame = requestAnimationFrame(simulate)
   }
 
-  // Start swinging
+  // Controls
   const startSwing = () => {
     cancelAnimationFrame(animationFrame)
     angle.value = initialAngle.value * (Math.PI / 180)
@@ -102,7 +92,6 @@
     simulate()
   }
 
-  // Stop swinging
   const stopSwing = () => {
     isSwinging.value = false
     cancelAnimationFrame(animationFrame)
@@ -134,51 +123,43 @@
         </div>
 
         <div class="mt-4">
-          <div class="flex justify-between">
-            <span class="font-semibold">Period (Small Angle)</span>
-            <span>{{ period.toFixed(2) }} s</span>
-          </div>
-          <div class="flex justify-between">
-            <span class="font-semibold">Potential Energy</span>
-            <span>{{ potentialEnergy.toFixed(2) }} J</span>
-          </div>
-          <div class="flex justify-between">
-            <span class="font-semibold">Kinetic Energy</span>
-            <span>{{ kineticEnergy.toFixed(2) }} J</span>
-          </div>
-          <div class="flex justify-between">
-            <span class="font-semibold">Total Energy</span>
-            <span>{{ totalEnergy.toFixed(2) }} J</span>
-          </div>
+          <div class="flex justify-between"><span class="font-semibold">Period</span><span>{{ period.toFixed(2) }}
+              s</span></div>
+          <div class="flex justify-between"><span class="font-semibold">Potential Energy</span><span>{{
+            potentialEnergy.toFixed(2) }} J</span></div>
+          <div class="flex justify-between"><span class="font-semibold">Kinetic Energy</span><span>{{
+            kineticEnergy.toFixed(2) }} J</span></div>
+          <div class="flex justify-between"><span class="font-semibold">Total Energy</span><span>{{
+            totalEnergy.toFixed(2) }} J</span></div>
         </div>
       </div>
 
       <!-- Controls -->
       <div class="w-full md:w-[350px] h-max p-4 bg-white rounded-xl shadow-xl">
-        <h2 class="text-xl font-semibold mb-4 text-center md:text-left">Configuration</h2>
+        <h2 class="text-xl font-semibold mb-4">Configuration</h2>
         <div class="grid gap-4">
           <div>
-            <label class="block font-medium mb-1">Length (px)</label>
+            <label>Length (px)</label>
             <input type="range" v-model.number="length" min="50" max="300" step="1" class="w-full" />
             <span>{{ length }} px</span>
           </div>
           <div>
-            <label class="block font-medium mb-1">Mass (kg)</label>
+            <label>Mass (kg)</label>
             <input type="range" v-model.number="mass" min="0.5" max="10" step="0.1" class="w-full" />
             <span>{{ mass }} kg</span>
           </div>
           <div>
-            <label class="block font-medium mb-1">Gravity (m/s²)</label>
+            <label>Gravity (m/s²)</label>
             <input type="range" v-model.number="gravity" min="1" max="20" step="0.1" class="w-full" />
             <span>{{ gravity }} m/s²</span>
           </div>
           <div>
-            <label class="block font-medium mb-1">Initial Angle (°)</label>
+            <label>Initial Angle (°)</label>
             <input type="range" v-model.number="initialAngle" min="-90" max="90" step="1" class="w-full" />
             <span>{{ initialAngle }}°</span>
           </div>
           <div>
-            <label class="block font-medium mb-1">Damping</label>
+            <label>Damping</label>
             <input type="range" v-model.number="damping" min="0" max="0.01" step="0.0001" class="w-full" />
             <span>{{ damping.toFixed(4) }}</span>
           </div>
