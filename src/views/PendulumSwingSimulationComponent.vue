@@ -145,6 +145,8 @@
   // --- Lifecycle ---
   onMounted(() => {
     updatePreviewWidth()
+    calculateEstimatedTimeToStop()
+
     window.addEventListener("resize", updatePreviewWidth)
   })
 
@@ -178,7 +180,7 @@
             <div class="bg-gray-100 p-2 rounded">
               <div class="text-sm font-semibold text-gray-600">Est. Time to Stop</div>
               <div class="text-lg">
-                {{ estimatedTimeToStop === Infinity ? "∞" : estimatedTimeToStop.toFixed(2) + " s" }}
+                {{ estimatedTimeToStop === Infinity ? "∞" : estimatedTimeToStop?.toFixed(2) + " s" }}
               </div>
             </div>
           </div>
