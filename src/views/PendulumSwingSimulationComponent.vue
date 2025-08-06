@@ -123,14 +123,22 @@
         </div>
 
         <div class="mt-4">
-          <div class="flex justify-between"><span class="font-semibold">Period</span><span>{{ period.toFixed(2) }}
-              s</span></div>
-          <div class="flex justify-between"><span class="font-semibold">Potential Energy</span><span>{{
-            potentialEnergy.toFixed(2) }} J</span></div>
-          <div class="flex justify-between"><span class="font-semibold">Kinetic Energy</span><span>{{
-            kineticEnergy.toFixed(2) }} J</span></div>
-          <div class="flex justify-between"><span class="font-semibold">Total Energy</span><span>{{
-            totalEnergy.toFixed(2) }} J</span></div>
+          <div class="flex justify-between">
+            <span class="font-semibold">Period</span>
+            <span>{{ period.toFixed(2) }}s</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="font-semibold">Potential Energy</span>
+            <span>{{ potentialEnergy.toFixed(2) }} J</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="font-semibold">Kinetic Energy</span>
+            <span>{{ kineticEnergy.toFixed(2) }} J</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="font-semibold">Total Energy</span>
+            <span>{{ totalEnergy.toFixed(2) }} J</span>
+          </div>
         </div>
       </div>
 
