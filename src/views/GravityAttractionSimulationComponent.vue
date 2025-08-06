@@ -164,6 +164,9 @@
       return
     }
 
+    // Update collision time
+    collisionTime.value = (performance.now() - startTime) / 1000
+
     // Force in Newtons
     const F = gravitationalForce.value * gravityMultiplier.value
 
@@ -211,23 +214,22 @@
           <div class="absolute" :style="body2Style"></div>
         </div>
 
-        <div class="mt-4">
-          <div class="flex justify-between">
-            <span class="text-md font-semibold">Distance</span>
-            <span class="text-md font-medium">{{ (distanceMeters / 1000).toFixed(2) }} km</span>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
+          <div class="bg-green-50 p-2 rounded">
+            <div class="text-sm font-semibold text-gray-600">Distance</div>
+            <div class="text-lg">{{ (distanceMeters / 1000).toFixed(2) }} km</div>
           </div>
-          <div class="flex justify-between">
-            <span class="text-md font-semibold">Force</span>
-            <span class="text-md font-medium">{{ gravitationalForce.toExponential(2) }} N</span>
+          <div class="bg-green-50 p-2 rounded">
+            <div class="text-sm font-semibold text-gray-600">Force</div>
+            <div class="text-lg">{{ gravitationalForce.toExponential(2) }} N</div>
           </div>
-
-          <div class="flex justify-between">
-            <span class="text-md font-semibold">Real Collision Time</span>
-            <span class="text-md font-medium">{{ realCollisionTimeFormatted }}</span>
+          <div class="bg-blue-50 p-2 rounded">
+            <div class="text-sm font-semibold text-gray-600">Real Collision Time</div>
+            <div class="text-lg">{{ realCollisionTimeFormatted }} s</div>
           </div>
-          <div class="flex justify-between" v-if="collisionTime !== null">
-            <span class="text-md font-semibold">Time to Collision</span>
-            <span class="text-md font-medium">{{ collisionTime.toFixed(2) }} s</span>
+          <div class="bg-blue-50 p-2 rounded">
+            <div class="text-sm font-semibold text-gray-600">Time to Collision</div>
+            <div class="text-lg">{{ collisionTime !== null ? collisionTime.toFixed(2) : '0.00' }} s</div>
           </div>
         </div>
       </div>
@@ -254,8 +256,8 @@
           </div>
           <div>
             <label>Initial Distance (px)</label>
-            <input type="range" v-model.number="initialDistance"  @input="setInitialPositions" :min="distanceMin" :max="distanceMax" step="10"
-              class="w-full" />
+            <input type="range" v-model.number="initialDistance" @input="setInitialPositions" :min="distanceMin"
+              :max="distanceMax" step="10" class="w-full" />
             <div class="flex justify-between">
               <span class="text-sm text-gray-600">{{ initialDistance }} px</span>
               <span class="text-sm text-gray-600">(1px = 1,000,000 m)</span>
