@@ -1,37 +1,37 @@
 <script lang="ts" setup>
   import { ref, computed, onMounted, onUnmounted } from "vue"
 
-  // Simulation parameters
+  // --- Simulation parameters ---
   const length = ref(200) // px
   const mass = ref(1) // kg
-  const gravity = ref(9.8) // m/s²
+  const gravity = ref(9.81) // m/s²
   const initialAngle = ref(-30) // degrees
   const damping = ref(0.002) // damping factor
 
-  // State
+  // --- State ---
   const angle = ref(initialAngle.value * (Math.PI / 180)) // radians
   const angularVelocity = ref(0) // rad/s
   const isSwinging = ref(false)
   let animationFrame: number
   let lastTime = 0
 
-  // Preview
+  // --- Preview area ---
   const previewRef = ref<HTMLElement | null>(null)
   const previewWidth = ref(400)
   const pivotX = computed(() => previewWidth.value / 2)
-  const pivotY = 50 // top offset
+  const pivotY = 50 // fixed pivot height in px
 
-  // String style
+  // --- Styles ---
   const stringStyle = computed(() => ({
     top: `${pivotY}px`,
     left: `${pivotX.value}px`,
     width: "2px",
     height: `${length.value}px`,
+    background: "black",
     transformOrigin: "top",
     transform: `rotate(${angle.value}rad)`
   }))
 
-  // Bob style — attached to string’s bottom
   const bobStyle = computed(() => {
     const bobDiameter = 30
     const offsetX = -Math.sin(angle.value) * length.value
@@ -44,54 +44,74 @@
     }
   })
 
-  // Physics
-  const lengthMeters = computed(() => length.value / 100) // px to m
-  const linearVelocity = computed(() => {
-    return Math.abs(angularVelocity.value) * lengthMeters.value
+  // --- Physics helpers ---
+  const lengthMeters = computed(() => length.value / 100) // px → meters
+
+  // Instantaneous tangential velocity (m/s)
+  const linearVelocity = computed(() => Math.abs(angularVelocity.value) * lengthMeters.value)
+
+  // Theoretical max velocity (from energy conservation)
+  const maxLinearVelocity = computed(() => {
+    const h = lengthMeters.value - lengthMeters.value * Math.cos(initialAngle.value * Math.PI / 180)
+    return Math.sqrt(2 * gravity.value * h)
   })
 
-  const period = computed(() => 2 * Math.PI * Math.sqrt(lengthMeters.value / gravity.value))
+  // Period (large-angle correction for realism)
+  const period = computed(() => {
+    const theta0 = Math.abs(initialAngle.value) * (Math.PI / 180)
+    // Simple small-angle: T = 2π√(L/g)
+    let T = 2 * Math.PI * Math.sqrt(lengthMeters.value / gravity.value)
+    // Large-angle correction (series expansion)
+    if (theta0 > 0.1) {
+      T *= 1 + (theta0 ** 2) / 16 + (11 * theta0 ** 4) / 3072
+    }
+    return T
+  })
+
+  // Energies
   const heightChange = computed(() => lengthMeters.value - lengthMeters.value * Math.cos(angle.value))
   const potentialEnergy = computed(() => mass.value * gravity.value * heightChange.value)
   const kineticEnergy = computed(() => 0.5 * mass.value * Math.pow(linearVelocity.value, 2))
   const totalEnergy = computed(() => potentialEnergy.value + kineticEnergy.value)
 
-  // Update preview width
+  // --- Resize handler ---
   const updatePreviewWidth = () => {
-    if (previewRef.value) {
-      previewWidth.value = previewRef.value.clientWidth
-    }
+    if (previewRef.value) previewWidth.value = previewRef.value.clientWidth
   }
 
+  // --- Angle preview when slider changes ---
   const updateAnglePreview = () => {
     if (!isSwinging.value) {
       angle.value = initialAngle.value * (Math.PI / 180)
-      angularVelocity.value = 0 // reset velocity for preview
+      angularVelocity.value = 0
     }
   }
 
-  // Simulation loop
+  // --- Simulation loop ---
   const simulate = () => {
     if (!isSwinging.value) return
     const now = performance.now()
     const dt = (now - lastTime) / 1000
     lastTime = now
 
-    if (dt > 0.1) {
+    if (dt > 0.05) { // prevent jumps on lag
       animationFrame = requestAnimationFrame(simulate)
       return
     }
 
-    // const angularAcceleration = -(gravity.value / 100) / (length.value / 100) * Math.sin(angle.value) - damping.value * angularVelocity.value
-    const angularAcceleration = -(gravity.value / lengthMeters.value) * Math.sin(angle.value) - damping.value * angularVelocity.value
+    // Angular acceleration (θ'' = -g/L * sinθ) with damping
+    const angularAcceleration =
+      -(gravity.value / lengthMeters.value) * Math.sin(angle.value) -
+      damping.value * angularVelocity.value
 
+    // Update velocity & position
     angularVelocity.value += angularAcceleration * dt
     angle.value += angularVelocity.value * dt
 
     animationFrame = requestAnimationFrame(simulate)
   }
 
-  // Controls
+  // --- Controls ---
   const startSwing = () => {
     cancelAnimationFrame(animationFrame)
     angle.value = initialAngle.value * (Math.PI / 180)
@@ -106,6 +126,7 @@
     cancelAnimationFrame(animationFrame)
   }
 
+  // --- Lifecycle ---
   onMounted(() => {
     updatePreviewWidth()
     window.addEventListener("resize", updatePreviewWidth)
@@ -116,6 +137,7 @@
     window.removeEventListener("resize", updatePreviewWidth)
   })
 </script>
+
 
 <template>
   <div class="flex items-center justify-center bg-gray-100 p-4">
