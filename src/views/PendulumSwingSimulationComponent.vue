@@ -153,7 +153,11 @@
           <div class="absolute border-2 bg-blue-500 rounded-full" :style="bobStyle"></div>
         </div>
 
-        <div class="mt-4 grid grid-cols-2 gap-2">
+        <div class="mt-4 row">
+          <div class="bg-gray-100 p-2 rounded">
+            <div class="text-sm font-semibold text-gray-600">Period</div>
+            <div class="text-lg">{{ period.toFixed(2) }} s</div>
+          </div>
           <div class="bg-gray-100 p-2 rounded">
             <div class="text-sm font-semibold text-gray-600">Period</div>
             <div class="text-lg">{{ period.toFixed(2) }} s</div>
