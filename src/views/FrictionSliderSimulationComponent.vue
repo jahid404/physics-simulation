@@ -185,32 +185,71 @@
       <!-- Configuration Panel -->
       <div class="w-full order-1 md:order-2 md:w-[350px] h-max p-4 bg-white rounded-xl shadow-xl">
         <h2 class="text-xl font-semibold mb-4 text-center md:text-left">Configuration</h2>
-        <div class="grid grid-cols-1 gap-4">
-          <div>
-            <label class="block font-medium mb-1">Mass (kg)</label>
-            <input type="range" v-model.number="mass" min="0.5" max="50" step="0.5" class="w-full">
-            <span class="text-sm text-gray-600">{{ mass }} kg</span>
+        <div class="space-y-6">
+          <!-- Mass Slider -->
+          <div class="space-y-1">
+            <div class="flex justify-between items-center">
+              <label class="block text-sm font-medium text-gray-700">Mass</label>
+              <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">{{ mass }} kg</span>
+            </div>
+            <input type="range" v-model.number="mass" min="0.5" max="50" step="0.5"
+              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600 hover:accent-blue-700 transition-colors">
+            <div class="flex justify-between text-xs text-gray-500">
+              <span>0.5 kg</span>
+              <span>50 kg</span>
+            </div>
           </div>
 
-          <div>
-            <label class="block font-medium mb-1">Initial Velocity (m/s)</label>
-            <input type="range" v-model.number="initialVelocity" min="0.1" max="10" step="0.1" class="w-full">
-            <span class="text-sm text-gray-600">{{ initialVelocity }} m/s</span>
+          <!-- Initial Velocity Slider -->
+          <div class="space-y-1">
+            <div class="flex justify-between items-center">
+              <label class="block text-sm font-medium text-gray-700">Initial Velocity</label>
+              <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">{{ initialVelocity }} m/s</span>
+            </div>
+            <input type="range" v-model.number="initialVelocity" min="0.1" max="10" step="0.1"
+              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600 hover:accent-blue-700 transition-colors">
+            <div class="flex justify-between text-xs text-gray-500">
+              <span>0.1 m/s</span>
+              <span>10 m/s</span>
+            </div>
           </div>
 
-          <div>
-            <label class="block font-medium mb-1">Friction Coefficient</label>
-            <input type="range" v-model.number="kineticFriction" min="0.01" max="1" step="0.01" class="w-full">
-            <span class="text-sm text-gray-600">{{ kineticFriction.toFixed(2) }}</span>
+          <!-- Friction Coefficient Slider -->
+          <div class="space-y-1">
+            <div class="flex justify-between items-center">
+              <label class="block text-sm font-medium text-gray-700">Friction Coefficient</label>
+              <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">{{ kineticFriction.toFixed(2) }}</span>
+            </div>
+            <input type="range" v-model.number="kineticFriction" min="0.01" max="1" step="0.01"
+              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600 hover:accent-blue-700 transition-colors">
+            <div class="flex justify-between text-xs text-gray-500">
+              <span>0.01</span>
+              <span>1.00</span>
+            </div>
           </div>
 
-          <div>
-            <label class="block font-medium mb-1">Air Density (kg/m³)</label>
-            <input type="range" v-model.number="airDensity" min="0" max="2" step="0.01" class="w-full">
-            <span class="text-sm text-gray-600">{{ airDensity.toFixed(2) }} kg/m³</span>
+          <!-- Air Density Slider -->
+          <div class="space-y-1">
+            <div class="flex justify-between items-center">
+              <label class="block text-sm font-medium text-gray-700">Air Density</label>
+              <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">{{ airDensity.toFixed(2) }} kg/m³</span>
+            </div>
+            <input type="range" v-model.number="airDensity" min="0" max="2" step="0.01"
+              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600 hover:accent-blue-700 transition-colors">
+            <div class="flex justify-between text-xs text-gray-500">
+              <span>0 kg/m³</span>
+              <span>2 kg/m³</span>
+            </div>
           </div>
 
-          <button @click="startSlide" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full">
+          <!-- Simulation Button -->
+          <button @click="startSlide"
+            class="w-full px-4 py-2 cursor-pointer bg-gradient-to-r from-blue-600 to-blue-700 text-white font-medium rounded-lg shadow-md hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                clip-rule="evenodd" />
+            </svg>
             Start Simulation
           </button>
         </div>

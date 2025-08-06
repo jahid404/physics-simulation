@@ -134,27 +134,59 @@
       <!-- Configuration Panel -->
       <div class="w-full order-1 md:order-2 md:w-[350px] h-max p-4 bg-white rounded-xl shadow-xl">
         <h2 class="text-xl font-semibold mb-4 text-center md:text-left">Configuration</h2>
-
-        <div class="grid grid-cols-1 gap-4">
+        
+        <div class="space-y-6">
+          <!-- Weight Slider -->
           <div>
-            <label class="block font-medium mb-1">Weight (kg)</label>
-            <input type="range" v-model.number="weight" min="0.5" max="1000" step="0.5" class="w-full">
-            <span class="text-sm text-gray-600">{{ weight }} kg</span>
+            <div class="flex justify-between items-center mb-2">
+              <label class="block text-sm font-medium text-gray-700">Weight</label>
+              <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">{{ weight }} kg</span>
+            </div>
+            <input type="range" v-model.number="weight" min="0.5" max="1000" step="0.5"
+              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600 hover:accent-blue-700 transition-colors">
+            <div class="flex justify-between text-xs text-gray-500 mt-1">
+              <span>0.5 kg</span>
+              <span>1000 kg</span>
+            </div>
           </div>
 
+          <!-- Gravity Slider -->
           <div>
-            <label class="block font-medium mb-1">Gravity (m/s²)</label>
-            <input type="range" v-model.number="gravity" min="0" max="50" step="0.1" class="w-full" />
-            <span class="text-sm text-gray-600">{{ gravity }} m/s²</span>
+            <div class="flex justify-between items-center mb-2">
+              <label class="block text-sm font-medium text-gray-700">Gravity</label>
+              <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">{{ gravity }} m/s²</span>
+            </div>
+            <input type="range" v-model.number="gravity" min="0" max="50" step="0.1"
+              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600 hover:accent-blue-700 transition-colors">
+            <div class="flex justify-between text-xs text-gray-500 mt-1">
+              <span>0 m/s²</span>
+              <span>50 m/s²</span>
+            </div>
           </div>
 
+          <!-- Ball Size Slider -->
           <div>
-            <label class="block font-medium mb-1">Ball Size (px): {{ objectSize }}px</label>
-            <input type="range" min="20" max="100" v-model.number="objectSize" class="w-full" />
+            <div class="flex justify-between items-center mb-2">
+              <label class="block text-sm font-medium text-gray-700">Ball Size</label>
+              <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">{{ objectSize }} px</span>
+            </div>
+            <input type="range" v-model.number="objectSize" min="20" max="100"
+              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600 hover:accent-blue-700 transition-colors">
+            <div class="flex justify-between text-xs text-gray-500 mt-1">
+              <span>20 px</span>
+              <span>100 px</span>
+            </div>
           </div>
 
-          <button @click="startDrop" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full">
-            Start Drop
+          <!-- Start Button -->
+          <button @click="startDrop"
+            class="w-full px-4 py-2 cursor-pointer bg-gradient-to-r from-blue-600 to-blue-700 text-white font-medium rounded-lg shadow-md hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                clip-rule="evenodd" />
+            </svg>
+            Start Simulation
           </button>
         </div>
       </div>

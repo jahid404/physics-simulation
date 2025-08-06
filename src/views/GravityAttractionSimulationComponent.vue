@@ -290,16 +290,27 @@
                 </div>
               </div>
             </div>
+
+            <!-- Initial Distance -->
+            <div class="space-y-1">
+              <div class="flex justify-between items-center">
+                <label class="block text-sm font-medium text-gray-700">Initial Distance</label>
+                <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">{{ initialDistance }} px
+                  ({{ (initialDistanceMeters /
+                  1000).toFixed(2) }} km)</span>
+              </div>
+              <input type="range" v-model.number="initialDistance" @input="setInitialPositions" min="50" max="300"
+                step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+            </div>
           </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">
-              Initial Distance: {{ initialDistance }} px ({{ (initialDistanceMeters / 1000).toFixed(2) }} km)
-            </label>
-            <input type="range" v-model.number="initialDistance" @input="setInitialPositions" min="50" max="300"
-              step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
-          </div>
+
           <button @click="startSimulation"
-            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full cursor-pointer">
+            class="w-full px-4 py-2 cursor-pointer bg-gradient-to-r from-blue-600 to-blue-700 text-white font-medium rounded-lg shadow-md hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                clip-rule="evenodd" />
+            </svg>
             Start Simulation
           </button>
         </div>

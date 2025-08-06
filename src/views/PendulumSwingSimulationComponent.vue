@@ -168,7 +168,7 @@
           <!-- String -->
           <div class="absolute bg-black" :style="stringStyle"></div>
           <!-- Bob -->
-          <div class="absolute border-2 bg-blue-500 rounded-full" :style="bobStyle"></div>
+          <div class="absolute border-1 bg-blue-500 rounded-full" :style="bobStyle"></div>
         </div>
 
         <div class="mt-4">
@@ -220,47 +220,107 @@
       <!-- Controls -->
       <div class="w-full order-1 md:order-2 md:w-[350px] h-max p-4 bg-white rounded-xl shadow-xl">
         <h2 class="text-xl font-semibold mb-4">Configuration</h2>
-        <div class="grid gap-4">
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">
-              Length: {{ length }} px ({{ lengthMeters.toFixed(2) }} m)
-            </label>
+        <div class="space-y-6">
+          <!-- Length Slider -->
+          <div class="space-y-1">
+            <div class="flex justify-between items-center">
+              <label class="block text-sm font-medium text-gray-700">Length</label>
+              <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">
+                {{ length }}px ({{ lengthMeters.toFixed(2) }}m)
+              </span>
+            </div>
             <input type="range" v-model.number="length" min="50" max="300" step="1"
-              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500 hover:accent-blue-600 transition-colors">
+            <div class="flex justify-between text-xs text-gray-500 mt-1">
+              <span>50px</span>
+              <span>300px</span>
+            </div>
           </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">
-              Mass: {{ mass }} kg
-            </label>
+
+          <!-- Mass Slider -->
+          <div class="space-y-1">
+            <div class="flex justify-between items-center">
+              <label class="block text-sm font-medium text-gray-700">Mass</label>
+              <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">
+                {{ mass }} kg
+              </span>
+            </div>
             <input type="range" v-model.number="mass" min="0.1" max="10" step="0.1"
-              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500 hover:accent-blue-600 transition-colors">
+            <div class="flex justify-between text-xs text-gray-500 mt-1">
+              <span>0.1kg</span>
+              <span>10kg</span>
+            </div>
           </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">
-              Gravity: {{ gravity }} m/s²
-            </label>
+
+          <!-- Gravity Slider -->
+          <div class="space-y-1">
+            <div class="flex justify-between items-center">
+              <label class="block text-sm font-medium text-gray-700">Gravity</label>
+              <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">
+                {{ gravity }} m/s²
+              </span>
+            </div>
             <input type="range" v-model.number="gravity" min="1" max="20" step="0.1"
-              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500 hover:accent-blue-600 transition-colors">
+            <div class="flex justify-between text-xs text-gray-500 mt-1">
+              <span>1m/s²</span>
+              <span>20m/s²</span>
+            </div>
           </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">
-              Initial Angle: {{ initialAngle }}°
-            </label>
+
+          <!-- Angle Slider -->
+          <div class="space-y-1">
+            <div class="flex justify-between items-center">
+              <label class="block text-sm font-medium text-gray-700">Initial Angle</label>
+              <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">
+                {{ initialAngle }}°
+              </span>
+            </div>
             <input type="range" v-model.number="initialAngle" @input="updateAnglePreview" min="-90" max="90" step="1"
-              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500 hover:accent-blue-600 transition-colors">
+            <div class="flex justify-between text-xs text-gray-500 mt-1">
+              <span>-90°</span>
+              <span>90°</span>
+            </div>
           </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">
-              Damping: {{ damping.toFixed(2) }}
-            </label>
+
+          <!-- Damping Slider -->
+          <div class="space-y-1">
+            <div class="flex justify-between items-center">
+              <label class="block text-sm font-medium text-gray-700">Damping</label>
+              <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">
+                {{ damping.toFixed(2) }}
+              </span>
+            </div>
             <input type="range" v-model.number="damping" @input="calculateEstimatedTimeToStop" min="0" max="1"
-              step="0.01" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+              step="0.01"
+              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500 hover:accent-blue-600 transition-colors">
+            <div class="flex justify-between text-xs text-gray-500 mt-1">
+              <span>0</span>
+              <span>1</span>
+            </div>
           </div>
-          <div class="flex gap-2">
+
+          <!-- Action Buttons -->
+          <div class="flex gap-3 pt-2">
             <button @click="startSwing"
-              class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-all duration-75 w-full">Start</button>
+              class="flex-1 px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-medium rounded-lg shadow-sm hover:from-blue-600 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 transition-all duration-150 flex items-center justify-center gap-1.5">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                  clip-rule="evenodd" />
+              </svg>
+              Start
+            </button>
             <button @click="stopSwing"
-              class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-all duration-75 w-full">Stop</button>
+              class="flex-1 px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white font-medium rounded-lg shadow-sm hover:from-red-600 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-1 transition-all duration-150 flex items-center justify-center gap-1.5">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z"
+                  clip-rule="evenodd" />
+              </svg>
+              Stop
+            </button>
           </div>
         </div>
       </div>
