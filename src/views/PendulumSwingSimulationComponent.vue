@@ -56,6 +56,12 @@
     return Math.sqrt(2 * gravity.value * h)
   })
 
+  const stopThreshold = 1 * (Math.PI / 180) // 1 degree in radians
+  const estimatedTimeToStop = computed(() => {
+    if (damping.value <= 0) return Infinity // no damping → swings forever
+    return Math.log(Math.abs(angle.value) / stopThreshold) / damping.value
+  })
+
   // Period (large-angle correction for realism)
   const period = computed(() => {
     const theta0 = Math.abs(initialAngle.value) * (Math.PI / 180)
@@ -161,7 +167,9 @@
             </div>
             <div class="bg-gray-100 p-2 rounded">
               <div class="text-sm font-semibold text-gray-600">Est. Time to Stop</div>
-              <div class="text-lg">{{ period.toFixed(2) }} s</div>
+              <div class="text-lg">
+                {{ estimatedTimeToStop === Infinity ? "∞" : estimatedTimeToStop.toFixed(2) + " s" }}
+              </div>
             </div>
           </div>
 
