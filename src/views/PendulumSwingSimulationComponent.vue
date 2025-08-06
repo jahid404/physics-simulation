@@ -45,10 +45,17 @@
   })
 
   // Physics
-  const period = computed(() => 2 * Math.PI * Math.sqrt((length.value / 100) / gravity.value))
+  /* const period = computed(() => 2 * Math.PI * Math.sqrt((length.value / 100) / gravity.value))
   const heightChange = computed(() => length.value - length.value * Math.cos(angle.value))
   const potentialEnergy = computed(() => mass.value * gravity.value * (heightChange.value / 100))
   const kineticEnergy = computed(() => 0.5 * mass.value * Math.pow(length.value / 100 * angularVelocity.value, 2))
+  const totalEnergy = computed(() => potentialEnergy.value + kineticEnergy.value) */
+  const lengthMeters = computed(() => length.value / 100) // px to m
+  const linearVelocity = computed(() => angularVelocity.value * lengthMeters.value)
+  const period = computed(() => 2 * Math.PI * Math.sqrt(lengthMeters.value / gravity.value))
+  const heightChange = computed(() => lengthMeters.value - lengthMeters.value * Math.cos(angle.value))
+  const potentialEnergy = computed(() => mass.value * gravity.value * heightChange.value)
+  const kineticEnergy = computed(() => 0.5 * mass.value * Math.pow(linearVelocity.value, 2))
   const totalEnergy = computed(() => potentialEnergy.value + kineticEnergy.value)
 
   // Update preview width
