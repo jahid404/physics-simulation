@@ -5,7 +5,7 @@
   const length = ref(200) // px
   const mass = ref(1) // kg
   const gravity = ref(9.8) // m/s²
-  const initialAngle = ref(30) // degrees
+  const initialAngle = ref(-30) // degrees
   const damping = ref(0.002) // damping factor
 
   // State
