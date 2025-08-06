@@ -27,7 +27,7 @@
     left: `${pivotX.value}px`,
     width: "2px",
     height: `${length.value}px`,
-    // transformOrigin: "top",
+    transformOrigin: "top",
     transform: `rotate(${angle.value}rad)`
   }))
 
@@ -120,6 +120,14 @@
           <div class="flex justify-between">
             <span class="font-semibold">Period</span>
             <span>{{ period.toFixed(2) }}s</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="font-semibold">Angular Velocity</span>
+            <span>{{ angularVelocity.toFixed(2) }} rad/s</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="font-semibold">Linear Velocity</span>
+            <span>{{ linearVelocity.toFixed(2) }} m/s</span>
           </div>
           <div class="flex justify-between">
             <span class="font-semibold">Potential Energy</span>
