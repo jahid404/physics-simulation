@@ -162,7 +162,7 @@
         <div class="relative w-full h-[400px] border border-gray-300 rounded bg-gray-50 overflow-hidden">
           <!-- Pivot point -->
           <div class="absolute w-6 h-6 rounded-full bg-gray-700"
-               :style="{ top: `${pivotY-12}px`, left: `${pivotX.value-12}px` }"></div>
+            :style="{ top: `${pivotY-12}px`, left: `${pivotX.value-12}px` }"></div>
 
           <!-- String -->
           <div :style="stringStyle"></div>
@@ -171,8 +171,9 @@
           <div :style="bobStyle"></div>
 
           <!-- Velocity vector visualization -->
-          <div v-if="isSwinging" class="absolute w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-b-16 border-b-red-500"
-               :style="{
+          <div v-if="isSwinging"
+            class="absolute w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-b-16 border-b-red-500"
+            :style="{
                  top: `${parseInt(bobStyle.top) + 15}px`,
                  left: `${parseInt(bobStyle.left) + 15}px`,
                  transform: `rotate(${angle.value + (angularVelocity.value > 0 ? Math.PI/2 : -Math.PI/2)}rad)`,
@@ -202,7 +203,8 @@
             <div class="text-lg">{{ potentialEnergy.toFixed(2) }} J</div>
             <div class="h-2 bg-blue-100 rounded-full mt-1">
               <div class="h-2 bg-blue-500 rounded-full"
-                   :style="{ width: `${Math.min(100, (potentialEnergy.value / (mass.value * gravity.value * lengthMeters.value * 2)) * 100}%` }"></div>
+                :style="{ width: `${Math.min(100, (potentialEnergy / (mass * gravity * lengthMeters * 2)) * 100)}%` }">
+              </div>
             </div>
           </div>
           <div class="bg-green-50 p-2 rounded col-span-2">
@@ -210,7 +212,8 @@
             <div class="text-lg">{{ kineticEnergy.toFixed(2) }} J</div>
             <div class="h-2 bg-green-100 rounded-full mt-1">
               <div class="h-2 bg-green-500 rounded-full"
-                   :style="{ width: `${Math.min(100, (kineticEnergy.value / (0.5 * mass.value * maxLinearVelocity.value ** 2)) * 100}%` }"></div>
+                :style="{ width: `${Math.min(100, (kineticEnergy / (0.5 * mass * maxLinearVelocity ** 2)) * 100)}%` }">
+              </div>
             </div>
           </div>
         </div>
@@ -221,24 +224,30 @@
         <h2 class="text-xl font-semibold mb-4">Configuration</h2>
         <div class="grid gap-4">
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Length: {{ length }} px ({{ lengthMeters.toFixed(2) }} m)</label>
-            <input type="range" v-model.number="length" min="50" max="300" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Length: {{ length }} px ({{
+              lengthMeters.toFixed(2) }} m)</label>
+            <input type="range" v-model.number="length" min="50" max="300" step="1"
+              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Mass: {{ mass }} kg</label>
-            <input type="range" v-model.number="mass" min="0.1" max="10" step="0.1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+            <input type="range" v-model.number="mass" min="0.1" max="10" step="0.1"
+              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Gravity: {{ gravity }} m/s²</label>
-            <input type="range" v-model.number="gravity" min="1" max="20" step="0.1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+            <input type="range" v-model.number="gravity" min="1" max="20" step="0.1"
+              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Initial Angle: {{ initialAngle }}°</label>
-            <input type="range" v-model.number="initialAngle" @input="updateAnglePreview" min="-90" max="90" step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+            <input type="range" v-model.number="initialAngle" @input="updateAnglePreview" min="-90" max="90" step="1"
+              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Damping: {{ damping.toFixed(4) }}</label>
-            <input type="range" v-model.number="damping" min="0" max="0.01" step="0.0001" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+            <input type="range" v-model.number="damping" min="0" max="0.01" step="0.0001"
+              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
           </div>
           <div class="flex gap-2 pt-2">
             <button @click="startSwing" :disabled="isSwinging"
