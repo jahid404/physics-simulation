@@ -244,7 +244,7 @@
           </div>
           <div>
             <label>Damping</label>
-            <input type="range" v-model.number="damping" min="0" max="0.01" step="0.0001" class="w-full" />
+            <input type="range" v-model.number="damping" @input="calculateEstimatedTimeToStop" min="0" max="1" step="0.0001" class="w-full" />
             <span>{{ damping.toFixed(4) }}</span>
           </div>
           <div class="flex gap-2">
