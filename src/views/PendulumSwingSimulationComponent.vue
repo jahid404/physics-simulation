@@ -222,36 +222,45 @@
         <h2 class="text-xl font-semibold mb-4">Configuration</h2>
         <div class="grid gap-4">
           <div>
-            <label>Length (px)</label>
-            <input type="range" v-model.number="length" min="50" max="300" step="1" class="w-full" />
-            <span>{{ length }} px</span>
+            <label class="block text-sm font-medium text-gray-700 mb-1">
+              Length: {{ length }} px ({{ lengthMeters.toFixed(2) }} m)
+            </label>
+            <input type="range" v-model.number="length" min="50" max="300" step="1"
+              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
           </div>
           <div>
-            <label>Mass (kg)</label>
-            <input type="range" v-model.number="mass" min="0.5" max="10" step="0.1" class="w-full" />
-            <span>{{ mass }} kg</span>
+            <label class="block text-sm font-medium text-gray-700 mb-1">
+              Mass: {{ mass }} kg
+            </label>
+            <input type="range" v-model.number="mass" min="0.1" max="10" step="0.1"
+              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
           </div>
           <div>
-            <label>Gravity (m/s²)</label>
-            <input type="range" v-model.number="gravity" min="1" max="20" step="0.1" class="w-full" />
-            <span>{{ gravity }} m/s²</span>
+            <label class="block text-sm font-medium text-gray-700 mb-1">
+              Gravity: {{ gravity }} m/s²
+            </label>
+            <input type="range" v-model.number="gravity" min="1" max="20" step="0.1"
+              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
           </div>
           <div>
-            <label>Initial Angle (°)</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">
+              Initial Angle: {{ initialAngle }}°
+            </label>
             <input type="range" v-model.number="initialAngle" @input="updateAnglePreview" min="-90" max="90" step="1"
-              class="w-full" />
-            <span>{{ initialAngle }}°</span>
+              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
           </div>
           <div>
-            <label>Damping</label>
-            <input type="range" v-model.number="damping" @input="calculateEstimatedTimeToStop" min="0" max="1" step="0.01" class="w-full" />
-            <span>{{ damping.toFixed(2) }}</span>
+            <label class="block text-sm font-medium text-gray-700 mb-1">
+              Damping: {{ damping.toFixed(2) }}
+            </label>
+            <input type="range" v-model.number="damping" @input="calculateEstimatedTimeToStop" min="0" max="1"
+              step="0.01" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
           </div>
           <div class="flex gap-2">
             <button @click="startSwing"
-              class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full">Start</button>
+              class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-all duration-75 w-full">Start</button>
             <button @click="stopSwing"
-              class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 w-full">Stop</button>
+              class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-all duration-75 w-full">Stop</button>
           </div>
         </div>
       </div>
