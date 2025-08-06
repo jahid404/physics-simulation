@@ -158,7 +158,7 @@
 
 
 <template>
-  <div class="flex items-center justify-center bg-gray-100 p-4">
+  <div class="flex items-center justify-center bg-gray-100">
     <div class="flex flex-col md:flex-row gap-4 w-full max-w-6xl">
 
       <!-- Simulation Preview -->
