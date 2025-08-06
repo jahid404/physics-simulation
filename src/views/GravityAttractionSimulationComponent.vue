@@ -238,21 +238,58 @@
       <div class="w-full order-1 md:order-2 md:w-[350px] h-max p-4 bg-white rounded-xl shadow-xl">
         <h2 class="text-xl font-semibold mb-4 text-center md:text-left">Configuration</h2>
         <div class="grid gap-4">
-          <div>
-            <label>Mass 1 (kg)</label>
-            <input type="number" v-model.number="mass1" class="w-full border rounded p-1" />
-          </div>
-          <div>
-            <label>Mass 2 (kg)</label>
-            <input type="number" v-model.number="mass2" class="w-full border rounded p-1" />
-          </div>
-          <div>
-            <label>Gravity Multiplier</label>
-            <input type="number" v-model.number="gravityMultiplier" class="w-full border rounded p-1" />
-          </div>
-          <div>
-            <label>Initial Velocity (m/s)</label>
-            <input type="number" v-model.number="initialVelocity" class="w-full border rounded p-1" />
+          <div class="space-y-4">
+            <!-- Mass 1 Input -->
+            <div class="space-y-1">
+              <label class="block text-sm font-medium text-gray-700">Mass 1 (kg)</label>
+              <div class="relative rounded-md shadow-sm">
+                <input type="number" v-model.number="mass1"
+                  class="block w-full rounded-md border-gray-300 pl-3 pr-12 py-2 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                  placeholder="1.0" min="0.1" step="0.1">
+                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <span class="text-gray-500 sm:text-sm">kg</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mass 2 Input -->
+            <div class="space-y-1">
+              <label class="block text-sm font-medium text-gray-700">Mass 2 (kg)</label>
+              <div class="relative rounded-md shadow-sm">
+                <input type="number" v-model.number="mass2"
+                  class="block w-full rounded-md border-gray-300 pl-3 pr-12 py-2 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                  placeholder="1.0" min="0.1" step="0.1">
+                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <span class="text-gray-500 sm:text-sm">kg</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Gravity Multiplier -->
+            <div class="space-y-1">
+              <label class="block text-sm font-medium text-gray-700">Gravity Multiplier</label>
+              <div class="relative rounded-md shadow-sm">
+                <input type="number" v-model.number="gravityMultiplier"
+                  class="block w-full rounded-md border-gray-300 pl-3 pr-12 py-2 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                  placeholder="1.0" min="0.1" step="0.1">
+                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <span class="text-gray-500 sm:text-sm">× g</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Initial Velocity -->
+            <div class="space-y-1">
+              <label class="block text-sm font-medium text-gray-700">Initial Velocity</label>
+              <div class="relative rounded-md shadow-sm">
+                <input type="number" v-model.number="initialVelocity"
+                  class="block w-full rounded-md border-gray-300 pl-3 pr-12 py-2 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                  placeholder="0.0" step="0.1">
+                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <span class="text-gray-500 sm:text-sm">m/s</span>
+                </div>
+              </div>
+            </div>
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">
@@ -261,7 +298,8 @@
             <input type="range" v-model.number="initialDistance" @input="setInitialPositions" min="50" max="300"
               step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
           </div>
-          <button @click="startSimulation" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full cursor-pointer">
+          <button @click="startSimulation"
+            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full cursor-pointer">
             Start Simulation
           </button>
         </div>
