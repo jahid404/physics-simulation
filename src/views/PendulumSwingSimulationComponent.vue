@@ -73,12 +73,15 @@
     const now = performance.now()
     const dt = (now - lastTime) / 1000
     lastTime = now
+    
     if (dt > 0.1) {
       animationFrame = requestAnimationFrame(simulate)
       return
     }
 
-    const angularAcceleration = -(gravity.value / 100) / (length.value / 100) * Math.sin(angle.value) - damping.value * angularVelocity.value
+    // const angularAcceleration = -(gravity.value / 100) / (length.value / 100) * Math.sin(angle.value) - damping.value * angularVelocity.value
+    const angularAcceleration = -(gravity.value / lengthMeters.value) * Math.sin(angle.value) - damping.value * angularVelocity.value
+
     angularVelocity.value += angularAcceleration * dt
     angle.value += angularVelocity.value * dt
 
@@ -174,7 +177,8 @@
           </div>
           <div>
             <label>Initial Angle (°)</label>
-            <input type="range" v-model.number="initialAngle" @input="updateAnglePreview" min="-90" max="90" step="1" class="w-full" />
+            <input type="range" v-model.number="initialAngle" @input="updateAnglePreview" min="-90" max="90" step="1"
+              class="w-full" />
             <span>{{ initialAngle }}°</span>
           </div>
           <div>
