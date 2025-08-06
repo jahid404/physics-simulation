@@ -144,40 +144,65 @@
           <div class="absolute bottom-0 right-0 w-1 h-[150px] bg-gray-800"></div>
         </div>
 
-        <div class="mt-5">
-          <div class="flex justify-between">
-            <span class="text-md font-semibold">Mass</span>
-            <span class="text-md font-medium">{{ mass }} kg</span>
+        <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-3">
+          <!-- Mass Card -->
+          <div class="bg-blue-50 p-3 rounded-lg shadow-sm">
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-medium text-gray-600">Mass</span>
+              <span class="text-lg font-semibold">{{ mass }} <span
+                  class="text-sm font-normal text-gray-400">kg</span></span>
+            </div>
           </div>
 
-          <div class="flex justify-between">
-            <span class="text-md font-semibold">Initial Velocity</span>
-            <span class="text-md font-medium">{{ initialVelocity }} m/s</span>
+          <!-- Initial Velocity Card -->
+          <div class="bg-blue-50 p-3 rounded-lg shadow-sm">
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-medium text-gray-600">Initial Velocity</span>
+              <span class="text-lg font-semibold">{{ initialVelocity }} <span
+                  class="text-sm font-normal text-gray-400">m/s</span></span>
+            </div>
           </div>
 
-          <div class="flex justify-between">
-            <span class="text-md font-semibold">Friction Coefficient</span>
-            <span class="text-md font-medium">{{ kineticFriction }}</span>
+          <!-- Friction Coefficient Card -->
+          <div class="bg-green-50 p-3 rounded-lg shadow-sm">
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-medium text-gray-600">Friction Coefficient</span>
+              <span class="text-lg font-semibold">{{ kineticFriction.toFixed(3) }}</span>
+            </div>
           </div>
 
-          <div class="flex justify-between">
-            <span class="text-md font-semibold">Air Density</span>
-            <span class="text-md font-medium">{{ airDensity }} kg/m³</span>
+          <!-- Air Density Card -->
+          <div class="bg-green-50 p-3 rounded-lg shadow-sm">
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-medium text-gray-600">Air Density</span>
+              <span class="text-lg font-semibold">{{ airDensity.toFixed(3) }} <span
+                  class="text-sm font-normal text-gray-400">kg/m³</span></span>
+            </div>
           </div>
 
-          <div class="flex justify-between">
-            <span class="text-md font-semibold">Drag Coefficient</span>
-            <span class="text-md font-medium">{{ dragCoefficient }}</span>
+          <!-- Drag Coefficient Card -->
+          <div class="bg-violet-50 p-3 rounded-lg shadow-sm">
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-medium text-gray-600">Drag Coefficient</span>
+              <span class="text-lg font-semibold">{{ dragCoefficient.toFixed(3) }}</span>
+            </div>
           </div>
 
-          <div class="flex justify-between">
-            <span class="text-md font-semibold">Final Distance</span>
-            <span class="text-md font-medium">{{ (positionX * pxToM).toFixed(2) }} m</span>
+          <!-- Final Distance Card -->
+          <div class="bg-violet-50 p-3 rounded-lg shadow-sm">
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-medium text-gray-600">Final Distance</span>
+              <span class="text-lg font-semibold">{{ (positionX * pxToM).toFixed(2) }} <span
+                  class="text-sm font-normal text-gray-400">m</span></span>
+            </div>
           </div>
 
-          <div class="flex justify-between">
-            <span class="text-md font-semibold">Total Bounces</span>
-            <span class="text-md font-medium">{{ totalBounces }}</span>
+          <!-- Total Bounces Card -->
+          <div class="bg-indigo-50 p-3 rounded-lg shadow-sm">
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-medium text-gray-600">Total Bounces</span>
+              <span class="text-lg font-semibold">{{ totalBounces }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -204,7 +229,8 @@
           <div class="space-y-1">
             <div class="flex justify-between items-center">
               <label class="block text-sm font-medium text-gray-700">Initial Velocity</label>
-              <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">{{ initialVelocity }} m/s</span>
+              <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">{{ initialVelocity }}
+                m/s</span>
             </div>
             <input type="range" v-model.number="initialVelocity" min="0.1" max="10" step="0.1"
               class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600 hover:accent-blue-700 transition-colors">
@@ -218,7 +244,8 @@
           <div class="space-y-1">
             <div class="flex justify-between items-center">
               <label class="block text-sm font-medium text-gray-700">Friction Coefficient</label>
-              <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">{{ kineticFriction.toFixed(2) }}</span>
+              <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">{{
+                kineticFriction.toFixed(2) }}</span>
             </div>
             <input type="range" v-model.number="kineticFriction" min="0.01" max="1" step="0.01"
               class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600 hover:accent-blue-700 transition-colors">
@@ -232,7 +259,8 @@
           <div class="space-y-1">
             <div class="flex justify-between items-center">
               <label class="block text-sm font-medium text-gray-700">Air Density</label>
-              <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">{{ airDensity.toFixed(2) }} kg/m³</span>
+              <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">{{ airDensity.toFixed(2)
+                }} kg/m³</span>
             </div>
             <input type="range" v-model.number="airDensity" min="0" max="2" step="0.01"
               class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600 hover:accent-blue-700 transition-colors">

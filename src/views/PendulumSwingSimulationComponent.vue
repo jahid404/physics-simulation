@@ -171,47 +171,69 @@
           <div class="absolute border-1 bg-blue-500 rounded-full" :style="bobStyle"></div>
         </div>
 
-        <div class="mt-4">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div class="bg-gray-100 p-2 rounded">
-              <div class="text-sm font-semibold text-gray-600">Period</div>
-              <div class="text-lg">{{ period.toFixed(2) }} s</div>
-            </div>
-            <div class="bg-gray-100 p-2 rounded">
-              <div class="text-sm font-semibold text-gray-600">Est. Time to Stop</div>
-              <div class="text-lg">
-                {{ estimatedTimeToStop === Infinity ? "∞" : estimatedTimeToStop?.toFixed(2) + " s" }}
-              </div>
+        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="bg-blue-50 p-3 rounded-lg shadow-sm">
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-medium text-gray-600">Period</span>
+              <span class="text-lg font-semibold">{{ period.toFixed(2) }} <span
+                  class="text-sm font-normal text-gray-400">s</span></span>
             </div>
           </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-2">
-            <div class="bg-blue-50 p-2 rounded">
-              <div class="text-sm font-semibold text-gray-600">Angular Velocity</div>
-              <div class="text-lg">{{ angularVelocity.toFixed(2) }} s</div>
-            </div>
-            <div class="bg-blue-50 p-2 rounded">
-              <div class="text-sm font-semibold text-gray-600">Linear Velocity</div>
-              <div class="text-lg">{{ linearVelocity.toFixed(2) }} m/s</div>
-            </div>
-            <div class="bg-blue-50 p-2 rounded">
-              <div class="text-sm font-semibold text-gray-600">Max Linear Velocity</div>
-              <div class="text-lg">{{ maxLinearVelocity.toFixed(2) }} m/s</div>
+          <div class="bg-blue-50 p-3 rounded-lg shadow-sm">
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-medium text-gray-600">Est. Time to Stop</span>
+              <span class="text-lg font-semibold">
+                {{ estimatedTimeToStop === Infinity ? "∞" : estimatedTimeToStop?.toFixed(2) }}
+                <span class="text-sm font-normal text-gray-400">s</span>
+              </span>
             </div>
           </div>
+        </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-2">
-            <div class="bg-green-50 p-2 rounded">
-              <div class="text-sm font-semibold text-gray-600">Potential Energy</div>
-              <div class="text-lg">{{ potentialEnergy.toFixed(2) }} J</div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-3">
+          <div class="bg-green-50 p-3 rounded-lg shadow-sm">
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-medium text-gray-600">Angular Velocity</span>
+              <span class="text-lg font-semibold">{{ angularVelocity.toFixed(2) }} <span
+                  class="text-sm font-normal text-gray-400">rad/s</span></span>
             </div>
-            <div class="bg-green-50 p-2 rounded">
-              <div class="text-sm font-semibold text-gray-600">Kinetic Energy</div>
-              <div class="text-lg">{{ kineticEnergy.toFixed(2) }} J</div>
+          </div>
+          <div class="bg-green-50 p-3 rounded-lg shadow-sm">
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-medium text-gray-600">Linear Velocity</span>
+              <span class="text-lg font-semibold">{{ linearVelocity.toFixed(2) }} <span
+                  class="text-sm font-normal text-gray-400">m/s</span></span>
             </div>
-            <div class="bg-green-50 p-2 rounded">
-              <div class="text-sm font-semibold text-gray-600">Total Energy</div>
-              <div class="text-lg">{{ totalEnergy.toFixed(2) }} J</div>
+          </div>
+          <div class="bg-green-50 p-3 rounded-lg shadow-sm">
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-medium text-gray-600">Max Linear Velocity</span>
+              <span class="text-lg font-semibold">{{ maxLinearVelocity.toFixed(2) }} <span
+                  class="text-sm font-normal text-gray-400">m/s</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-3">
+          <div class="bg-violet-50 p-3 rounded-lg shadow-sm">
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-medium text-gray-600">Potential Energy</span>
+              <span class="text-lg font-semibold">{{ potentialEnergy.toFixed(2) }} <span
+                  class="text-sm font-normal text-gray-400">J</span></span>
+            </div>
+          </div>
+          <div class="bg-violet-50 p-3 rounded-lg shadow-sm">
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-medium text-gray-600">Kinetic Energy</span>
+              <span class="text-lg font-semibold">{{ kineticEnergy.toFixed(2) }} <span
+                  class="text-sm font-normal text-gray-400">J</span></span>
+            </div>
+          </div>
+          <div class="bg-violet-50 p-3 rounded-lg shadow-sm">
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-medium text-gray-600">Total Energy</span>
+              <span class="text-lg font-semibold">{{ totalEnergy.toFixed(2) }} <span
+                  class="text-sm font-normal text-gray-400">J</span></span>
             </div>
           </div>
         </div>

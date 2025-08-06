@@ -214,22 +214,37 @@
           <div class="absolute" :style="body2Style"></div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
-          <div class="bg-green-50 p-2 rounded">
-            <div class="text-sm font-semibold text-gray-600">Distance</div>
-            <div class="text-lg">{{ (distanceMeters / 1000).toFixed(2) }} km</div>
+        <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-3">
+          <!-- Distance Card -->
+          <div class="bg-blue-50 p-3 rounded-lg shadow-sm">
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-medium text-gray-600">Distance</span>
+              <span class="text-lg font-semibold">{{ (distanceMeters / 1000).toFixed(2) }} km</span>
+            </div>
           </div>
-          <div class="bg-green-50 p-2 rounded">
-            <div class="text-sm font-semibold text-gray-600">Force</div>
-            <div class="text-lg">{{ gravitationalForce.toExponential(2) }} N</div>
+
+          <!-- Force Card -->
+          <div class="bg-blue-50 p-3 rounded-lg shadow-sm">
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-medium text-gray-600">Force</span>
+              <span class="text-lg font-semibold">{{ gravitationalForce.toExponential(2) }} N</span>
+            </div>
           </div>
-          <div class="bg-blue-50 p-2 rounded">
-            <div class="text-sm font-semibold text-gray-600">Real Collision Time</div>
-            <div class="text-lg">{{ realCollisionTimeFormatted }} s</div>
+
+          <!-- Real Collision Time Card -->
+          <div class="bg-blue-50 p-3 rounded-lg shadow-sm">
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-medium text-gray-600">Real Collision Time</span>
+              <span class="text-lg font-semibold">{{ realCollisionTimeFormatted }}</span>
+            </div>
           </div>
-          <div class="bg-blue-50 p-2 rounded">
-            <div class="text-sm font-semibold text-gray-600">Time to Collision</div>
-            <div class="text-lg">{{ collisionTime !== null ? collisionTime.toFixed(2) : '0.00' }} s</div>
+
+          <!-- Time to Collision Card -->
+          <div class="bg-blue-50 p-3 rounded-lg shadow-sm">
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-medium text-gray-600">Time to Collision</span>
+              <span class="text-lg font-semibold">{{ collisionTime !== null ? collisionTime.toFixed(2) : '0.00' }} s</span>
+            </div>
           </div>
         </div>
       </div>
