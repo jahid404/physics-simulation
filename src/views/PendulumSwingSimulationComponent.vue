@@ -60,6 +60,13 @@
     }
   }
 
+  const updateAnglePreview = () => {
+    if (!isSwinging.value) {
+      angle.value = initialAngle.value * (Math.PI / 180)
+      angularVelocity.value = 0 // reset velocity for preview
+    }
+  }
+
   // Simulation loop
   const simulate = () => {
     if (!isSwinging.value) return
@@ -167,7 +174,7 @@
           </div>
           <div>
             <label>Initial Angle (°)</label>
-            <input type="range" v-model.number="initialAngle" @change="" min="-90" max="90" step="1" class="w-full" />
+            <input type="range" v-model.number="initialAngle" @change="updateAnglePreview" min="-90" max="90" step="1" class="w-full" />
             <span>{{ initialAngle }}°</span>
           </div>
           <div>
