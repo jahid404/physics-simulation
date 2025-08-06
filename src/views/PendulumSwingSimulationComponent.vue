@@ -174,7 +174,7 @@
           </div>
           <div>
             <label>Initial Angle (°)</label>
-            <input type="range" v-model.number="initialAngle" @change="updateAnglePreview" min="-90" max="90" step="1" class="w-full" />
+            <input type="range" v-model.number="initialAngle" @input="updateAnglePreview" min="-90" max="90" step="1" class="w-full" />
             <span>{{ initialAngle }}°</span>
           </div>
           <div>
