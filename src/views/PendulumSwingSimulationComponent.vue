@@ -36,7 +36,7 @@
   // Bob style — attached to string’s bottom
   const bobStyle = computed(() => {
     const bobDiameter = 30
-    const offsetX = Math.sin(angle.value) * length.value
+    const offsetX = -Math.sin(angle.value) * length.value
     const offsetY = Math.cos(angle.value) * length.value
     return {
       position: "absolute",
