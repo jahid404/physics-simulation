@@ -161,10 +161,18 @@
             </div>
           </div>
 
-          <div class="grid grid-cols-2 gap-3 mt-2">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-2">
             <div class="bg-gray-100 p-2 rounded">
               <div class="text-sm font-semibold text-gray-600">Angular Velocity</div>
               <div class="text-lg">{{ angularVelocity.toFixed(2) }} s</div>
+            </div>
+            <div class="bg-gray-100 p-2 rounded">
+              <div class="text-sm font-semibold text-gray-600">Linear Velocity</div>
+              <div class="text-lg">{{ linearVelocity.toFixed(2) }} m/s</div>
+            </div>
+            <div class="bg-gray-100 p-2 rounded">
+              <div class="text-sm font-semibold text-gray-600">Max Linear Velocity</div>
+              <div class="text-lg">{{ maxLinearVelocity.toFixed(2) }} m/s</div>
             </div>
           </div>
         </div>
