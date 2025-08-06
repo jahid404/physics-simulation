@@ -132,6 +132,8 @@
     angularVelocity.value = 0
     isSwinging.value = true
     lastTime = performance.now()
+
+    calculateEstimatedTimeToStop()
     simulate()
   }
 
