@@ -161,11 +161,11 @@
             </div>
           </div>
 
-          <div class="grid gap-3">
-          </div>
-          <div class="bg-gray-100 p-2 rounded">
-            <div class="text-sm font-semibold text-gray-600">Period</div>
-            <div class="text-lg">{{ period.toFixed(2) }} s</div>
+          <div class="grid grid-cols-2 gap-3 mt-2">
+            <div class="bg-gray-100 p-2 rounded">
+              <div class="text-sm font-semibold text-gray-600">Angular Velocity</div>
+              <div class="text-lg">{{ angularVelocity.toFixed(2) }} s</div>
+            </div>
           </div>
         </div>
 
