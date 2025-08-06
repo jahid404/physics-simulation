@@ -17,7 +17,7 @@
       id: 3,
       name: "Pendulum Swing",
       description: "Visualize a swinging pendulum",
-      link: "/pendulum",
+      link: "/pendulum-swing",
     },
     {
       id: 4,

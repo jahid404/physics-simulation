@@ -28,6 +28,13 @@ const router = createRouter({
         title: 'Gravity Attraction',
       },
     },
+    {
+      path: '/pendulum-swing',
+      component: () => import('@/views/PendulumSwingSimulationComponent.vue'),
+      meta: {
+        title: 'Pendulum Swing',
+      },
+    },
   ],
 })
 
