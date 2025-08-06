@@ -39,14 +39,10 @@
     const offsetX = -Math.sin(angle.value) * length.value
     const offsetY = Math.cos(angle.value) * length.value
     return {
-      position: "absolute",
       top: `${pivotY + offsetY - bobDiameter / 2}px`,
       left: `${pivotX.value + offsetX - bobDiameter / 2}px`,
       width: `${bobDiameter}px`,
       height: `${bobDiameter}px`,
-      backgroundColor: "orange",
-      borderRadius: "50%",
-      border: "2px solid #b45309"
     }
   })
 
@@ -119,7 +115,7 @@
           <!-- String -->
           <div :style="stringStyle"></div>
           <!-- Bob -->
-          <div :style="bobStyle"></div>
+          <div class="absolute border-2 bg-blue-500 rounded-full" :style="bobStyle"></div>
         </div>
 
         <div class="mt-4">
