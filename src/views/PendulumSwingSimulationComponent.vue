@@ -23,13 +23,11 @@
 
   // String style
   const stringStyle = computed(() => ({
-    position: "absolute",
     top: `${pivotY}px`,
     left: `${pivotX.value}px`,
     width: "2px",
     height: `${length.value}px`,
-    backgroundColor: "#444",
-    transformOrigin: "top",
+    // transformOrigin: "top",
     transform: `rotate(${angle.value}rad)`
   }))
 
@@ -113,7 +111,7 @@
         <h2 class="text-xl font-bold mb-4 text-center">Pendulum Swing Simulation</h2>
         <div class="relative w-full h-[400px] border border-gray-300 rounded bg-gray-50 overflow-hidden">
           <!-- String -->
-          <div :style="stringStyle"></div>
+          <div class="absolute bg-black" :style="stringStyle"></div>
           <!-- Bob -->
           <div class="absolute border-2 bg-blue-500 rounded-full" :style="bobStyle"></div>
         </div>
