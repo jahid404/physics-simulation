@@ -181,7 +181,7 @@
               <div class="text-sm font-semibold text-gray-600">Potential Energy</div>
               <div class="text-lg">{{ potentialEnergy.toFixed(2) }} J</div>
             </div> -->
-            <div class="bg-blue-50 p-2 rounded col-span-2">
+            <div class="bg-blue-50 p-2 rounded">
               <div class="text-sm font-semibold text-blue-600">Potential Energy</div>
               <div class="text-lg">{{ potentialEnergy.toFixed(2) }} J</div>
               <div class="h-2 bg-blue-100 rounded-full mt-1">
