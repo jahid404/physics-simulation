@@ -56,11 +56,19 @@
     return Math.sqrt(2 * gravity.value * h)
   })
 
+  // Estimated time to stop
   const stopThreshold = 1 * (Math.PI / 180) // 1 degree in radians
-  const estimatedTimeToStop = computed(() => {
-    if (damping.value <= 0) return Infinity // no damping → swings forever
-    return Math.log(Math.abs(angle.value) / stopThreshold) / damping.value
-  })
+  const estimatedTimeToStop = ref<number | null>(null)
+
+  const calculateEstimatedTimeToStop = () => {
+    if (damping.value <= 0) {
+      estimatedTimeToStop.value = Infinity
+      return
+    }
+    estimatedTimeToStop.value =
+      Math.log(Math.abs(initialAngle.value * Math.PI / 180) / stopThreshold) / damping.value
+  }
+
 
   // Period (large-angle correction for realism)
   const period = computed(() => {
