@@ -177,11 +177,17 @@
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-2">
-            <div class="bg-green-50 p-2 rounded">
+            <!-- <div class="bg-green-50 p-2 rounded">
               <div class="text-sm font-semibold text-gray-600">Potential Energy</div>
-              <!-- <div class="text-lg">{{ potentialEnergy.toFixed(2) }} J</div> -->
-              <div class="h-2 bg-blue-500 rounded-full"
-                :style="{ width: `${Math.min(100, (potentialEnergy / (mass * gravity * lengthMeters * 2)) * 100)}%` }">
+              <div class="text-lg">{{ potentialEnergy.toFixed(2) }} J</div>
+            </div> -->
+            <div class="bg-blue-50 p-2 rounded col-span-2">
+              <div class="text-sm font-semibold text-blue-600">Potential Energy</div>
+              <div class="text-lg">{{ potentialEnergy.toFixed(2) }} J</div>
+              <div class="h-2 bg-blue-100 rounded-full mt-1">
+                <div class="h-2 bg-blue-500 rounded-full"
+                  :style="{ width: `${Math.min(100, (potentialEnergy / (mass * gravity * lengthMeters * 2)) * 100)}%` }">
+                </div>
               </div>
             </div>
             <div class="bg-green-50 p-2 rounded">
