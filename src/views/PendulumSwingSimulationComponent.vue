@@ -162,10 +162,11 @@
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-2">
-            <div class="bg-blue-50 p-2 rounded">
+            <!-- <div class="bg-blue-50 p-2 rounded">
               <div class="text-sm font-semibold text-gray-600">Angular Velocity</div>
               <div class="text-lg">{{ angularVelocity.toFixed(2) }} s</div>
-            </div>
+            </div> -->
+            
             <div class="bg-blue-50 p-2 rounded">
               <div class="text-sm font-semibold text-gray-600">Linear Velocity</div>
               <div class="text-lg">{{ linearVelocity.toFixed(2) }} m/s</div>
@@ -207,9 +208,14 @@
               <div class="text-sm font-semibold text-gray-600">Total Energy</div>
               <div class="text-lg">{{ totalEnergy.toFixed(2) }} J</div>
             </div> -->
-            <div class="bg-green-50 p-2 rounded col-span-2">
-              <div class="text-sm font-semibold text-gray-600">Total Energy</div>
+            <div class="bg-green-50 p-2 rounded">
+              <div class="text-sm font-semibold text-green-600">Total Energy</div>
               <div class="text-lg">{{ totalEnergy.toFixed(2) }} J</div>
+              <div class="h-2 bg-green-100 rounded-full mt-1">
+                <div class="h-2 bg-green-500 rounded-full"
+                  :style="{ width: `${Math.min(100, (totalEnergy / (mass * gravity * lengthMeters * 2)) * 100)}%` }">
+                </div>
+              </div>
             </div>
           </div>
         </div>
