@@ -13,7 +13,7 @@
   const radius2 = ref(15)    // px
   const gravityMultiplier = ref(5e7) // Boost factor for visual speed
   const initialVelocity = ref(0) // m/s (for each body)
-  const initialDistance = ref(300) // px (scaled distance)
+  const initialDistance = ref(200) // px (scaled distance)
   const distanceMin = ref(100)
   const distanceMax = ref(600)
 
@@ -31,7 +31,7 @@
 
   // Distance in meters (computed each frame)
   const distanceMeters = computed(() => Math.abs(pos2X.value - pos1X.value) * pxToM)
-
+  const initialDistanceMeters = computed(() => initialDistance.value * pxToM)
   // Force in Newtons
   const gravitationalForce = computed(() => {
     const r = distanceMeters.value
@@ -255,15 +255,13 @@
             <input type="number" v-model.number="initialVelocity" class="w-full border rounded p-1" />
           </div>
           <div>
-            <label>Initial Distance (px)</label>
-            <input type="range" v-model.number="initialDistance" @input="setInitialPositions" :min="distanceMin"
-              :max="distanceMax" step="10" class="w-full" />
-            <div class="flex justify-between">
-              <span class="text-sm text-gray-600">{{ initialDistance }} px</span>
-              <span class="text-sm text-gray-600">(1px = 1,000,000 m)</span>
-            </div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">
+              Initial Distance: {{ initialDistance }} px ({{ (initialDistanceMeters / 1000).toFixed(2) }} km)
+            </label>
+            <input type="range" v-model.number="initialDistance" @input="setInitialPositions" min="50" max="300"
+              step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
           </div>
-          <button @click="startSimulation" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full">
+          <button @click="startSimulation" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full cursor-pointer">
             Start Simulation
           </button>
         </div>
