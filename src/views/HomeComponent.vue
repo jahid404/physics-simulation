@@ -18,6 +18,7 @@
       name: "Pendulum Swing",
       description: "Visualize a swinging pendulum",
       link: "/pendulum-swing",
+      badge: "New",
     },
     {
       id: 4,
