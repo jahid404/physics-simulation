@@ -46,7 +46,10 @@
 
   // Physics
   const lengthMeters = computed(() => length.value / 100) // px to m
-  const linearVelocity = computed(() => angularVelocity.value * lengthMeters.value)
+  const linearVelocity = computed(() => {
+    return Math.abs(angularVelocity.value) * lengthMeters.value
+  })
+
   const period = computed(() => 2 * Math.PI * Math.sqrt(lengthMeters.value / gravity.value))
   const heightChange = computed(() => lengthMeters.value - lengthMeters.value * Math.cos(angle.value))
   const potentialEnergy = computed(() => mass.value * gravity.value * heightChange.value)
@@ -73,7 +76,7 @@
     const now = performance.now()
     const dt = (now - lastTime) / 1000
     lastTime = now
-    
+
     if (dt > 0.1) {
       animationFrame = requestAnimationFrame(simulate)
       return
