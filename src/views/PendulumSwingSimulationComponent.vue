@@ -190,11 +190,24 @@
                 </div>
               </div>
             </div>
-            <div class="bg-green-50 p-2 rounded">
+            <!-- <div class="bg-green-50 p-2 rounded">
               <div class="text-sm font-semibold text-gray-600">Kinetic Energy</div>
               <div class="text-lg">{{ kineticEnergy.toFixed(2) }} J</div>
-            </div>
+            </div> -->
             <div class="bg-green-50 p-2 rounded">
+              <div class="text-sm font-semibold text-green-600">Kinetic Energy</div>
+              <div class="text-lg">{{ kineticEnergy.toFixed(2) }} J</div>
+              <div class="h-2 bg-green-100 rounded-full mt-1">
+                <div class="h-2 bg-green-500 rounded-full"
+                  :style="{ width: `${Math.min(100, (kineticEnergy / (0.5 * mass * maxLinearVelocity ** 2)) * 100)}%` }">
+                </div>
+              </div>
+            </div>
+            <!-- <div class="bg-green-50 p-2 rounded">
+              <div class="text-sm font-semibold text-gray-600">Total Energy</div>
+              <div class="text-lg">{{ totalEnergy.toFixed(2) }} J</div>
+            </div> -->
+            <div class="bg-green-50 p-2 rounded col-span-2">
               <div class="text-sm font-semibold text-gray-600">Total Energy</div>
               <div class="text-lg">{{ totalEnergy.toFixed(2) }} J</div>
             </div>
