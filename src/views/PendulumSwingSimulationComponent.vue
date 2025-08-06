@@ -162,49 +162,33 @@
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-2">
-            <div class="bg-gray-100 p-2 rounded">
+            <div class="bg-blue-50 p-2 rounded">
               <div class="text-sm font-semibold text-gray-600">Angular Velocity</div>
               <div class="text-lg">{{ angularVelocity.toFixed(2) }} s</div>
             </div>
-            <div class="bg-gray-100 p-2 rounded">
+            <div class="bg-blue-50 p-2 rounded">
               <div class="text-sm font-semibold text-gray-600">Linear Velocity</div>
               <div class="text-lg">{{ linearVelocity.toFixed(2) }} m/s</div>
             </div>
-            <div class="bg-gray-100 p-2 rounded">
+            <div class="bg-blue-50 p-2 rounded">
               <div class="text-sm font-semibold text-gray-600">Max Linear Velocity</div>
               <div class="text-lg">{{ maxLinearVelocity.toFixed(2) }} m/s</div>
             </div>
           </div>
-        </div>
 
-        <div class="mt-4">
-          <div class="flex justify-between">
-            <span class="font-semibold">Period</span>
-            <span>{{ period.toFixed(2) }}s</span>
-          </div>
-          <div class="flex justify-between">
-            <span class="font-semibold">Angular Velocity</span>
-            <span>{{ angularVelocity.toFixed(2) }} rad/s</span>
-          </div>
-          <div class="flex justify-between">
-            <span class="font-semibold">Linear Velocity</span>
-            <span>{{ linearVelocity.toFixed(2) }} m/s</span>
-          </div>
-          <div class="flex justify-between">
-            <span class="font-semibold">Max Linear Velocity</span>
-            <span>{{ maxLinearVelocity.toFixed(2) }} m/s</span>
-          </div>
-          <div class="flex justify-between">
-            <span class="font-semibold">Potential Energy</span>
-            <span>{{ potentialEnergy.toFixed(2) }} J</span>
-          </div>
-          <div class="flex justify-between">
-            <span class="font-semibold">Kinetic Energy</span>
-            <span>{{ kineticEnergy.toFixed(2) }} J</span>
-          </div>
-          <div class="flex justify-between">
-            <span class="font-semibold">Total Energy</span>
-            <span>{{ totalEnergy.toFixed(2) }} J</span>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-2">
+            <div class="bg-blue-50 p-2 rounded">
+              <div class="text-sm font-semibold text-gray-600">Potential Energy</div>
+              <div class="text-lg">{{ potentialEnergy.toFixed(2) }} J</div>
+            </div>
+            <div class="bg-blue-50 p-2 rounded">
+              <div class="text-sm font-semibold text-gray-600">Kinetic Energy</div>
+              <div class="text-lg">{{ kineticEnergy.toFixed(2) }} J</div>
+            </div>
+            <div class="bg-blue-50 p-2 rounded">
+              <div class="text-sm font-semibold text-gray-600">Total Energy</div>
+              <div class="text-lg">{{ totalEnergy.toFixed(2) }} J</div>
+            </div>
           </div>
         </div>
       </div>
