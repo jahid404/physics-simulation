@@ -5,8 +5,8 @@
   const length = ref(200) // px
   const mass = ref(1) // kg
   const gravity = ref(9.8) // m/s²
-  const initialAngle = ref(30) // degrees from vertical
-  const damping = ref(0.002) // friction/damping factor
+  const initialAngle = ref(30) // degrees
+  const damping = ref(0.002) // damping factor
 
   // State
   const angle = ref(initialAngle.value * (Math.PI / 180)) // radians
@@ -19,15 +19,16 @@
   const previewRef = ref<HTMLElement | null>(null)
   const previewWidth = ref(400)
   const pivotX = computed(() => previewWidth.value / 2)
+  const pivotY = 0
 
-  // Bob position
+  // Bob position (corrected)
   const bobX = computed(() => pivotX.value + length.value * Math.sin(angle.value))
-  const bobY = computed(() => length.value * Math.cos(angle.value))
+  const bobY = computed(() => pivotY + length.value * Math.cos(angle.value))
 
   // Styles
   const stringStyle = computed(() => ({
     position: "absolute",
-    top: "0px",
+    top: `${pivotY}px`,
     left: `${pivotX.value}px`,
     width: "2px",
     height: `${length.value}px`,
@@ -38,7 +39,7 @@
 
   const bobStyle = computed(() => ({
     position: "absolute",
-    top: `${bobY.value}px`,
+    top: `${bobY.value - 15}px`,
     left: `${bobX.value - 15}px`,
     width: "30px",
     height: "30px",
@@ -47,6 +48,21 @@
     border: "2px solid #b45309"
   }))
 
+  // Physics calculations
+  const period = computed(() => {
+    // Small-angle approximation
+    return 2 * Math.PI * Math.sqrt((length.value / 100) / gravity.value)
+  })
+
+  const heightChange = computed(() => {
+    // Vertical displacement from lowest point
+    return length.value - length.value * Math.cos(angle.value)
+  })
+
+  const potentialEnergy = computed(() => mass.value * gravity.value * (heightChange.value / 100))
+  const kineticEnergy = computed(() => 0.5 * mass.value * Math.pow(length.value / 100 * angularVelocity.value, 2))
+  const totalEnergy = computed(() => potentialEnergy.value + kineticEnergy.value)
+
   // Update preview width
   const updatePreviewWidth = () => {
     if (previewRef.value) {
@@ -54,7 +70,7 @@
     }
   }
 
-  // Physics simulation
+  // Simulation loop
   const simulate = () => {
     if (!isSwinging.value) return
 
@@ -67,7 +83,7 @@
       return
     }
 
-    // Angular acceleration (non-linear equation of motion)
+    // Non-linear equation of motion
     const angularAcceleration = -(gravity.value / 100) / (length.value / 100) * Math.sin(angle.value) - damping.value * angularVelocity.value
 
     angularVelocity.value += angularAcceleration * dt
@@ -115,6 +131,25 @@
           <div :style="stringStyle"></div>
           <!-- Bob -->
           <div :style="bobStyle"></div>
+        </div>
+
+        <div class="mt-4">
+          <div class="flex justify-between">
+            <span class="font-semibold">Period (Small Angle)</span>
+            <span>{{ period.toFixed(2) }} s</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="font-semibold">Potential Energy</span>
+            <span>{{ potentialEnergy.toFixed(2) }} J</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="font-semibold">Kinetic Energy</span>
+            <span>{{ kineticEnergy.toFixed(2) }} J</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="font-semibold">Total Energy</span>
+            <span>{{ totalEnergy.toFixed(2) }} J</span>
+          </div>
         </div>
       </div>
 
