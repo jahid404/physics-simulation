@@ -24,6 +24,10 @@
   const previewWidth = ref(800)
   const previewHeight = ref(400)
 
+  const updateInitialHeight = () => {
+    initialHeight.value = initialHeight.value * pxPerMeter
+  }
+
   const updatePreviewSize = () => {
     if (previewRef.value) {
       previewWidth.value = previewRef.value.clientWidth
@@ -176,7 +180,7 @@
             <div class="space-y-1">
               <label class="block text-sm font-medium text-gray-700">Initial Height (m)</label>
               <div class="relative rounded-md shadow-sm">
-                <input type="number" v-model.number="initialHeight" class="w-full border-gray-300 rounded-md" min="0"
+                <input type="number" v-model.number="initialHeight" @input="updateInitialHeight" class="w-full border-gray-300 rounded-md" min="0"
                   step="0.1">
                 <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                   <span class="text-gray-500 sm:text-sm">m</span>
