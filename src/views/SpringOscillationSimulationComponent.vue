@@ -121,7 +121,7 @@
 </script>
 
 <template>
-  <div class="flex items-center justify-center bg-gray-100 min-h-screen">
+  <div class="flex items-center justify-center bg-gray-100 min-h-screen p-4">
     <div class="flex flex-col md:flex-row gap-6 w-full max-w-6xl">
 
       <!-- Simulation Canvas -->
@@ -136,19 +136,21 @@
           <!-- Spring visualization -->
           <div class="absolute left-1/2 w-1 bg-gray-400" :style="{
             top: '20px',
-            bottom: `${equilibriumPosition - position * pxPerMeter - 25}px`,
+            bottom: `${equilibriumPosition + position * pxPerMeter - 20}px`,
             transform: 'translateX(-50%)'
           }">
-            <div class="absolute -top-4 left-1/2 w-8 h-8 bg-gray-300 rounded-full border-2 border-gray-400"
+            <div class="absolute -top-4 left-1/2 w-6 h-6 bg-gray-300 rounded-full border-2 border-gray-400"
               :style="{ transform: 'translateX(-50%)' }"></div>
           </div>
 
           <!-- Mass visualization -->
-          <div class="absolute left-1/2 w-10 h-10 bg-amber-500 rounded-lg shadow-md border-2 border-amber-600" :style="{
-            top: `${equilibriumPosition - position * pxPerMeter}px`,
-            transform: 'translateX(-50%)'
-          }">
-            <div class="text-white text-center mt-4 font-bold text-xs">{{ mass }} kg</div>
+          <div
+            class="absolute left-1/2 w-10 h-10 flex items-center bg-blue-500 rounded-lg shadow-md border-2 border-blue-600"
+            :style="{
+              top: `${equilibriumPosition - position * pxPerMeter}px`,
+              transform: 'translateX(-50%) translateY(50%)'
+            }">
+            <div class="text-white text-center font-semibold text-xs">{{ mass }} kg</div>
           </div>
 
           <!-- Path visualization -->
@@ -161,7 +163,7 @@
 
         <!-- System Info -->
         <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
-          <div class="bg-violet-50 p-3 rounded-lg shadow-sm">
+          <div class="bg-blue-50 p-3 rounded-lg shadow-sm">
             <div class="flex justify-between items-center">
               <span class="text-sm font-medium text-gray-600">Natural Frequency</span>
               <span class="text-lg font-semibold">{{ naturalFrequency.toFixed(2) }} <span
@@ -169,17 +171,20 @@
             </div>
           </div>
 
-          <div class="bg-violet-50 p-3 rounded-lg shadow-sm">
+          <div class="bg-blue-50 p-3 rounded-lg shadow-sm">
             <div class="flex justify-between items-center">
               <span class="text-sm font-medium text-gray-600">Damping Ratio</span>
-              <span
-                class="text-lg font-semibold" :class="isUnderdamped ? 'text-green-500' : isCriticallyDamped ? 'text-red-500' : ''">
+              <span class="text-lg font-semibold" :class="{
+                'text-green-500': isUnderdamped,
+                'text-yellow-500': isCriticallyDamped,
+                'text-red-500': isOverdamped
+              }">
                 {{ dampingRatio.toFixed(3) }}
               </span>
             </div>
           </div>
 
-          <div class="bg-violet-50 p-3 rounded-lg shadow-sm">
+          <div class="bg-blue-50 p-3 rounded-lg shadow-sm">
             <div class="flex justify-between items-center">
               <span class="text-sm font-medium text-gray-600">Period</span>
               <span class="text-lg font-semibold">{{ period.toFixed(3) }} <span
@@ -199,14 +204,14 @@
             <div class="flex justify-between items-center">
               <label class="block text-sm font-medium text-gray-700">Mass</label>
               <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">
-                {{ mass }}kg
+                {{ mass }} kg
               </span>
             </div>
             <input type="range" v-model.number="mass" min="0.1" max="10" step="0.1"
-              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500 hover:accent-blue-600 transition-colors">
+              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500">
             <div class="flex justify-between text-xs text-gray-500 mt-1">
-              <span>0.1kg</span>
-              <span>10kg</span>
+              <span>0.1 kg</span>
+              <span>10 kg</span>
             </div>
           </div>
 
@@ -219,7 +224,7 @@
               </span>
             </div>
             <input type="range" v-model.number="springConstant" min="1" max="500" step="1"
-              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500 hover:accent-blue-600 transition-colors">
+              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500">
             <div class="flex justify-between text-xs text-gray-500 mt-1">
               <span>1 N/m</span>
               <span>500 N/m</span>
@@ -229,13 +234,13 @@
           <!-- Damping Coefficient -->
           <div class="space-y-1">
             <div class="flex justify-between items-center">
-              <label class="block text-sm font-medium text-gray-700">Damping Coefficient</label>
+              <label class="block text-sm font-medium text-gray-700">Damping</label>
               <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">
                 {{ dampingCoefficient }} N·s/m
               </span>
             </div>
             <input type="range" v-model.number="dampingCoefficient" min="0" max="50" step="0.1"
-              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500 hover:accent-blue-600 transition-colors">
+              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500">
             <div class="flex justify-between text-xs text-gray-500 mt-1">
               <span>0 N·s/m</span>
               <span>50 N·s/m</span>
@@ -251,10 +256,10 @@
               </span>
             </div>
             <input type="range" v-model.number="initialDisplacement" min="-1" max="1" step="0.01"
-              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500 hover:accent-blue-600 transition-colors">
+              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500">
             <div class="flex justify-between text-xs text-gray-500 mt-1">
-              <span>-1m</span>
-              <span>1m</span>
+              <span>-1 m</span>
+              <span>1 m</span>
             </div>
           </div>
 
@@ -267,7 +272,7 @@
               </span>
             </div>
             <input type="range" v-model.number="gravityMultiplier" min="0.1" max="3" step="0.1"
-              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500 hover:accent-blue-600 transition-colors">
+              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500">
             <div class="flex justify-between text-xs text-gray-500 mt-1">
               <span>0.1×</span>
               <span>3×</span>
