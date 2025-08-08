@@ -35,6 +35,13 @@ const router = createRouter({
         title: 'Pendulum Swing',
       },
     },
+    {
+      path: '/projectile-motion',
+      component: () => import('@/views/ProjectileMotionSimulationComponent.vue'),
+      meta: {
+        title: 'Projectile Motion'
+      }
+    }
   ],
 })
 
