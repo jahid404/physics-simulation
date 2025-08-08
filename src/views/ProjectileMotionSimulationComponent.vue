@@ -151,7 +151,7 @@
         <div class="grid gap-2">
           <div class="space-y-4">
             <!-- Launch Angle -->
-            <div class="space-y-1">
+            <!-- <div class="space-y-1">
               <label class="block text-sm font-medium text-gray-700">Launch Angle (°)</label>
               <div class="relative rounded-md shadow-sm">
                 <input type="number" v-model.number="launchAngle"
@@ -161,6 +161,16 @@
                   <span class="text-gray-500 sm:text-sm">deg</span>
                 </div>
               </div>
+            </div> -->
+            <div class="space-y-1">
+              <div class="flex justify-between items-center">
+                <label class="block text-sm font-medium text-gray-700">Initial Distance</label>
+                <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">{{ initialDistance }} px
+                  ({{ (initialDistanceMeters /
+                    1000).toFixed(2) }} km)</span>
+              </div>
+              <input type="range" v-model.number="initialDistance" @input="setInitialPositions" min="50" max="300"
+                step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
             </div>
 
             <!-- Launch Velocity -->
