@@ -1,19 +1,19 @@
 <script lang="ts" setup>
-  import { ref, computed, onMounted, onUnmounted } from 'vue'
+  import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 
   // Physics constants
-  const g = ref(9.81) // m/s² (Earth gravity)
-  const pxPerMeter = 5 // Scaling for visuals
+  const g = ref(9.81) // m/s²
+  const pxPerMeter = 5
 
   // Configurable parameters
   const launchAngle = ref(45) // degrees
   const launchVelocity = ref(50) // m/s
   const initialHeight = ref(0) // m
-  const gravityMultiplier = ref(1) // Speed boost for visuals
+  const gravityMultiplier = ref(1) // visual speed boost
 
   // State
   const posX = ref(0) // px
-  const posY = ref(0) // px (0 = ground)
+  const posY = ref(0) // px
   const pathPoints = ref<{ x: number; y: number }[]>([])
   const isRunning = ref(false)
   let animationFrame: number
@@ -23,10 +23,6 @@
   const previewRef = ref<HTMLElement | null>(null)
   const previewWidth = ref(800)
   const previewHeight = ref(400)
-
-  const updateInitialHeight = () => {
-    initialHeight.value = initialHeight.value * pxPerMeter
-  }
 
   const updatePreviewSize = () => {
     if (previewRef.value) {
@@ -76,7 +72,6 @@
       lastTime = now
       t += dt
 
-      // Position in meters
       const x = x0 + vx * t
       const y = y0 + vy0 * t - 0.5 * g.value * t * t
 
@@ -96,9 +91,17 @@
     animationFrame = requestAnimationFrame(step)
   }
 
+  // Update visual position instantly when initialHeight changes
+  watch(initialHeight, (newVal) => {
+    if (!isRunning.value) {
+      posY.value = newVal * pxPerMeter
+    }
+  })
+
   onMounted(() => {
     updatePreviewSize()
     window.addEventListener('resize', updatePreviewSize)
+    posY.value = initialHeight.value * pxPerMeter
   })
 
   onUnmounted(() => {
@@ -124,7 +127,7 @@
           </svg>
 
           <!-- Projectile -->
-          <div class="absolute bg-red-500 rounded-full" :style="{
+          <div class="absolute bg-red-500 rounded-full transition-transform duration-100 ease-linear" :style="{
             width: '15px',
             height: '15px',
             transform: `translate(${posX}px, ${previewHeight - posY - 7.5}px)`
@@ -158,46 +161,35 @@
             <div class="space-y-1">
               <div class="flex justify-between items-center">
                 <label class="block text-sm font-medium text-gray-700">Launch Angle</label>
-                <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">{{ launchAngle }} deg</span>
+                <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">{{ launchAngle
+                  }}°</span>
               </div>
-              <input type="range" v-model.number="launchAngle" min="0" max="90"
-                step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+              <input type="range" v-model.number="launchAngle" min="0" max="90" step="1"
+                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
             </div>
 
             <!-- Launch Velocity -->
             <div class="space-y-1">
               <label class="block text-sm font-medium text-gray-700">Launch Velocity (m/s)</label>
-              <div class="relative rounded-md shadow-sm">
-                <input type="number" v-model.number="launchVelocity" class="w-full border-gray-300 rounded-md" min="1"
-                  step="0.1">
-                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                  <span class="text-gray-500 sm:text-sm">m/s</span>
-                </div>
-              </div>
+              <input type="range" v-model.number="launchVelocity" min="1" max="100" step="1"
+                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+              <div class="text-xs text-gray-600">{{ launchVelocity }} m/s</div>
             </div>
 
-            <!-- Initial Height -->
+            <!-- Initial Height (as range) -->
             <div class="space-y-1">
               <label class="block text-sm font-medium text-gray-700">Initial Height (m)</label>
-              <div class="relative rounded-md shadow-sm">
-                <input type="number" v-model.number="initialHeight" @input="updateInitialHeight" class="w-full border-gray-300 rounded-md" min="0"
-                  step="0.1">
-                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                  <span class="text-gray-500 sm:text-sm">m</span>
-                </div>
-              </div>
+              <input type="range" v-model.number="initialHeight" min="0" max="50" step="0.1"
+                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+              <div class="text-xs text-gray-600">{{ initialHeight }} m</div>
             </div>
 
             <!-- Gravity Multiplier -->
             <div class="space-y-1">
               <label class="block text-sm font-medium text-gray-700">Gravity Multiplier</label>
-              <div class="relative rounded-md shadow-sm">
-                <input type="number" v-model.number="gravityMultiplier" class="w-full border-gray-300 rounded-md"
-                  min="0" step="0.1">
-                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                  <span class="text-gray-500 sm:text-sm">x</span>
-                </div>
-              </div>
+              <input type="range" v-model.number="gravityMultiplier" min="0.1" max="3" step="0.1"
+                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+              <div class="text-xs text-gray-600">{{ gravityMultiplier }}×</div>
             </div>
           </div>
 
