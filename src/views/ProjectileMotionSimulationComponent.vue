@@ -17,12 +17,16 @@
   const pathPoints = ref<{ x: number; y: number }[]>([])
   const isRunning = ref(false)
   let animationFrame: number
-  let lastTime = 0
+  let startTime = 0
 
   // Canvas size
   const previewRef = ref<HTMLElement | null>(null)
   const previewWidth = ref(800)
   const previewHeight = ref(400)
+
+  // Calculated landing position
+  const landingX = computed(() => horizontalRange.value * pxPerMeter)
+  const landingY = computed(() => 0) // Ground level
 
   const updatePreviewSize = () => {
     if (previewRef.value) {
@@ -51,50 +55,70 @@
 
   // Simulation start
   const startSimulation = () => {
+    if (isRunning.value) {
+      cancelAnimationFrame(animationFrame)
+    }
+
     isRunning.value = true
     posX.value = 0
     posY.value = initialHeight.value * pxPerMeter
-    pathPoints.value = []
+    pathPoints.value = [{ x: posX.value, y: posY.value }]
 
-    lastTime = performance.now()
-    simulate(0, initialHeight.value, launchVelocity.value, launchAngle.value)
+    startTime = performance.now()
+    simulate()
   }
 
-  const simulate = (x0: number, y0: number, velocity: number, angleDeg: number) => {
-    const angleRad = angleDeg * Math.PI / 180
-    let t = 0
-    const vx = velocity * Math.cos(angleRad)
-    const vy0 = velocity * Math.sin(angleRad)
+  const simulate = () => {
+    const angleRad = launchAngle.value * Math.PI / 180
+    const vx = launchVelocity.value * Math.cos(angleRad)
+    const vy0 = launchVelocity.value * Math.sin(angleRad)
 
-    const step = () => {
-      const now = performance.now()
-      const dt = ((now - lastTime) / 1000) * gravityMultiplier.value
-      lastTime = now
-      t += dt
+    const step = (timestamp: number) => {
+      if (!startTime) startTime = timestamp
+      const elapsedTime = Math.min((timestamp - startTime) / 1000 * gravityMultiplier.value, totalFlightTime.value)
 
-      const x = x0 + vx * t
-      const y = y0 + vy0 * t - 0.5 * g.value * t * t
+      // Calculate position using projectile motion equations
+      const x = vx * elapsedTime
+      const y = initialHeight.value + vy0 * elapsedTime - 0.5 * g.value * elapsedTime * elapsedTime
 
-      if (y < 0) {
+      // Update positions
+      posX.value = x * pxPerMeter
+      posY.value = Math.max(y, 0) * pxPerMeter // Ensure we don't go below ground
+
+      // Add point to path (with some optimization to not store every frame)
+      if (pathPoints.value.length < 2 ||
+          Math.abs(posX.value - pathPoints.value[pathPoints.value.length - 1].x) > 5 ||
+          Math.abs(posY.value - pathPoints.value[pathPoints.value.length - 1].y) > 5) {
+        pathPoints.value.push({ x: posX.value, y: posY.value })
+      }
+
+      // Ensure the last point is exactly at the landing position
+      if (elapsedTime >= totalFlightTime.value) {
+        posX.value = landingX.value
+        posY.value = landingY.value
+        pathPoints.value.push({ x: posX.value, y: posY.value })
         isRunning.value = false
-        cancelAnimationFrame(animationFrame)
         return
       }
 
-      posX.value = x * pxPerMeter
-      posY.value = y * pxPerMeter
-      pathPoints.value.push({ x: posX.value, y: posY.value })
-
-      animationFrame = requestAnimationFrame(step)
+      // Continue animation if projectile is still in the air
+      if (isRunning.value) {
+        animationFrame = requestAnimationFrame(step)
+      }
     }
 
     animationFrame = requestAnimationFrame(step)
   }
 
-  // Update visual position instantly when initialHeight changes
-  watch(initialHeight, (newVal) => {
-    if (!isRunning.value) {
-      posY.value = newVal * pxPerMeter
+  // Reset simulation when parameters change
+  watch([launchAngle, launchVelocity, initialHeight], (newVal, oldVal) => {
+    if (isRunning.value) {
+      startSimulation()
+    }
+
+    // if initial height is changed, update the landing position
+    if (newVal[2] !== oldVal[2]) {
+      posY.value = newVal[2] * pxPerMeter
     }
   })
 
@@ -120,6 +144,10 @@
         <div ref="previewRef"
           class="relative w-full h-[400px] bg-gray-50 border border-gray-300 rounded overflow-hidden">
 
+          <!-- Ground line -->
+          <div class="absolute bottom-0 left-0 right-0 h-px bg-green-700"></div>
+          <div class="absolute bottom-0 left-0 right-0 h-2 bg-green-600 opacity-20"></div>
+
           <!-- Path -->
           <svg class="absolute inset-0 w-full h-full">
             <polyline :points="pathPoints.map(p => `${p.x},${previewHeight - p.y}`).join(' ')" fill="none" stroke="blue"
@@ -131,6 +159,11 @@
             width: '15px',
             height: '15px',
             transform: `translate(${posX}px, ${previewHeight - posY - 7.5}px)`
+          }"></div>
+
+          <!-- Landing marker (small dot at calculated landing position) -->
+          <div class="absolute bg-green-600 rounded-full w-2 h-2" :style="{
+            transform: `translate(${landingX}px, ${previewHeight - landingY - 1}px)`
           }"></div>
         </div>
 
@@ -200,7 +233,7 @@
                 d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
                 clip-rule="evenodd" />
             </svg>
-            Start Simulation
+            {{ isRunning ? 'Restart' : 'Start' }} Simulation
           </button>
         </div>
       </div>
