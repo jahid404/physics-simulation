@@ -164,12 +164,10 @@
             </div> -->
             <div class="space-y-1">
               <div class="flex justify-between items-center">
-                <label class="block text-sm font-medium text-gray-700">Initial Distance</label>
-                <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">{{ initialDistance }} px
-                  ({{ (initialDistanceMeters /
-                    1000).toFixed(2) }} km)</span>
+                <label class="block text-sm font-medium text-gray-700">Launch Angle</label>
+                <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">{{ launchAngle }} deg</span>
               </div>
-              <input type="range" v-model.number="initialDistance" @input="setInitialPositions" min="50" max="300"
+              <input type="range" v-model.number="launchAngle" min="0" max="90"
                 step="1" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
             </div>
 
