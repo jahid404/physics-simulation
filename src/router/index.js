@@ -41,7 +41,14 @@ const router = createRouter({
       meta: {
         title: 'Projectile Motion'
       }
-    }
+    },
+    {
+      path: '/spring-oscillation',
+      component: () => import('@/views/SpringOscillationSimulationComponent.vue'),
+      meta: {
+        title: 'Spring Oscillation',
+      },
+    },
   ],
 })
 

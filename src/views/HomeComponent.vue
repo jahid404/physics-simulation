@@ -26,6 +26,7 @@
       name: "Spring Oscillation",
       description: "Explore a spring-mass oscillating system",
       link: "/spring-oscillation",
+      badge: "New",
     },
     {
       id: 5,
