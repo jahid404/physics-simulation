@@ -7,7 +7,7 @@
 
   // Configurable parameters
   const launchAngle = ref(45) // degrees
-  const launchVelocity = ref(50) // m/s
+  const launchVelocity = ref(30) // m/s
   const initialHeight = ref(0) // m
   const gravityMultiplier = ref(1) // visual speed boost
 
@@ -87,8 +87,8 @@
 
       // Add point to path (with some optimization to not store every frame)
       if (pathPoints.value.length < 2 ||
-          Math.abs(posX.value - pathPoints.value[pathPoints.value.length - 1].x) > 5 ||
-          Math.abs(posY.value - pathPoints.value[pathPoints.value.length - 1].y) > 5) {
+        Math.abs(posX.value - pathPoints.value[pathPoints.value.length - 1].x) > 5 ||
+        Math.abs(posY.value - pathPoints.value[pathPoints.value.length - 1].y) > 5) {
         pathPoints.value.push({ x: posX.value, y: posY.value })
       }
 
@@ -155,7 +155,7 @@
           </svg>
 
           <!-- Projectile -->
-          <div class="absolute bg-red-500 rounded-full transition-transform duration-100 ease-linear" :style="{
+          <div class="absolute bg-blue-600 rounded-full transition-transform duration-100 ease-linear" :style="{
             width: '15px',
             height: '15px',
             transform: `translate(${posX}px, ${previewHeight - posY - 7.5}px)`
@@ -169,17 +169,26 @@
 
         <!-- Stats -->
         <div class="mt-5 grid grid-cols-1 md:grid-cols-3 gap-3">
-          <div class="bg-blue-50 p-3 rounded-lg shadow-sm">
-            <span class="text-sm text-gray-600">Flight Time</span>
-            <div class="text-lg font-semibold">{{ totalFlightTime.toFixed(2) }} s</div>
+          <div class="bg-violet-50 p-3 rounded-lg shadow-sm">
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-medium text-gray-600">Flight Time</span>
+              <span class="text-lg font-semibold">{{ totalFlightTime.toFixed(2) }} <span
+                  class="text-sm font-normal text-gray-400">s</span></span>
+            </div>
           </div>
-          <div class="bg-blue-50 p-3 rounded-lg shadow-sm">
-            <span class="text-sm text-gray-600">Max Height</span>
-            <div class="text-lg font-semibold">{{ maxHeight.toFixed(2) }} m</div>
+          <div class="bg-violet-50 p-3 rounded-lg shadow-sm">
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-medium text-gray-600">Max Height</span>
+              <span class="text-lg font-semibold">{{ maxHeight.toFixed(2) }} <span
+                  class="text-sm font-normal text-gray-400">m</span></span>
+            </div>
           </div>
-          <div class="bg-blue-50 p-3 rounded-lg shadow-sm">
-            <span class="text-sm text-gray-600">Range</span>
-            <div class="text-lg font-semibold">{{ horizontalRange.toFixed(2) }} m</div>
+          <div class="bg-violet-50 p-3 rounded-lg shadow-sm">
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-medium text-gray-600">Range</span>
+              <span class="text-lg font-semibold">{{ horizontalRange.toFixed(2) }} <span
+                  class="text-sm font-normal text-gray-400">m</span></span>
+            </div>
           </div>
         </div>
       </div>
@@ -199,30 +208,55 @@
               </div>
               <input type="range" v-model.number="launchAngle" min="0" max="90" step="1"
                 class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+              <div class="flex justify-between text-xs text-gray-500 mt-1">
+                <span>0°</span>
+                <span>90°</span>
+              </div>
             </div>
 
             <!-- Launch Velocity -->
             <div class="space-y-1">
-              <label class="block text-sm font-medium text-gray-700">Launch Velocity (m/s)</label>
+              <div class="flex justify-between items-center">
+                <label class="block text-sm font-medium text-gray-700">Launch Velocity (m/s)</label>
+                <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">{{ launchVelocity
+                  }} m/s</span>
+              </div>
               <input type="range" v-model.number="launchVelocity" min="1" max="100" step="1"
                 class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
-              <div class="text-xs text-gray-600">{{ launchVelocity }} m/s</div>
+              <div class="flex justify-between text-xs text-gray-500 mt-1">
+                <span>1 m/s</span>
+                <span>100 m/s</span>
+              </div>
             </div>
 
             <!-- Initial Height (as range) -->
             <div class="space-y-1">
-              <label class="block text-sm font-medium text-gray-700">Initial Height (m)</label>
+              <div class="flex justify-between items-center">
+                <label class="block text-sm font-medium text-gray-700">Initial Height (m)</label>
+                <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">{{ initialHeight
+                  }} m</span>
+              </div>
               <input type="range" v-model.number="initialHeight" min="0" max="50" step="0.1"
                 class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
-              <div class="text-xs text-gray-600">{{ initialHeight }} m</div>
+              <div class="flex justify-between text-xs text-gray-500 mt-1">
+                <span>0 m</span>
+                <span>50 m</span>
+              </div>
             </div>
 
             <!-- Gravity Multiplier -->
             <div class="space-y-1">
-              <label class="block text-sm font-medium text-gray-700">Gravity Multiplier</label>
-              <input type="range" v-model.number="gravityMultiplier" min="0.1" max="3" step="0.1"
+              <div class="flex justify-between items-center">
+                <label class="block text-sm font-medium text-gray-700">Gravity Multiplier</label>
+                <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">{{ gravityMultiplier
+                  }}×</span>
+              </div>
+              <input type="range" v-model.number="gravityMultiplier" min="0.5" max="10" step="0.5"
                 class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
-              <div class="text-xs text-gray-600">{{ gravityMultiplier }}×</div>
+              <div class="flex justify-between text-xs text-gray-500 mt-1">
+                <span>0.5×</span>
+                <span>10×</span>
+              </div>
             </div>
           </div>
 
