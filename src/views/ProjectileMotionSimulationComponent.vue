@@ -174,44 +174,38 @@
                 </div>
               </div>
             </div>
+
+            <!-- Initial Height -->
+            <div class="space-y-1">
+              <label class="block text-sm font-medium text-gray-700">Initial Height (m)</label>
+              <div class="relative rounded-md shadow-sm">
+                <input type="number" v-model.number="initialHeight" class="w-full border-gray-300 rounded-md" min="0"
+                  step="0.1">
+                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <span class="text-gray-500 sm:text-sm">m</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Gravity Multiplier -->
+            <!-- <div class="space-y-1">
+              <label class="block text-sm font-medium text-gray-700">Gravity Multiplier</label>
+              <div class="relative rounded-md shadow-sm">
+                <input type="number" v-model.number="gravityMultiplier" class="w-full border-gray-300 rounded-md" min="0.1"
+                  step="0.1">
+              </div>
+            </div> -->
+            <div class="space-y-1">
+              <label class="block text-sm font-medium text-gray-700">Gravity Multiplier</label>
+              <div class="relative rounded-md shadow-sm">
+                <input type="number" v-model.number="gravityMultiplier" class="w-full border-gray-300 rounded-md" min="0"
+                  step="0.1">
+                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <span class="text-gray-500 sm:text-sm">x</span>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-
-        <div class="space-y-4">
-
-          <!-- Launch Angle -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Launch Angle (°)</label>
-            <input type="number" v-model.number="launchAngle" class="w-full border-gray-300 rounded-md" min="0" max="90"
-              step="1">
-          </div>
-
-          <!-- Launch Velocity -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Launch Velocity (m/s)</label>
-            <input type="number" v-model.number="launchVelocity" class="w-full border-gray-300 rounded-md" min="1"
-              step="0.1">
-          </div>
-
-          <!-- Initial Height -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Initial Height (m)</label>
-            <input type="number" v-model.number="initialHeight" class="w-full border-gray-300 rounded-md" min="0"
-              step="0.1">
-          </div>
-
-          <!-- Gravity Multiplier -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Gravity Multiplier</label>
-            <input type="number" v-model.number="gravityMultiplier" class="w-full border-gray-300 rounded-md" min="0.1"
-              step="0.1">
-          </div>
-
-          <!-- Start Button -->
-          <button @click="startSimulation"
-            class="w-full px-4 py-2 bg-gradient-to-r from-green-600 to-green-700 text-white font-medium rounded-lg shadow-md hover:from-green-700 hover:to-green-800 transition-all">
-            Start Simulation
-          </button>
         </div>
       </div>
     </div>
