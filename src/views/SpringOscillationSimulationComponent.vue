@@ -145,7 +145,7 @@
 
           <!-- Mass visualization -->
           <div
-            class="absolute left-1/2 w-10 h-10 flex items-center bg-blue-500 rounded-lg shadow-md border-2 border-blue-600"
+            class="absolute left-1/2 w-10 h-10 flex items-center justify-center bg-blue-500 rounded-lg shadow-md border-2 border-blue-600"
             :style="{
               top: `${equilibriumPosition - position * pxPerMeter}px`,
               transform: 'translateX(-50%) translateY(50%)'
@@ -207,11 +207,11 @@
                 {{ mass }} kg
               </span>
             </div>
-            <input type="range" v-model.number="mass" min="0.1" max="10" step="0.1"
+            <input type="range" v-model.number="mass" min="0.5" max="50" step="0.5"
               class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500">
             <div class="flex justify-between text-xs text-gray-500 mt-1">
-              <span>0.1 kg</span>
-              <span>10 kg</span>
+              <span>0.5 kg</span>
+              <span>50 kg</span>
             </div>
           </div>
 
