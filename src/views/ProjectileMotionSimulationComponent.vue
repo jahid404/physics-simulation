@@ -188,24 +188,27 @@
             </div>
 
             <!-- Gravity Multiplier -->
-            <!-- <div class="space-y-1">
-              <label class="block text-sm font-medium text-gray-700">Gravity Multiplier</label>
-              <div class="relative rounded-md shadow-sm">
-                <input type="number" v-model.number="gravityMultiplier" class="w-full border-gray-300 rounded-md" min="0.1"
-                  step="0.1">
-              </div>
-            </div> -->
             <div class="space-y-1">
               <label class="block text-sm font-medium text-gray-700">Gravity Multiplier</label>
               <div class="relative rounded-md shadow-sm">
-                <input type="number" v-model.number="gravityMultiplier" class="w-full border-gray-300 rounded-md" min="0"
-                  step="0.1">
+                <input type="number" v-model.number="gravityMultiplier" class="w-full border-gray-300 rounded-md"
+                  min="0" step="0.1">
                 <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                   <span class="text-gray-500 sm:text-sm">x</span>
                 </div>
               </div>
             </div>
           </div>
+
+          <button @click="startSimulation"
+            class="w-full px-4 py-2 mt-4 cursor-pointer bg-gradient-to-r from-blue-600 to-blue-700 text-white font-medium rounded-lg shadow-md hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                clip-rule="evenodd" />
+            </svg>
+            Start Simulation
+          </button>
         </div>
       </div>
     </div>
