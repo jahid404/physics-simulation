@@ -217,11 +217,11 @@
               <label class="block text-sm font-medium text-gray-700">Mass</label>
               <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">{{ mass }} kg</span>
             </div>
-            <input type="range" v-model.number="mass" min="0.5" max="50" step="0.5"
+            <input type="range" v-model.number="mass" min="0.5" max="1000" step="0.5"
               class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600 hover:accent-blue-700 transition-colors">
             <div class="flex justify-between text-xs text-gray-500">
               <span>0.5 kg</span>
-              <span>50 kg</span>
+              <span>1000 kg</span>
             </div>
           </div>
 
@@ -232,11 +232,11 @@
               <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">{{ initialVelocity }}
                 m/s</span>
             </div>
-            <input type="range" v-model.number="initialVelocity" min="0.1" max="10" step="0.1"
+            <input type="range" v-model.number="initialVelocity" min="0.5" max="100" step="0.5"
               class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600 hover:accent-blue-700 transition-colors">
             <div class="flex justify-between text-xs text-gray-500">
-              <span>0.1 m/s</span>
-              <span>10 m/s</span>
+              <span>0.5 m/s</span>
+              <span>100 m/s</span>
             </div>
           </div>
 
