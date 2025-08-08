@@ -45,15 +45,6 @@
     }
   }
 
-  // Start/stop simulation
-  const toggleSimulation = () => {
-    if (isRunning.value) {
-      stopSimulation()
-    } else {
-      startSimulation()
-    }
-  }
-
   const startSimulation = () => {
     if (isRunning.value) return
 
@@ -130,7 +121,7 @@
 </script>
 
 <template>
-  <div class="flex items-center justify-center bg-gray-100 min-h-screen p-4">
+  <div class="flex items-center justify-center bg-gray-100 min-h-screen">
     <div class="flex flex-col md:flex-row gap-6 w-full max-w-6xl">
 
       <!-- Simulation Canvas -->
@@ -170,94 +161,139 @@
 
         <!-- System Info -->
         <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
-          <div class="bg-blue-50 p-3 rounded-lg shadow-sm">
-            <span class="text-sm text-gray-600">Natural Frequency</span>
-            <div class="text-lg font-semibold">{{ naturalFrequency.toFixed(2) }} rad/s</div>
+          <div class="bg-violet-50 p-3 rounded-lg shadow-sm">
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-medium text-gray-600">Natural Frequency</span>
+              <span class="text-lg font-semibold">{{ naturalFrequency.toFixed(2) }} <span
+                  class="text-sm font-normal text-gray-400">rad/s</span></span>
+            </div>
           </div>
-          <div class="bg-blue-50 p-3 rounded-lg shadow-sm">
-            <span class="text-sm text-gray-600">Damping Ratio</span>
-            <div class="text-lg font-semibold">
-              {{ dampingRatio.toFixed(3) }}
-              <span class="text-sm ml-1">
-                ({{ isUnderdamped ? 'Underdamped' : isCriticallyDamped ? 'Critically Damped' : 'Overdamped' }})
+
+          <div class="bg-violet-50 p-3 rounded-lg shadow-sm">
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-medium text-gray-600">Damping Ratio</span>
+              <span
+                class="text-lg font-semibold" :class="isUnderdamped ? 'text-green-500' : isCriticallyDamped ? 'text-red-500' : ''">
+                {{ dampingRatio.toFixed(3) }}
               </span>
             </div>
           </div>
-          <div class="bg-blue-50 p-3 rounded-lg shadow-sm">
-            <span class="text-sm text-gray-600">Period</span>
-            <div class="text-lg font-semibold">{{ period.toFixed(3) }} s</div>
+
+          <div class="bg-violet-50 p-3 rounded-lg shadow-sm">
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-medium text-gray-600">Period</span>
+              <span class="text-lg font-semibold">{{ period.toFixed(3) }} <span
+                  class="text-sm font-normal text-gray-400">s</span></span>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Controls Panel -->
-      <div class="w-full order-1 md:order-2 md:w-80 bg-white rounded-xl shadow-xl p-4">
-        <h2 class="text-xl font-semibold mb-4">Controls</h2>
+      <div class="w-full order-1 md:order-2 md:w-[350px] h-max p-4 bg-white rounded-xl shadow-xl">
+        <h2 class="text-xl font-semibold mb-4">Configuration</h2>
 
         <div class="space-y-4">
           <!-- Mass -->
           <div class="space-y-1">
-            <label class="block text-sm font-medium text-gray-700">Mass (kg)</label>
+            <div class="flex justify-between items-center">
+              <label class="block text-sm font-medium text-gray-700">Mass</label>
+              <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">
+                {{ mass }}kg
+              </span>
+            </div>
             <input type="range" v-model.number="mass" min="0.1" max="10" step="0.1"
-              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
-            <div class="text-xs text-gray-600">{{ mass }} kg</div>
+              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500 hover:accent-blue-600 transition-colors">
+            <div class="flex justify-between text-xs text-gray-500 mt-1">
+              <span>0.1kg</span>
+              <span>10kg</span>
+            </div>
           </div>
 
           <!-- Spring Constant -->
           <div class="space-y-1">
-            <label class="block text-sm font-medium text-gray-700">Spring Constant (N/m)</label>
+            <div class="flex justify-between items-center">
+              <label class="block text-sm font-medium text-gray-700">Spring Constant</label>
+              <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">
+                {{ springConstant }} N/m
+              </span>
+            </div>
             <input type="range" v-model.number="springConstant" min="1" max="500" step="1"
-              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
-            <div class="text-xs text-gray-600">{{ springConstant }} N/m</div>
+              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500 hover:accent-blue-600 transition-colors">
+            <div class="flex justify-between text-xs text-gray-500 mt-1">
+              <span>1 N/m</span>
+              <span>500 N/m</span>
+            </div>
           </div>
 
           <!-- Damping Coefficient -->
           <div class="space-y-1">
-            <label class="block text-sm font-medium text-gray-700">Damping (N·s/m)</label>
+            <div class="flex justify-between items-center">
+              <label class="block text-sm font-medium text-gray-700">Damping Coefficient</label>
+              <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">
+                {{ dampingCoefficient }} N·s/m
+              </span>
+            </div>
             <input type="range" v-model.number="dampingCoefficient" min="0" max="50" step="0.1"
-              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
-            <div class="text-xs text-gray-600">{{ dampingCoefficient }} N·s/m</div>
+              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500 hover:accent-blue-600 transition-colors">
+            <div class="flex justify-between text-xs text-gray-500 mt-1">
+              <span>0 N·s/m</span>
+              <span>50 N·s/m</span>
+            </div>
           </div>
 
           <!-- Initial Displacement -->
           <div class="space-y-1">
-            <label class="block text-sm font-medium text-gray-700">Initial Displacement (m)</label>
+            <div class="flex justify-between items-center">
+              <label class="block text-sm font-medium text-gray-700">Initial Displacement</label>
+              <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">
+                {{ initialDisplacement }} m
+              </span>
+            </div>
             <input type="range" v-model.number="initialDisplacement" min="-1" max="1" step="0.01"
-              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
-            <div class="text-xs text-gray-600">{{ initialDisplacement }} m</div>
+              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500 hover:accent-blue-600 transition-colors">
+            <div class="flex justify-between text-xs text-gray-500 mt-1">
+              <span>-1m</span>
+              <span>1m</span>
+            </div>
           </div>
 
           <!-- Simulation Speed -->
           <div class="space-y-1">
-            <label class="block text-sm font-medium text-gray-700">Simulation Speed</label>
+            <div class="flex justify-between items-center">
+              <label class="block text-sm font-medium text-gray-700">Simulation Speed</label>
+              <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-1 rounded-full">
+                {{ gravityMultiplier }}×
+              </span>
+            </div>
             <input type="range" v-model.number="gravityMultiplier" min="0.1" max="3" step="0.1"
-              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
-            <div class="text-xs text-gray-600">{{ gravityMultiplier }}×</div>
+              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500 hover:accent-blue-600 transition-colors">
+            <div class="flex justify-between text-xs text-gray-500 mt-1">
+              <span>0.1×</span>
+              <span>3×</span>
+            </div>
           </div>
 
           <!-- Control Buttons -->
-          <button @click="toggleSimulation"
-            class="w-full px-4 py-2 mt-4 cursor-pointer bg-gradient-to-r from-blue-600 to-blue-700 text-white font-medium rounded-lg shadow-md hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-              <path v-if="!isRunning" fill-rule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                clip-rule="evenodd" />
-              <path v-else fill-rule="evenodd"
-                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z"
-                clip-rule="evenodd" />
-            </svg>
-            {{ isRunning ? 'Stop' : 'Start' }} Simulation
-          </button>
-
-          <button @click="startSimulation" v-if="isRunning"
-            class="w-full px-4 py-2 cursor-pointer bg-gradient-to-r from-amber-500 to-amber-600 text-white font-medium rounded-lg shadow-md hover:from-amber-600 hover:to-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd"
-                d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
-                clip-rule="evenodd" />
-            </svg>
-            Restart
-          </button>
+          <div class="flex gap-3 pt-2">
+            <button @click="startSimulation"
+              class="flex-1 px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-medium rounded-lg shadow-sm hover:from-blue-600 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 transition-all duration-150 flex items-center justify-center gap-1.5">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                  clip-rule="evenodd" />
+              </svg>
+              Start
+            </button>
+            <button @click="stopSimulation"
+              class="flex-1 px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white font-medium rounded-lg shadow-sm hover:from-red-600 hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-1 transition-all duration-150 flex items-center justify-center gap-1.5">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z"
+                  clip-rule="evenodd" />
+              </svg>
+              Stop
+            </button>
+          </div>
         </div>
       </div>
     </div>
