@@ -252,6 +252,7 @@
       <!-- Controls -->
       <div class="w-full order-1 md:order-2 md:w-[350px] h-max p-4 bg-white rounded-xl shadow-xl">
         <h2 class="text-xl font-semibold mb-4 text-center md:text-left">Configuration</h2>
+
         <div class="grid gap-4">
           <div class="space-y-4">
             <!-- Mass 1 Input -->
