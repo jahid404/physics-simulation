@@ -153,11 +153,11 @@
           </div>
 
           <!-- Mass visualization -->
-          <div class="absolute left-1/2 w-16 h-16 bg-amber-500 rounded-lg shadow-md border-2 border-amber-600" :style="{
+          <div class="absolute left-1/2 w-10 h-10 bg-amber-500 rounded-lg shadow-md border-2 border-amber-600" :style="{
             top: `${equilibriumPosition - position * pxPerMeter}px`,
             transform: 'translateX(-50%)'
           }">
-            <div class="text-white text-center mt-4 font-bold">{{ mass }} kg</div>
+            <div class="text-white text-center mt-4 font-bold text-xs">{{ mass }} kg</div>
           </div>
 
           <!-- Path visualization -->
